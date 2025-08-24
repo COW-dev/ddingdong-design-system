@@ -9,7 +9,7 @@ const allowedColors: Record<Props<Variant>['variant'], Array<Props<Variant>['col
 };
 
 const meta: Meta<Props<Variant>> = {
-  title: 'components/common/Button',
+  title: 'components/Button',
   component: Button,
   tags: ['autodocs'],
   argTypes: {
@@ -31,6 +31,17 @@ const meta: Meta<Props<Variant>> = {
         defaultValue: { summary: 'blue' },
       },
       options: ['blue', 'red'],
+      control: {
+        type: 'radio',
+      },
+    },
+    size: {
+      description: 'Button의 size를 설정합니다.',
+      table: {
+        type: { summary: 'ButtonSize' },
+        defaultValue: { summary: 'md' },
+      },
+      options: ['sm', 'md', 'lg', 'full'],
       control: {
         type: 'radio',
       },
@@ -67,6 +78,7 @@ export const Primary: Story = {
   args: {
     variant: 'primary',
     color: 'blue',
+    size: 'md',
     children: 'PrimaryButton',
   },
 };
@@ -75,6 +87,7 @@ export const Secondary: Story = {
   args: {
     variant: 'secondary',
     color: 'blue',
+    size: 'md',
     children: 'SecondaryButton',
   },
 };
@@ -82,6 +95,7 @@ export const Secondary: Story = {
 export const Tertiary: Story = {
   args: {
     variant: 'tertiary',
+    size: 'md',
     children: 'TertiaryButton',
   },
 };
