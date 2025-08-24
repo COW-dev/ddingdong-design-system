@@ -2,8 +2,8 @@ import type { Meta } from '@storybook/react';
 
 import { Item, Accordion } from '.';
 
-const meta: Meta = {
-  title: 'components/common/Accordion',
+const meta: Meta<typeof Accordion> = {
+  title: 'components/Accordion',
   component: Accordion,
   tags: ['autodocs'],
   parameters: {
