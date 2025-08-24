@@ -32,14 +32,16 @@ const hoverColorMap = {
   black: 'hover:bg-black/20',
 } as const;
 
-export function IconButton({ iconName, color, size, className, ...props }: IconButtonProps) {
+export function IconButton({
+  iconName,
+  color = 'gray',
+  size,
+  className,
+  ...props
+}: IconButtonProps) {
   return (
     <button
-      className={cn(
-        'cursor-pointer rounded-md p-1 transition',
-        hoverColorMap[color ?? 'primary'],
-        className
-      )}
+      className={cn('cursor-pointer rounded-md p-1 transition', hoverColorMap[color], className)}
       {...props}
     >
       <Icon name={iconName} color={color} size={size} />
