@@ -36,7 +36,7 @@ export function Modal({ isOpen, closeModal, children }: Props) {
         exit={MODAL_MOTION.exit}
         className="fixed inset-0 z-30 flex w-full items-center justify-center"
       >
-        <div className="bg-opacity-50 absolute inset-0 bg-black" onClick={handleOutsideClick} />
+        <div className="absolute inset-0 bg-black/50" onClick={handleOutsideClick} />
         <ModalContent>{children}</ModalContent>
       </motion.div>
     </Portal>
