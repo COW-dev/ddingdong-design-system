@@ -3,7 +3,12 @@ import { ComponentProps } from 'react';
 import { Flex } from '../Flex';
 import { IconButton } from '../IconButton';
 
-type InputProps = { onClickReset: () => void } & ComponentProps<'input'>;
+type InputProps = {
+  /**
+   * Callback function when the reset button is clicked.
+   */
+  onClickReset: () => void;
+} & ComponentProps<'input'>;
 
 export function Input({ value, onClickReset, ...props }: InputProps) {
   return (
