@@ -36,7 +36,6 @@ export const Icons = {
   loading: Loading,
   instagram: Insta,
   youtube: Youtube,
-  NavbarArrow: NavbarArrow,
 };
 
 export type IconName = keyof typeof Icons;

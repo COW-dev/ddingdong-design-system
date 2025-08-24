@@ -7,7 +7,7 @@ import { Icon } from './Icon';
 import { iconNames } from '../assets';
 
 const meta = {
-  title: 'components/common/Icon',
+  title: 'components/Icon',
   component: Icon,
   tags: ['autodocs'],
 } satisfies Meta<typeof Icon>;
