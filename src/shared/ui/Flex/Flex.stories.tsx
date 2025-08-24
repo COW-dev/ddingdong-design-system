@@ -23,13 +23,13 @@ export const Basic: Story = {
   args: {
     dir: 'row',
     alignItems: 'stretch',
-    justifyContent: 'normal',
+    justifyContent: 'start',
     wrap: 'nowrap',
   },
   argTypes: {
     dir: {
       control: { type: 'select' },
-      options: ['row', 'row-reverse', 'column', 'column-reverse'],
+      options: ['row', 'row-reverse', 'col', 'col-reverse'],
     },
     alignItems: {
       control: { type: 'select' },
@@ -37,17 +37,7 @@ export const Basic: Story = {
     },
     justifyContent: {
       control: { type: 'select' },
-      options: [
-        'start',
-        'end',
-        'center',
-        'between',
-        'around',
-        'evenly',
-        'stretch',
-        'baseline',
-        'normal',
-      ],
+      options: ['start', 'end', 'center', 'between', 'around', 'evenly', 'stretch', 'baseline'],
     },
     wrap: {
       control: { type: 'select' },

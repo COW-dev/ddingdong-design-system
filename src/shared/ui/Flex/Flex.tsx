@@ -24,7 +24,6 @@ const JUSTIFY_CONTENT = {
   evenly: 'justify-evenly',
   stretch: 'justify-stretch',
   baseline: 'justify-baseline',
-  normal: 'justify-normal',
 } as const;
 
 const WRAP = {
