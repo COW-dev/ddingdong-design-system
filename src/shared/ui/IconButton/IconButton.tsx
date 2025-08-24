@@ -41,6 +41,7 @@ export function IconButton({
 }: IconButtonProps) {
   return (
     <button
+      type="button"
       className={cn('cursor-pointer rounded-md p-1 transition', hoverColorMap[color], className)}
       {...props}
     >

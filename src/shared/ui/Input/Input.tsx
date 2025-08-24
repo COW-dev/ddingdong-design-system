@@ -20,6 +20,8 @@ export function Input({ value, onClickReset, ...props }: InputProps) {
       />
       {value && (
         <IconButton
+          title="입력값 지우기"
+          aria-label="입력값 지우기"
           iconName="close"
           color="gray"
           size={18}
