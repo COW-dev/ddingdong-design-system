@@ -1,19 +1,26 @@
-import React from 'react';
+import { useEffect, useState } from 'react';
 import { AnimatePresence } from 'framer-motion';
-import ReactDOM from 'react-dom';
+import { createPortal } from 'react-dom';
+
 type Props = {
+  /**
+   * Controls whether the portal is open or closed.
+   */
   isOpen: boolean;
+  /**
+   * The content to render inside the portal.
+   */
   children: React.ReactNode;
 };
 export function Portal({ isOpen, children }: Props) {
-  const [mounted, setMounted] = React.useState(false);
+  const [mounted, setMounted] = useState(false);
 
-  React.useEffect(() => {
+  useEffect(() => {
     setMounted(true);
     return () => setMounted(false);
   }, []);
 
   return mounted
-    ? ReactDOM.createPortal(<AnimatePresence>{isOpen && children}</AnimatePresence>, document.body)
+    ? createPortal(<AnimatePresence>{isOpen && children}</AnimatePresence>, document.body)
     : null;
 }

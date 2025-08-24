@@ -1,10 +1,10 @@
-import React from 'react';
+import { Fragment } from 'react';
 import type { Meta, StoryObj } from '@storybook/react';
 
 import { GroupingSelect, Select } from './index';
 
 const meta = {
-  title: 'components/common/Select',
+  title: 'components/Select',
   component: Select,
   tags: ['autodocs'],
   argTypes: {
@@ -117,12 +117,12 @@ export const Grouping: StoryObj<typeof GroupingSelect> = {
   render: (args) => (
     <GroupingSelect {...args}>
       {Object.entries(groupingContents).map(([group, departments]) => (
-        <React.Fragment key={group}>
+        <Fragment key={group}>
           <GroupingSelect.Group name={group} />
           {departments.map((dept, idx) => (
             <GroupingSelect.Option key={`${group}-${idx}`} id={`${group}-${idx}`} name={dept} />
           ))}
-        </React.Fragment>
+        </Fragment>
       ))}
     </GroupingSelect>
   ),

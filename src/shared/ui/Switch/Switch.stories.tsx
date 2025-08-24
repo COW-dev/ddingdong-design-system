@@ -5,7 +5,7 @@ import { COLORS } from '@/shared/lib/colors';
 import { Switch } from '.';
 
 const meta = {
-  title: 'components/common/Switch',
+  title: 'components/Switch',
   component: Switch,
   tags: ['autodocs'],
 } satisfies Meta<typeof Switch>;

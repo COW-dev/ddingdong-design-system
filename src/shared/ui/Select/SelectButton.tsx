@@ -1,6 +1,3 @@
-'use client';
-import React from 'react';
-
 import { cn } from '@/shared/lib/core';
 
 import { Icon } from '../Icon';

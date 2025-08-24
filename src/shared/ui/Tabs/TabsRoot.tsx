@@ -1,4 +1,3 @@
-'use client';
 import { Children, isValidElement, ReactElement, useMemo, useState } from 'react';
 import { motion } from 'framer-motion';
 
@@ -44,7 +43,7 @@ export function TabsRoot({ children, defaultIndex = 0, ...props }: Props) {
               {label}
               {label === activeLabel && (
                 <motion.div
-                  className="absolute -bottom-0.5 left-0 right-0 h-0.5 bg-primary-300"
+                  className="bg-primary-300 absolute right-0 -bottom-0.5 left-0 h-0.5"
                   layoutId="underline"
                   id="underline"
                 />

@@ -3,9 +3,10 @@ import type { Meta, StoryObj } from '@storybook/react';
 import { DoubleButton, Props } from './DoubleButton';
 
 import { Button } from '../Button/Button';
+import { Flex } from '../Flex';
 
 const meta: Meta = {
-  title: 'components/common/DoubleButton',
+  title: 'components/DoubleButton',
   component: DoubleButton,
   tags: ['autodocs'],
   argTypes: {
@@ -20,14 +21,21 @@ export type Story = StoryObj<Props>;
 export const Default: Story = {
   args: {
     left: (
-      <Button variant="primary" color="blue">
+      <Button variant="primary" color="blue" size="full">
         Left Button
       </Button>
     ),
     right: (
-      <Button variant="secondary" color="red">
+      <Button variant="secondary" color="red" size="full">
         Right Button
       </Button>
     ),
+  },
+  render: (args) => {
+    return (
+      <Flex className="w-75">
+        <DoubleButton {...args} />
+      </Flex>
+    );
   },
 };

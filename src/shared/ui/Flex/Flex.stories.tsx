@@ -3,7 +3,7 @@ import type { Meta, StoryObj } from '@storybook/react';
 import { Flex } from './Flex';
 
 const meta = {
-  title: 'components/common/Flex',
+  title: 'components/Flex',
   component: Flex,
   tags: ['autodocs'],
   parameters: {
@@ -58,7 +58,7 @@ export const Basic: Story = {
     <Flex {...args} className="w-full">
       <div className="size-10 bg-red-300">1</div>
       <div className="size-10 bg-green-300">2</div>
-      <div className="size-10 bg-primary-300">3</div>
+      <div className="bg-primary-300 size-10">3</div>
     </Flex>
   ),
 };

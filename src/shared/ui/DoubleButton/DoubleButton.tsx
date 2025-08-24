@@ -1,4 +1,6 @@
-import React, { ReactNode } from 'react';
+import { ReactNode } from 'react';
+
+import { Flex } from '../Flex';
 
 export type Props = {
   /**
@@ -11,11 +13,11 @@ export type Props = {
   right: ReactNode;
 } & React.HTMLAttributes<HTMLDivElement>;
 
-export function DoubleButton({ left, right, ...props }: Props) {
+export function DoubleButton({ left, right }: Props) {
   return (
-    <div className="flex items-center justify-center gap-2 md:gap-4" {...props}>
-      <div>{left}</div>
-      <div> {right}</div>
-    </div>
+    <Flex dir="row" justify="between" items="center" className="w-full gap-2 md:gap-4">
+      <div className="flex-1">{left}</div>
+      <div className="flex-1">{right}</div>
+    </Flex>
   );
 }

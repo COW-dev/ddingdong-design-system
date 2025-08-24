@@ -3,8 +3,8 @@ import { cn } from '@/shared/lib/core';
 const DIR = {
   row: 'flex-row',
   'row-reverse': 'flex-row-reverse',
-  column: 'flex-col',
-  'column-reverse': 'flex-col-reverse',
+  col: 'flex-col',
+  'col-reverse': 'flex-col-reverse',
 } as const;
 
 const ALIGN_ITEMS = {
@@ -34,6 +34,11 @@ const WRAP = {
 } as const;
 
 type Props = {
+  /**
+   * The HTML element to use as the container.
+   * @default 'div'
+   */
+  as?: React.ElementType;
   /**
    * Defines the direction of the flex container's main axis.
    * @default row
@@ -66,6 +71,7 @@ type Props = {
 } & React.HTMLAttributes<HTMLDivElement>;
 
 export function Flex({
+  as = 'div',
   dir = 'row',
   items = 'stretch',
   justify = 'start',
@@ -74,8 +80,9 @@ export function Flex({
   children,
   ...props
 }: Props) {
+  const Container = as;
   return (
-    <div
+    <Container
       className={cn(
         'flex',
         DIR[dir],
@@ -87,6 +94,6 @@ export function Flex({
       {...props}
     >
       {children}
-    </div>
+    </Container>
   );
 }
