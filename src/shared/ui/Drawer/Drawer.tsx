@@ -26,7 +26,7 @@ export function Drawer({ isOpen, onClose, children }: Props) {
         animate={FADE_IN_ANIMATION.animate}
         exit={FADE_IN_ANIMATION.exit}
       />
-      <div className="fixed right-0 top-0 z-50 h-full">
+      <div className="fixed top-0 right-0 z-50 h-full">
         <motion.div
           className="h-full bg-white shadow-lg"
           initial={SLIDE_IN_ANIMATION.initial}
