@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { ReactNode, useState } from 'react';
 
 import { OptionList } from './OptionList';
 import { SelectContext } from './Select.context';
@@ -10,10 +10,23 @@ type OptionProps = {
 };
 
 type Props = {
-  children: React.ReactNode;
-  defaultValue: string;
-  onChange?: (option: OptionProps) => void;
+  /**
+   * The size of the select component.
+   * @default 'lg'
+   */
   size?: 'md' | 'lg';
+  /**
+   * Callback function called when the selected option changes.
+   */
+  onChange?: (option: OptionProps) => void;
+  /**
+   * The default value of the select component.
+   */
+  defaultValue: string;
+  /**
+   * The content to be displayed inside the select component.
+   */
+  children: ReactNode;
 };
 
 export function SelectMain({ children, defaultValue, onChange, size = 'lg' }: Props) {

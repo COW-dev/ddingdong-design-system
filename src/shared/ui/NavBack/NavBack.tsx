@@ -8,7 +8,6 @@ type Props = {
   title: string;
   /**
    * The size of the navigation back button.
-   * @default 'sm'
    */
   size: 'sm' | 'lg';
   /**
