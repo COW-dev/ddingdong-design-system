@@ -48,17 +48,22 @@ type Props = {
    * Specifies how flex items are aligned along the cross axis.
    * @default start
    */
-  items?: keyof typeof ALIGN_ITEMS;
+  alignItems?: keyof typeof ALIGN_ITEMS;
   /**
    * Defines how flex items are distributed along the main axis.
    * @default center
    */
-  justify?: keyof typeof JUSTIFY_CONTENT;
+  justifyContent?: keyof typeof JUSTIFY_CONTENT;
   /**
    * Controls whether flex items should wrap onto multiple lines.
    * @default nowrap
    */
   wrap?: keyof typeof WRAP;
+  /**
+   * Defines the gap between flex items.
+   * @default '0px'
+   */
+  gap?: string;
   /**
    * Additional CSS classNames to be applied to the container.
    * @default ''
@@ -73,9 +78,10 @@ type Props = {
 export function Flex({
   as = 'div',
   dir = 'row',
-  items = 'stretch',
-  justify = 'start',
+  alignItems = 'stretch',
+  justifyContent = 'start',
   wrap = 'nowrap',
+  gap,
   className = '',
   children,
   ...props
@@ -86,9 +92,10 @@ export function Flex({
       className={cn(
         'flex',
         DIR[dir],
-        ALIGN_ITEMS[items],
-        JUSTIFY_CONTENT[justify],
+        ALIGN_ITEMS[alignItems],
+        JUSTIFY_CONTENT[justifyContent],
         WRAP[wrap],
+        `gap-[${gap}]`,
         className
       )}
       {...props}

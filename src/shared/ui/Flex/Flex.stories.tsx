@@ -22,8 +22,8 @@ type Story = StoryObj<typeof Flex>;
 export const Basic: Story = {
   args: {
     dir: 'row',
-    items: 'stretch',
-    justify: 'normal',
+    alignItems: 'stretch',
+    justifyContent: 'normal',
     wrap: 'nowrap',
   },
   argTypes: {
@@ -31,11 +31,11 @@ export const Basic: Story = {
       control: { type: 'select' },
       options: ['row', 'row-reverse', 'column', 'column-reverse'],
     },
-    items: {
+    alignItems: {
       control: { type: 'select' },
       options: ['start', 'end', 'center', 'baseline', 'stretch'],
     },
-    justify: {
+    justifyContent: {
       control: { type: 'select' },
       options: [
         'start',

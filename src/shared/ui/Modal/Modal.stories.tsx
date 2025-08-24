@@ -44,7 +44,7 @@ export const Basic: StoryObj<typeof Modal> = {
         </Button>
 
         <Modal {...args} isOpen={isOpen} closeModal={closeModal}>
-          <Flex dir="col" justify="center" items="center" className="gap-2 md:gap-4">
+          <Flex dir="col" justifyContent="center" alignItems="center" className="gap-2 md:gap-4">
             <Title3 className="text-2xl font-semibold">ddingdong 모달입니다.</Title3>
             <DoubleButton
               left={

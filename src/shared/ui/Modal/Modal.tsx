@@ -45,7 +45,11 @@ export function Modal({ isOpen, closeModal, children }: Props) {
 
 export function ModalContent({ children }: { children: React.ReactNode }) {
   return (
-    <Flex justify="center" items="center" className="relative z-40 rounded-lg bg-white p-8">
+    <Flex
+      justifyContent="center"
+      alignItems="center"
+      className="relative z-40 rounded-lg bg-white p-8"
+    >
       {children}
     </Flex>
   );

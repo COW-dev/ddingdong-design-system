@@ -15,7 +15,7 @@ export type Props = {
 
 export function DoubleButton({ left, right }: Props) {
   return (
-    <Flex dir="row" justify="between" items="center" className="w-full gap-2 md:gap-4">
+    <Flex dir="row" justifyContent="between" alignItems="center" className="w-full gap-2 md:gap-4">
       <div className="flex-1">{left}</div>
       <div className="flex-1">{right}</div>
     </Flex>
