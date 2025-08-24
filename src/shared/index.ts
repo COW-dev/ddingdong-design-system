@@ -17,7 +17,6 @@ export { Tabs } from './ui/Tabs';
 
 export * from './ui/Typography';
 export * from './ui/assets';
-export * from './constants/motion';
 
 export * from './lib/colors';
 export * from './lib/core';

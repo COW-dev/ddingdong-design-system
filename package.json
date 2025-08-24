@@ -2,7 +2,29 @@
   "name": "ddingdong-design-system",
   "version": "0.1.0",
   "type": "module",
-  "private": true,
+  "keywords": [
+    "react",
+    "ui",
+    "components",
+    "design-system"
+  ],
+  "author": "ddingdong-fe",
+  "license": "MIT",
+  "homepage": "https://github.com/COW-dev/ddingdong2.0#readme",
+  "main": "./dist/ddingdong-design-system.js",
+  "types": "./dist/index.d.ts",
+  "files": [
+    "dist",
+    "README.md"
+  ],
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "import": "./dist/ddingdong-design-system.es.js",
+      "require": "./dist/ddingdong-design-system.umd.js"
+    },
+    "./styles.css": "./dist/ddingdong-design-system.css"
+  },
   "scripts": {
     "lint": "eslint . --ext ts,tsx --report-unused-disable-directives --max-warnings 0",
     "dev": "vite",
@@ -15,9 +37,7 @@
   "dependencies": {
     "class-variance-authority": "^0.7.1",
     "clsx": "^2.1.1",
-    "eslint-plugin-react-hooks": "^5.2.0",
-    "tailwind-merge": "^2.6.0",
-    "vite-plugin-dts": "^4.5.4"
+    "tailwind-merge": "^2.6.0"
   },
   "peerDependencies": {
     "@radix-ui/react-accordion": "^1.0.0",
@@ -59,6 +79,7 @@
     "eslint-plugin-react": "^7.37.3",
     "eslint-plugin-react-refresh": "^0.4.16",
     "eslint-plugin-storybook": "^0.11.2",
+    "eslint-plugin-react-hooks": "^5.2.0",
     "eslint-plugin-vitest-globals": "^1.5.0",
     "framer-motion": "^11.18.2",
     "husky": "^9.1.7",
@@ -72,7 +93,8 @@
     "typescript": "^5",
     "vite": "^6.3.5",
     "vite-plugin-svgr": "^4.3.0",
-    "vite-tsconfig-paths": "^5.1.4"
+    "vite-tsconfig-paths": "^5.1.4",
+    "vite-plugin-dts": "^4.5.4"
   },
   "eslintConfig": {
     "extends": [
