@@ -1,14 +1,19 @@
 import { resolve } from 'path';
-
 import react from '@vitejs/plugin-react-swc';
 import { defineConfig } from 'vite';
 import svgr from 'vite-plugin-svgr';
+import dts from 'vite-plugin-dts';
 
 export default defineConfig({
   plugins: [
     react(),
     svgr({
       include: '**/*.svg',
+    }),
+    dts({
+      insertTypesEntry: true,
+      include: ['src'],
+      exclude: ['**/*.stories.*', '**/*.test.*', 'src/main.tsx'],
     }),
   ],
   resolve: {
