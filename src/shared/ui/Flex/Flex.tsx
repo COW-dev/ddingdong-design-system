@@ -3,8 +3,8 @@ import { cn } from '@/shared/lib/core';
 const DIR = {
   row: 'flex-row',
   'row-reverse': 'flex-row-reverse',
-  column: 'flex-col',
-  'column-reverse': 'flex-col-reverse',
+  col: 'flex-col',
+  'col-reverse': 'flex-col-reverse',
 } as const;
 
 const ALIGN_ITEMS = {
@@ -24,7 +24,6 @@ const JUSTIFY_CONTENT = {
   evenly: 'justify-evenly',
   stretch: 'justify-stretch',
   baseline: 'justify-baseline',
-  normal: 'justify-normal',
 } as const;
 
 const WRAP = {
@@ -35,6 +34,11 @@ const WRAP = {
 
 type Props = {
   /**
+   * The HTML element to use as the container.
+   * @default 'div'
+   */
+  as?: React.ElementType;
+  /**
    * Defines the direction of the flex container's main axis.
    * @default row
    */
@@ -43,17 +47,22 @@ type Props = {
    * Specifies how flex items are aligned along the cross axis.
    * @default start
    */
-  items?: keyof typeof ALIGN_ITEMS;
+  alignItems?: keyof typeof ALIGN_ITEMS;
   /**
    * Defines how flex items are distributed along the main axis.
    * @default center
    */
-  justify?: keyof typeof JUSTIFY_CONTENT;
+  justifyContent?: keyof typeof JUSTIFY_CONTENT;
   /**
    * Controls whether flex items should wrap onto multiple lines.
    * @default nowrap
    */
   wrap?: keyof typeof WRAP;
+  /**
+   * Defines the gap between flex items.
+   * @default '0px'
+   */
+  gap?: string;
   /**
    * Additional CSS classNames to be applied to the container.
    * @default ''
@@ -66,27 +75,31 @@ type Props = {
 } & React.HTMLAttributes<HTMLDivElement>;
 
 export function Flex({
+  as = 'div',
   dir = 'row',
-  items = 'stretch',
-  justify = 'start',
+  alignItems = 'stretch',
+  justifyContent = 'start',
   wrap = 'nowrap',
+  gap,
   className = '',
   children,
   ...props
 }: Props) {
+  const Container = as;
   return (
-    <div
+    <Container
       className={cn(
         'flex',
         DIR[dir],
-        ALIGN_ITEMS[items],
-        JUSTIFY_CONTENT[justify],
+        ALIGN_ITEMS[alignItems],
+        JUSTIFY_CONTENT[justifyContent],
         WRAP[wrap],
+        `gap-[${gap}]`,
         className
       )}
       {...props}
     >
       {children}
-    </div>
+    </Container>
   );
 }

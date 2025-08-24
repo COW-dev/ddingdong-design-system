@@ -1,107 +1,77 @@
 import { Meta, Typeset } from '@storybook/blocks';
-
-<Meta title="foundations/Typography" name="Typography UI Docs" />
-
+ 
+<Meta title="foundations/Typography" />
+ 
+export const typography = {
+  type: {
+    primary: 'Pretendard',
+  },
+  weight: {
+    normal: '400',
+    medium: '500',
+    semibold: '600',
+    bold: '700',
+  },
+  size: {
+    pc: {
+      title1: 36,      
+      title2: 30,      
+      title3: 24,        
+      body1: 20,       
+      body2: 18,       
+      body3: 16,       
+      caption1: 14,    
+    },
+    mobile: {
+      title1: 24,      
+      title2: 20,      
+      title3: 20,          
+      body1: 18,       
+      body2: 16,       
+      body3: 16,       
+      caption1: 14,    
+    },
+  },
+};
+ 
+export const SampleText = '명지대학교의 모든 동아리, 띵동에서 확인해 보세요!';
+ 
 # Typography
-
-## Titles
-
+ 
+**Font:** Pretendard
+ 
+**Weights:** 400(normal), 500(medium), 600(semibold), 700(bold)
+ 
+## PC Typography (Desktop)
 <Typeset
-  fontSizes={['32px', '24px']}
-  fontWeight="700"
-  sampleText="Title1: 명지대학교의 모든 동아리, 띵동에서 확인해 보세요!"
-  fontFamily="Pretendard"
-/>
-<Typeset
-  fontSizes={['28px', '20px']}
-  fontWeight="700"
-  sampleText="Title2: 명지대학교의 모든 동아리, 띵동에서 확인해 보세요!"
-  fontFamily="Pretendard"
-/>
-<Typeset
-  fontSizes={['24px', '20px']}
-  fontWeight="700"
-  sampleText="Title3: 명지대학교의 모든 동아리, 띵동에서 확인해 보세요!"
-  fontFamily="Pretendard"
-/>
+  fontSizes={[
+    Number(typography.size.pc.title1),
+    Number(typography.size.pc.title2),
+    Number(typography.size.pc.title3),
+    Number(typography.size.pc.body1),
+    Number(typography.size.pc.body2),
+    Number(typography.size.pc.body3),
+    Number(typography.size.pc.caption1),
 
----
-
-## Subtitles
-
-<Typeset
-  fontSizes={['22px', '16px']}
-  fontWeight="700"
-  sampleText="Subtitle1: 명지대학교의 모든 동아리, 띵동에서 확인해 보세요!"
-  fontFamily="Pretendard"
+]}
+fontWeight={typography.weight.medium}
+sampleText={`${SampleText}`}
+fontFamily={typography.type.primary}
 />
 
-<Typeset
-  fontSizes={['20px', '18px']}
-  fontWeight="600"
-  sampleText="Subtitle2: 명지대학교의 모든 동아리, 띵동에서 확인해 보세요!"
-  fontFamily="Pretendard"
-/>
-<Typeset
-  fontSizes={['18px']}
-  fontWeight="600"
-  sampleText="Subtitle3: 명지대학교의 모든 동아리, 띵동에서 확인해 보세요!"
-  fontFamily="Pretendard"
-/>
-
----
-
-## Body Text
+## Mobile Typography
 
 <Typeset
-  fontSizes={['18px', '16px']}
-  fontWeight="500"
-  sampleText="Body1: 명지대학교의 모든 동아리, 띵동에서 확인해 보세요!"
-  fontFamily="Pretendard"
-/>
-<Typeset
-  fontSizes={['16px', '14px']}
-  fontWeight="500"
-  sampleText="Body2: 명지대학교의 모든 동아리, 띵동에서 확인해 보세요!"
-  fontFamily="Pretendard"
-/>
-<Typeset
-  fontSizes={['14px']}
-  fontWeight="500"
-  sampleText="Body3: 명지대학교의 모든 동아리, 띵동에서 확인해 보세요!"
-  fontFamily="Pretendard"
-/>
-
----
-
-## Captions
-
-<Typeset
-  fontSizes={['14px']}
-  fontWeight="400"
-  sampleText="Caption1: 명지대학교의 모든 동아리, 띵동에서 확인해 보세요!"
-  fontFamily="Pretendard"
-/>
-<Typeset
-  fontSizes={['12px']}
-  fontWeight="400"
-  sampleText="Caption2: 명지대학교의 모든 동아리, 띵동에서 확인해 보세요!"
-  fontFamily="Pretendard"
-/>
-
----
-
-## Buttons
-
-<Typeset
-  fontSizes={['18px', '14px']}
-  fontWeight="700"
-  sampleText="ButtonTitle1: 명지대학교의 모든 동아리, 띵동에서 확인해 보세요!"
-  fontFamily="Pretendard"
-/>
-<Typeset
-  fontSizes={['14px']}
-  fontWeight="700"
-  sampleText="ButtonTitle2: 명지대학교의 모든 동아리, 띵동에서 확인해 보세요!"
-  fontFamily="Pretendard"
+  fontSizes={[
+    Number(typography.size.mobile.title1),
+    Number(typography.size.mobile.title2),
+    Number(typography.size.mobile.title3),
+    Number(typography.size.mobile.body1),
+    Number(typography.size.mobile.body2),
+    Number(typography.size.mobile.body3),
+    Number(typography.size.mobile.caption1),
+  ]}
+  fontWeight={typography.weight.medium}
+  sampleText={`${SampleText}`}
+  fontFamily={typography.type.primary}
 />

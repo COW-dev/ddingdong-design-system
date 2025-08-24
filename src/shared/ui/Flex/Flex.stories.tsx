@@ -3,7 +3,7 @@ import type { Meta, StoryObj } from '@storybook/react';
 import { Flex } from './Flex';
 
 const meta = {
-  title: 'components/common/Flex',
+  title: 'components/Flex',
   component: Flex,
   tags: ['autodocs'],
   parameters: {
@@ -22,32 +22,22 @@ type Story = StoryObj<typeof Flex>;
 export const Basic: Story = {
   args: {
     dir: 'row',
-    items: 'stretch',
-    justify: 'normal',
+    alignItems: 'stretch',
+    justifyContent: 'start',
     wrap: 'nowrap',
   },
   argTypes: {
     dir: {
       control: { type: 'select' },
-      options: ['row', 'row-reverse', 'column', 'column-reverse'],
+      options: ['row', 'row-reverse', 'col', 'col-reverse'],
     },
-    items: {
+    alignItems: {
       control: { type: 'select' },
       options: ['start', 'end', 'center', 'baseline', 'stretch'],
     },
-    justify: {
+    justifyContent: {
       control: { type: 'select' },
-      options: [
-        'start',
-        'end',
-        'center',
-        'between',
-        'around',
-        'evenly',
-        'stretch',
-        'baseline',
-        'normal',
-      ],
+      options: ['start', 'end', 'center', 'between', 'around', 'evenly', 'stretch', 'baseline'],
     },
     wrap: {
       control: { type: 'select' },
@@ -58,7 +48,7 @@ export const Basic: Story = {
     <Flex {...args} className="w-full">
       <div className="size-10 bg-red-300">1</div>
       <div className="size-10 bg-green-300">2</div>
-      <div className="size-10 bg-primary-300">3</div>
+      <div className="bg-primary-300 size-10">3</div>
     </Flex>
   ),
 };

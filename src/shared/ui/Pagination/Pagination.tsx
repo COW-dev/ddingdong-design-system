@@ -39,7 +39,7 @@ function PaginationItem({ page, isActive, onClick }: PaginationItemProps) {
   return (
     <button
       onClickCapture={onClick}
-      className={`size-9 rounded px-3 py-1 font-semibold ${
+      className={`size-9 cursor-pointer rounded px-3 py-1 font-semibold ${
         isActive ? 'bg-primary-100 text-primary-300 shadow-sm' : 'hover:bg-gray-100'
       }`}
     >

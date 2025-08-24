@@ -3,7 +3,7 @@ import type { Meta, StoryObj } from '@storybook/react';
 import { NavBack } from './NavBack';
 
 const meta: Meta<typeof NavBack> = {
-  title: 'components/common/NavBack',
+  title: 'components/NavBack',
   component: NavBack,
   parameters: {
     nextjs: {
@@ -20,7 +20,7 @@ type Story = StoryObj<typeof NavBack>;
 export const Basic: Story = {
   args: {
     title: 'NavBack 예시입니다',
-    size: 'sm',
+    size: 'lg',
   },
   argTypes: {
     title: { control: { type: 'text' } },
