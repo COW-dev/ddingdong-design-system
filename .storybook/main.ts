@@ -1,4 +1,5 @@
 import type { StorybookConfig } from '@storybook/react-vite';
+import svgr from 'vite-plugin-svgr';
 
 const config: StorybookConfig = {
   stories: ['../src/**/*.mdx', '../src/**/*.stories.@(js|jsx|mjs|ts|tsx)'],
@@ -11,18 +12,14 @@ const config: StorybookConfig = {
   docs: {
     autodocs: 'tag',
   },
-  async viteFinal(config) {
-    const { mergeConfig } = await import('vite');
-    return mergeConfig(config, {
-      css: {
-        postcss: {
-          plugins: [
-            (await import('@tailwindcss/postcss')).default,
-            (await import('autoprefixer')).default(),
-          ],
-        },
-      },
-    });
+  viteFinal: async (config) => {
+    config.plugins = config.plugins ?? [];
+    config.plugins.push(
+      svgr({
+        include: '**/*.svg',
+      })
+    );
+    return config;
   },
 };
 
