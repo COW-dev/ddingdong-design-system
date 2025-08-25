@@ -6,13 +6,18 @@ import { Body3 } from '../Typography';
 
 export type FileUploadProps = {
   /**
+   * The id of the file input.
+   */
+  id?: string;
+  /**
    * The mode of the file upload.
    */
   mode: 'single' | 'multiple';
-} & ComponentProps<'input'>;
+} & Omit<ComponentProps<'input'>, 'id' | 'multiple'>;
 
-export function FileUpload({ mode, ...props }: FileUploadProps) {
-  const inputId = useId();
+export function FileUpload({ id, mode, ...props }: FileUploadProps) {
+  const generatedId = useId();
+  const inputId = id || generatedId;
 
   return (
     <label
