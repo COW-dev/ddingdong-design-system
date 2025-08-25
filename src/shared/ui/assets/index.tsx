@@ -7,6 +7,7 @@ import Check from './check.svg';
 import Close from './close.svg';
 import DownLoad from './download.svg';
 import Etc from './etc.svg';
+import File from './file.svg';
 import Insta from './instagram.svg';
 import List from './list.svg';
 import Loading from './loading.svg';
@@ -27,6 +28,7 @@ export const Icons = {
   close: Close,
   download: DownLoad,
   etc: Etc,
+  file: File,
   list: List,
   navbarArrow: NavbarArrow,
   new: New,
