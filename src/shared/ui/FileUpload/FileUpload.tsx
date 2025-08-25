@@ -27,11 +27,11 @@ export function FileUpload({ mode, ...props }: FileUploadProps) {
         </Body3>
       </Flex>
       <input
-        className="hidden"
         id={inputId}
         name="uploadFile"
         type="file"
         multiple={mode === 'multiple'}
+        className="hidden"
         {...props}
       />
     </label>
