@@ -56,7 +56,7 @@ export function TextArea({
         {...props}
       />
 
-      {showCounter && (
+      {showCounter && props.maxLength && (
         <Caption1 weight="normal" className="text-right text-gray-500">
           {value.length ?? 0}/{props.maxLength}
         </Caption1>
