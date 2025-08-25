@@ -12,10 +12,10 @@ type InputProps = {
 
 export function Input({ value, onClickReset, ...props }: InputProps) {
   return (
-    <Flex gap="8px" alignItems="center" className="relative w-full">
+    <Flex gap={8} alignItems="center" className="relative w-full">
       <input
         value={value}
-        className="focus:bg-primary-50 w-full rounded-xl border border-none bg-gray-50 px-4 py-3 outline-1 outline-gray-200 md:py-3.5"
+        className="focus:bg-primary-50 w-full rounded-xl border-none bg-gray-50 px-4 py-3 outline-1 outline-gray-200 md:py-3.5"
         {...props}
       />
       {value && (
