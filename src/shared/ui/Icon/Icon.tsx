@@ -23,5 +23,5 @@ type Props = {
 export function Icon({ name, color = 'gray', size = 25, ...props }: Props) {
   const SVGIcon = Icons[name];
 
-  return <SVGIcon width={`${size}px`} height={`${size}px`} fill={COLORS[color]} {...props} />;
+  return <SVGIcon width={`${size}px`} height={`${size}px`} color={COLORS[color]} {...props} />;
 }
