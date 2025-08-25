@@ -21,6 +21,16 @@ export const Single: Story = {
     mode: 'single',
     placeholder: '파일을 업로드해주세요',
   },
+  argTypes: {
+    mode: {
+      control: false,
+      options: ['single', 'multiple'],
+      table: {
+        type: { summary: 'single | multiple' },
+        defaultValue: { summary: 'single' },
+      },
+    },
+  },
   render: (args) => {
     const [file, setFile] = useState<File | null>(null);
 
@@ -36,7 +46,7 @@ export const Single: Story = {
 
     return (
       <Flex dir="col" gap={4}>
-        <FileUpload onChange={handleFileUpload} {...args} />
+        <FileUpload {...args} onChange={handleFileUpload} />
         <Flex>
           {file && (
             <Flex alignItems="center" gap={2} className="h-auto w-full">
@@ -71,7 +81,7 @@ export const Multiple: Story = {
 
     return (
       <Flex dir="col" gap={4}>
-        <FileUpload max={5} onChange={handleFileUpload} {...args} />
+        <FileUpload onChange={handleFileUpload} {...args} />
         <Flex dir="col" gap={2}>
           {files.map((file, index) => (
             <Flex
