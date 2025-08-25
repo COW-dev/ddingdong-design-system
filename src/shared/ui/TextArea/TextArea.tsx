@@ -38,7 +38,7 @@ const variantStyle = {
 
 export function TextArea({
   value,
-  variant,
+  variant = 'gray',
   rows = 3,
   showCounter = false,
   className,
