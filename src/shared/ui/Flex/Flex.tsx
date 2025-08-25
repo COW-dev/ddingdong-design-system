@@ -60,9 +60,10 @@ type Props = {
   wrap?: keyof typeof WRAP;
   /**
    * Defines the gap between flex items.
-   * @default '0px'
+   * Can be a number (Tailwind spacing scale) or string (custom CSS value)
+   * @example gap={4} → gap-4
    */
-  gap?: string;
+  gap?: number;
   /**
    * Additional CSS classNames to be applied to the container.
    * @default ''
@@ -80,12 +81,13 @@ export function Flex({
   alignItems = 'stretch',
   justifyContent = 'start',
   wrap = 'nowrap',
-  gap,
+  gap = 0,
   className = '',
   children,
   ...props
 }: Props) {
   const Container = as;
+
   return (
     <Container
       className={cn(
@@ -94,7 +96,7 @@ export function Flex({
         ALIGN_ITEMS[alignItems],
         JUSTIFY_CONTENT[justifyContent],
         WRAP[wrap],
-        `gap-[${gap}]`,
+        `gap-${gap}`,
         className
       )}
       {...props}
