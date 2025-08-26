@@ -24,8 +24,6 @@ export const Default: Story = {
   args: {
     src: 'https://picsum.photos/150/150',
     alt: 'Avatar',
-    width: 150,
-    height: 150,
   },
   argTypes: {
     src: {
@@ -43,34 +41,10 @@ export const Default: Story = {
 export const All: Story = {
   render: () => (
     <Flex dir="row" alignItems="center" justifyContent="start" wrap="nowrap" className="gap-4">
-      <Avatar
-        size="sm"
-        src="https://picsum.photos/50/50"
-        alt="Avatar Small"
-        width={50}
-        height={50}
-      />
-      <Avatar
-        size="md"
-        src="https://picsum.photos/100/100"
-        alt="Avatar Medium"
-        width={100}
-        height={100}
-      />
-      <Avatar
-        size="lg"
-        src="https://picsum.photos/150/150"
-        alt="Avatar Large"
-        width={150}
-        height={150}
-      />
-      <Avatar
-        size="xl"
-        src="https://picsum.photos/150/150"
-        alt="Avatar Large"
-        width={150}
-        height={150}
-      />
+      <Avatar size="sm" src="https://picsum.photos/50/50" alt="Avatar Small" />
+      <Avatar size="md" src="https://picsum.photos/100/100" alt="Avatar Medium" />
+      <Avatar size="lg" src="https://picsum.photos/150/150" alt="Avatar Large" />
+      <Avatar size="xl" src="https://picsum.photos/150/150" alt="Avatar Large" />
     </Flex>
   ),
 };
