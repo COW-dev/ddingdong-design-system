@@ -2,7 +2,7 @@ import { useId } from 'react';
 import { motion } from 'framer-motion';
 
 import { TOOLTIP_MOTION } from '@/shared/constants/motion';
-import { useFloating } from '@/shared/hooks/useFloating';
+import { useTooltip } from '@/shared/hooks/useTooltip';
 import { Colors } from '@/shared/lib/colors';
 import { cn } from '@/shared/lib/core';
 
@@ -37,7 +37,7 @@ export function Tooltip({
   children,
 }: TooltipProps) {
   const tooltipId = useId();
-  const { open, ref, show, hide, position } = useFloating();
+  const { open, ref, show, hide, position } = useTooltip();
   const selectedColor = tooltipColorMap[color];
   const animation = TOOLTIP_MOTION[animationMode];
 

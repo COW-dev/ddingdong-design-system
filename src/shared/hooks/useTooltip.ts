@@ -1,6 +1,6 @@
 import { useEffect, useRef, useState } from 'react';
 
-export const useFloating = () => {
+export const useTooltip = () => {
   const [open, setOpen] = useState(false);
   const [position, setPosition] = useState<{ top: number; left: number } | null>(null);
   const ref = useRef<HTMLDivElement>(null);
