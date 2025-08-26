@@ -27,6 +27,7 @@ export const Basic: Story = {
   args: {
     color: 'gray',
     content: '툴팁입니다!',
+    animationMode: 'SPRING',
   },
   argTypes: {
     color: {
@@ -40,6 +41,58 @@ export const Basic: Story = {
         type: 'text',
       },
     },
+    animationMode: {
+      control: {
+        type: 'select',
+        options: ['SPRING', 'POP', 'SMOOTH'],
+      },
+      description: '툴팁 애니메이션 모드를 선택하세요',
+    },
+  },
+  render: (args) => (
+    <Flex>
+      <Tooltip {...args}>
+        <Icon name="youtube" size={25} />
+      </Tooltip>
+    </Flex>
+  ),
+};
+
+export const SpringAnimation: Story = {
+  args: {
+    color: 'primary',
+    content: '스프링!',
+    animationMode: 'SPRING',
+  },
+  render: (args) => (
+    <Flex>
+      <Tooltip {...args}>
+        <Icon name="youtube" size={25} />
+      </Tooltip>
+    </Flex>
+  ),
+};
+
+export const PopAnimation: Story = {
+  args: {
+    color: 'green',
+    content: '뿅!',
+    animationMode: 'POP',
+  },
+  render: (args) => (
+    <Flex>
+      <Tooltip {...args}>
+        <Icon name="youtube" size={25} />
+      </Tooltip>
+    </Flex>
+  ),
+};
+
+export const SmoothAnimation: Story = {
+  args: {
+    color: 'purple',
+    content: '부드러운 애니메이션',
+    animationMode: 'SMOOTH',
   },
   render: (args) => (
     <Flex>
