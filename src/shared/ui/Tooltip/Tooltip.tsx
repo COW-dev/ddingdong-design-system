@@ -1,3 +1,4 @@
+import { useId } from 'react';
 import { motion } from 'framer-motion';
 
 import { TOOLTIP_MOTION } from '@/shared/constants/motion';
@@ -35,15 +36,28 @@ export function Tooltip({
   animationMode = 'SPRING',
   children,
 }: TooltipProps) {
+  const tooltipId = useId();
   const { open, ref, show, hide, position } = useFloating();
   const selectedColor = tooltipColorMap[color];
   const animation = TOOLTIP_MOTION[animationMode];
 
   return (
-    <div ref={ref} className="inline-flex" onMouseEnter={show} onMouseLeave={hide}>
+    <div
+      ref={ref}
+      className="inline-flex"
+      onMouseEnter={show}
+      onMouseLeave={hide}
+      onFocus={show}
+      onBlur={hide}
+      onClick={() => (open ? hide() : show())}
+      aria-describedby={open ? tooltipId : undefined}
+    >
       {children}
       <Portal isOpen={open}>
         <motion.div
+          id={tooltipId}
+          role="tooltip"
+          aria-live="polite"
           initial={animation.initial}
           animate={animation.animate}
           exit={animation.exit}
