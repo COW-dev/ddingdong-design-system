@@ -17,27 +17,21 @@ type AvatarProps = {
    */
   alt: string;
   /**
-   * Width of the avatar image.
-   */
-  width: number;
-  /**
-   * Height of the avatar image.
-   */
-  height: number;
-  /**
    * CSS class name for the avatar container.
    */
   className?: string;
-} & Omit<ComponentProps<'img'>, 'src' | 'alt' | 'width' | 'height'>;
+} & Omit<ComponentProps<'img'>, 'src' | 'alt'>;
 
 const avatarSizeMap = {
-  sm: 'size-14',
-  md: 'size-16',
-  lg: 'md:size-18 size-14',
-  xl: 'md:size-20 size-14',
+  sm: { class: 'size-14', width: 56, height: 56 },
+  md: { class: 'size-16', width: 64, height: 64 },
+  lg: { class: 'size-18', width: 72, height: 72 },
+  xl: { class: 'size-20', width: 80, height: 80 },
 } as const;
 
-export function Avatar({ size = 'lg', src, alt, width, height, className, ...props }: AvatarProps) {
+export function Avatar({ size = 'lg', src, alt, className, ...props }: AvatarProps) {
+  const { class: sizeClass, width, height } = avatarSizeMap[size];
+
   return (
     <img
       src={src}
@@ -45,11 +39,7 @@ export function Avatar({ size = 'lg', src, alt, width, height, className, ...pro
       width={width}
       height={height}
       loading="lazy"
-      className={cn(
-        'rounded-full border border-gray-200 object-cover',
-        avatarSizeMap[size],
-        className
-      )}
+      className={cn('rounded-full border border-gray-200 object-cover', sizeClass, className)}
       {...props}
     />
   );
