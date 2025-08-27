@@ -3,7 +3,6 @@ import { motion } from 'framer-motion';
 
 import { TOOLTIP_MOTION } from '@/shared/constants/motion';
 import { useTooltip } from '@/shared/hooks/useTooltip';
-import { Colors } from '@/shared/lib/colors';
 import { cn } from '@/shared/lib/core';
 
 import { tooltipColorMap } from './tooltipColorMap';
@@ -19,7 +18,7 @@ type TooltipProps = {
   /**
    * The color of the tooltip
    */
-  color: Colors;
+  color: keyof typeof tooltipColorMap;
   /**
    * The animation mode for the tooltip
    */
@@ -62,7 +61,7 @@ export function Tooltip({
           animate={animation.animate}
           exit={animation.exit}
           className={cn(
-            'fixed mb-2 -translate-x-1/2 -translate-y-full rounded px-2 py-1 whitespace-nowrap shadow-lg',
+            'fixed -translate-x-1/2 -translate-y-full rounded px-2 py-1 whitespace-nowrap shadow-lg',
             selectedColor.bg
           )}
           style={{
