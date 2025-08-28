@@ -1,6 +1,6 @@
 import type { Meta, StoryObj } from '@storybook/react';
 
-import { Carousel, CarouselContent, CarouselItem, CarouselPrevious, CarouselNext } from '.';
+import { Carousel, CarouselContent, CarouselItem } from '.';
 
 const meta = {
   title: 'components/Carousel',
@@ -32,8 +32,6 @@ export const Default: Story = {
           <div className="h-48 w-full bg-green-500" />
         </CarouselItem>
       </CarouselContent>
-      <CarouselPrevious />
-      <CarouselNext />
     </Carousel>
   ),
 };
@@ -46,8 +44,6 @@ export const Single: Story = {
           <div className="h-48 w-full bg-red-500" />
         </CarouselItem>
       </CarouselContent>
-      <CarouselPrevious />
-      <CarouselNext />
     </Carousel>
   ),
 };
