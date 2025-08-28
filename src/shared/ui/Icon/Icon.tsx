@@ -18,10 +18,12 @@ type Props = {
    * @default 25
    */
   size?: number;
-} & React.SVGProps<SVGSVGElement>;
+} & Omit<React.SVGProps<SVGSVGElement>, 'color'>;
 
 export function Icon({ name, color = 'gray', size = 25, ...props }: Props) {
   const SVGIcon = Icons[name];
 
-  return <SVGIcon width={`${size}px`} height={`${size}px`} color={COLORS[color]} {...props} />;
+  return (
+    <SVGIcon width={`${size}px`} height={`${size}px`} style={{ color: COLORS[color] }} {...props} />
+  );
 }
