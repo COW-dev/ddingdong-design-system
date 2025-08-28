@@ -56,7 +56,7 @@ export function CarouselContent({ children, className = '' }: Omit<CarouselProps
 }
 
 export function CarouselItem({ children, className = '' }: Omit<CarouselProps, 'itemsPerView'>) {
-  return <div className={cn('flex-shrink-0', className)}>{children}</div>;
+  return <div className={cn('w-full flex-shrink-0', className)}>{children}</div>;
 }
 
 export function CarouselPrevious() {
