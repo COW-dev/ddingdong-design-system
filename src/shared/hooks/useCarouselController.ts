@@ -5,7 +5,7 @@ export const useCarouselController = (itemsPerView: number = 1) => {
   const [totalItems, setTotalItems] = useState(0);
   const [isPaused, setIsPaused] = useState(false);
   const scrollContainerRef = useRef<HTMLDivElement>(null);
-  const intervalRef = useRef<NodeJS.Timeout | null>(null);
+  const intervalRef = useRef<ReturnType<typeof setInterval> | null>(null);
 
   useEffect(() => {
     if (scrollContainerRef.current) {
