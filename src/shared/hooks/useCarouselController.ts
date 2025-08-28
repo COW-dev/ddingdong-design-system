@@ -52,7 +52,7 @@ export const useCarouselController = (itemsPerView: number = 1) => {
   }, [currentIndex, goToIndex]);
 
   useEffect(() => {
-    if (totalItems === 0) return;
+    if (totalItems === 0 || isPaused) return;
 
     intervalRef.current = setInterval(autoGoToNext, 3000);
 
@@ -61,7 +61,7 @@ export const useCarouselController = (itemsPerView: number = 1) => {
         clearInterval(intervalRef.current);
       }
     };
-  }, [autoGoToNext, totalItems]);
+  }, [autoGoToNext, totalItems, isPaused]);
 
   const handleMouseEnter = () => setIsPaused(true);
   const handleMouseLeave = () => setIsPaused(false);
