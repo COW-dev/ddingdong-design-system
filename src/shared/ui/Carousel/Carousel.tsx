@@ -9,10 +9,6 @@ import { Icon } from '../Icon';
 
 type CarouselProps = {
   /**
-   * Number of items to show in the carousel at once
-   */
-  itemsPerView?: number;
-  /**
    * Additional CSS classes to apply to the carousel container
    */
   className?: string;
@@ -22,8 +18,8 @@ type CarouselProps = {
   children: ReactNode;
 };
 
-export function Carousel({ itemsPerView = 1, className = '', children }: CarouselProps) {
-  const carouselData = useCarouselController(itemsPerView);
+export function Carousel({ className = '', children }: CarouselProps) {
+  const carouselData = useCarouselController();
 
   return (
     <CarouselContext.Provider value={carouselData}>
@@ -56,7 +52,7 @@ export function CarouselContent({ children, className = '' }: Omit<CarouselProps
 }
 
 export function CarouselItem({ children, className = '' }: Omit<CarouselProps, 'itemsPerView'>) {
-  return <div className={cn('w-full flex-shrink-0', className)}>{children}</div>;
+  return <div className={cn('w-full min-w-full flex-shrink-0', className)}>{children}</div>;
 }
 
 export function CarouselPrevious() {

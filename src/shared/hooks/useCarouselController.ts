@@ -1,6 +1,6 @@
 import { useCallback, useEffect, useRef, useState } from 'react';
 
-export const useCarouselController = (itemsPerView: number = 1) => {
+export const useCarouselController = () => {
   const [currentIndex, setCurrentIndex] = useState(0);
   const [totalItems, setTotalItems] = useState(0);
   const [isPaused, setIsPaused] = useState(false);
@@ -15,36 +15,33 @@ export const useCarouselController = (itemsPerView: number = 1) => {
     }
   }, []);
 
-  const goToIndex = useCallback(
-    (index: number) => {
-      if (!scrollContainerRef.current) return;
+  const goToIndex = useCallback((index: number) => {
+    if (!scrollContainerRef.current) return;
 
-      const container = scrollContainerRef.current;
-      const itemWidth = container.clientWidth / itemsPerView;
-      const targetScrollLeft = index * itemWidth;
+    const container = scrollContainerRef.current;
+    const itemWidth = container.clientWidth;
 
-      container.scrollTo({
-        left: targetScrollLeft,
-        behavior: 'smooth',
-      });
+    container.scrollTo({
+      left: itemWidth * index,
+      behavior: 'smooth',
+    });
 
-      setCurrentIndex(index);
-    },
-    [itemsPerView]
-  );
+    setCurrentIndex(index);
+  }, []);
 
   const autoGoToNext = useCallback(() => {
     if (isPaused || totalItems === 0) return;
 
-    const nextIndex = currentIndex >= totalItems - itemsPerView ? 0 : currentIndex + 1;
+    const nextIndex = currentIndex >= totalItems - 1 ? 0 : currentIndex + 1;
     goToIndex(nextIndex);
-  }, [goToIndex, isPaused, currentIndex, totalItems, itemsPerView]);
+  }, [goToIndex, isPaused, currentIndex, totalItems]);
 
   const goToNext = useCallback(() => {
-    const maxIndex = Math.max(0, totalItems - itemsPerView);
+    const maxIndex = totalItems - 1;
     const nextIndex = Math.min(currentIndex + 1, maxIndex);
+
     goToIndex(nextIndex);
-  }, [currentIndex, totalItems, itemsPerView, goToIndex]);
+  }, [currentIndex, totalItems, goToIndex]);
 
   const goToPrevious = useCallback(() => {
     const prevIndex = Math.max(0, currentIndex - 1);
@@ -66,7 +63,7 @@ export const useCarouselController = (itemsPerView: number = 1) => {
   const handleMouseEnter = () => setIsPaused(true);
   const handleMouseLeave = () => setIsPaused(false);
 
-  const canGoNext = currentIndex < totalItems - itemsPerView;
+  const canGoNext = currentIndex < totalItems - 1;
   const canGoPrevious = currentIndex > 0;
 
   return {
