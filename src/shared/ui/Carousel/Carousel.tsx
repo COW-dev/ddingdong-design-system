@@ -64,7 +64,7 @@ export function CarouselPrevious() {
     <button
       onClick={goToPrevious}
       disabled={!canGoPrevious}
-      className="absolute top-1/2 left-6 z-10 flex size-10 -translate-y-1/2 items-center justify-center rounded-full bg-white shadow-lg transition-all hover:bg-gray-50 disabled:cursor-not-allowed disabled:opacity-50"
+      className="absolute top-1/2 left-6 z-10 flex size-10 -translate-y-1/2 cursor-pointer items-center justify-center rounded-full bg-white shadow-lg transition-all hover:bg-gray-50 disabled:cursor-not-allowed disabled:opacity-50"
       aria-label="이전"
     >
       <Icon name="arrowLeft" className="pr-0.5" />
@@ -83,7 +83,7 @@ export function CarouselNext() {
     <button
       onClick={goToNext}
       disabled={!canGoNext}
-      className="absolute top-1/2 right-6 z-10 flex size-10 -translate-y-1/2 items-center justify-center rounded-full bg-white shadow-lg transition-all hover:bg-gray-50 disabled:cursor-not-allowed disabled:opacity-50"
+      className="absolute top-1/2 right-6 z-10 flex size-10 -translate-y-1/2 cursor-pointer items-center justify-center rounded-full bg-white shadow-lg transition-all hover:bg-gray-50 disabled:cursor-not-allowed disabled:opacity-50"
       aria-label="다음"
     >
       <Icon name="arrowRight" className="pl-0.5" />
