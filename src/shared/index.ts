@@ -2,6 +2,7 @@ export { Accordion } from './ui/Accordion';
 export { Avatar } from './ui/Avatar/Avatar';
 export { Badge } from './ui/Badge';
 export { Button } from './ui/Button';
+export { Carousel } from './ui/Carousel';
 export { Card } from './ui/Card';
 export { DoubleButton } from './ui/DoubleButton';
 export { Drawer } from './ui/Drawer';
