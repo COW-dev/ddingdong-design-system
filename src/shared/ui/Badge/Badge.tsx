@@ -24,7 +24,10 @@ export function Badge({ variant = 'neutral', text, ...props }: Props) {
 
   return (
     <div
-      className={cn('w-min rounded-xl px-2 py-1 font-semibold whitespace-nowrap', badgeStyle)}
+      className={cn(
+        'w-min rounded-lg px-2 py-1 text-sm font-semibold whitespace-nowrap',
+        badgeStyle
+      )}
       {...props}
     >
       {text}

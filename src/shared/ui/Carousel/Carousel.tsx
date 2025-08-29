@@ -44,7 +44,10 @@ export function CarouselContent({ children, className = '' }: Omit<CarouselProps
   return (
     <div
       ref={scrollContainerRef}
-      className={cn('scroll no-scrollbar flex overflow-x-auto scroll-smooth', className)}
+      className={cn(
+        'scroll no-scrollbar flex overflow-x-auto overflow-y-hidden scroll-smooth',
+        className
+      )}
     >
       {children}
     </div>
