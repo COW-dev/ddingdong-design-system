@@ -31,11 +31,20 @@ type Props = {
 } & VariantProps<typeof optionVariants>;
 
 export function Option({ name, size, className }: Props) {
-  const { onSelect, size: contextSize } = useSelectContext();
+  const { onSelect, size: contextSize, selected } = useSelectContext();
 
   return (
     <div
+      role="option"
+      tabIndex={0}
+      aria-selected={selected === name}
       onClick={() => onSelect(name)}
+      onKeyDown={(e) => {
+        if (e.key === 'Enter' || e.key === ' ') {
+          e.preventDefault();
+          onSelect(name);
+        }
+      }}
       className={cn(optionVariants({ size: size || contextSize }), className)}
     >
       {name}
