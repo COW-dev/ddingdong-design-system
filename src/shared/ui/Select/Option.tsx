@@ -20,20 +20,23 @@ const optionVariants = cva(
 );
 
 type Props = {
-  id: string;
+  /**
+   * The display name for the option.
+   */
   name: string;
+  /**
+   * Additional classes to apply to the option.
+   */
+  className?: string;
 } & VariantProps<typeof optionVariants>;
 
-export function Option({ id, name, size }: Props) {
-  const { onSelect, size: contextSize } = useSelectContext() as {
-    onSelect: (arg: { id: string; name: string }) => void;
-    size: 'md' | 'lg';
-  };
+export function Option({ name, size, className }: Props) {
+  const { onSelect, size: contextSize } = useSelectContext();
 
   return (
     <div
-      onClick={() => onSelect({ id, name })}
-      className={cn(optionVariants({ size: size || contextSize }))}
+      onClick={() => onSelect(name)}
+      className={cn(optionVariants({ size: size || contextSize }), className)}
     >
       {name}
     </div>
