@@ -14,6 +14,7 @@ import Loading from './loading.svg';
 import NavbarArrow from './navbar-arrow.svg';
 import New from './new.svg';
 import Pin from './pin.svg';
+import Search from './search.svg';
 import Trash from './trash.svg';
 import Write from './write.svg';
 import Youtube from './youtube.svg';
@@ -33,6 +34,7 @@ export const Icons = {
   navbarArrow: NavbarArrow,
   new: New,
   pin: Pin,
+  search: Search,
   trash: Trash,
   write: Write,
   loading: Loading,
