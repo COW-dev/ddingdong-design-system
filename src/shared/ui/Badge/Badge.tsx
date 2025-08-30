@@ -14,7 +14,7 @@ type Props = {
 } & React.HTMLAttributes<HTMLDivElement>;
 
 const variantStyles = {
-  positive: 'bg-green-100 text-green-300',
+  positive: 'bg-green-50 text-green-200',
   negative: 'bg-red-100 text-red-300',
   neutral: 'bg-gray-100 text-gray-400',
 };
