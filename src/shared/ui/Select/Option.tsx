@@ -20,20 +20,32 @@ const optionVariants = cva(
 );
 
 type Props = {
-  id: string;
+  /**
+   * The display name for the option.
+   */
   name: string;
+  /**
+   * Additional classes to apply to the option.
+   */
+  className?: string;
 } & VariantProps<typeof optionVariants>;
 
-export function Option({ id, name, size }: Props) {
-  const { onSelect, size: contextSize } = useSelectContext() as {
-    onSelect: (arg: { id: string; name: string }) => void;
-    size: 'md' | 'lg';
-  };
+export function Option({ name, size, className }: Props) {
+  const { onSelect, size: contextSize, selected } = useSelectContext();
 
   return (
     <div
-      onClick={() => onSelect({ id, name })}
-      className={cn(optionVariants({ size: size || contextSize }))}
+      role="option"
+      tabIndex={0}
+      aria-selected={selected === name}
+      onClick={() => onSelect(name)}
+      onKeyDown={(e) => {
+        if (e.key === 'Enter' || e.key === ' ') {
+          e.preventDefault();
+          onSelect(name);
+        }
+      }}
+      className={cn(optionVariants({ size: size || contextSize }), className)}
     >
       {name}
     </div>

@@ -1,13 +1,8 @@
-import { ReactNode, useState } from 'react';
+import { ComponentProps, ReactNode, useState } from 'react';
 
 import { OptionList } from './OptionList';
 import { SelectContext } from './Select.context';
 import { SelectButton } from './SelectButton';
-
-type OptionProps = {
-  id: string;
-  name: string;
-};
 
 type Props = {
   /**
@@ -16,9 +11,13 @@ type Props = {
    */
   size?: 'md' | 'lg';
   /**
+   * The currently selected option.
+   */
+  value: string;
+  /**
    * Callback function called when the selected option changes.
    */
-  onChange?: (option: OptionProps) => void;
+  onChange?: (option: string) => void;
   /**
    * The default value of the select component.
    */
@@ -27,26 +26,27 @@ type Props = {
    * The content to be displayed inside the select component.
    */
   children: ReactNode;
-};
+} & Omit<ComponentProps<'select'>, 'value' | 'onChange' | 'size'>;
 
-export function SelectMain({ children, defaultValue, onChange, size = 'lg' }: Props) {
-  const [selected, setSelected] = useState<OptionProps>({
-    id: '',
-    name: defaultValue,
-  });
+export function SelectMain({ value, onChange, size = 'lg', children }: Props) {
   const [isOpen, setIsOpen] = useState(false);
 
-  const handleSelect = (option: OptionProps) => {
-    setSelected(option);
+  const handleSelect = (option: string) => {
     setIsOpen(false);
     onChange?.(option);
   };
 
   return (
-    <SelectContext.Provider value={{ selected, onSelect: handleSelect, size }}>
+    <SelectContext.Provider
+      value={{
+        selected: value,
+        onSelect: handleSelect,
+        size: size,
+      }}
+    >
       <div className="relative w-fit">
         <SelectButton
-          selected={selected.name}
+          selected={value}
           onClick={() => setIsOpen(!isOpen)}
           size={size}
           isOpen={isOpen}
