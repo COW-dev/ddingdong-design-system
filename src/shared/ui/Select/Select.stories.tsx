@@ -1,4 +1,4 @@
-import { Fragment } from 'react';
+import { Fragment, useState } from 'react';
 import type { Meta, StoryObj } from '@storybook/react';
 
 import { GroupingSelect, Select } from './index';
@@ -21,7 +21,6 @@ const meta = {
 } satisfies Meta<typeof Select>;
 
 export default meta;
-
 type Story = StoryObj<typeof Select>;
 
 const defaultContents = ['객관식', '단답형', '체크박스', '드롭다운', '파일'];
@@ -35,20 +34,27 @@ export const Basic: Story = {
     },
   },
   args: {
+    value: '유형을 선택해주세요',
     size: 'md',
     defaultValue: '유형을 선택해주세요',
   },
-  render: (args) => (
-    <Select {...args}>
-      {defaultContents.map((item, index) => (
-        <Select.Option key={index} id={String(index + 1)} name={item} />
-      ))}
-    </Select>
-  ),
+  render: (args) => {
+    const [value, setValue] = useState(args.defaultValue);
+    return (
+      <div className="h-50">
+        <Select {...args} value={value} onChange={setValue}>
+          {defaultContents.map((item, index) => (
+            <Select.Option key={index} name={item} />
+          ))}
+        </Select>
+      </div>
+    );
+  },
 };
 
 export const LargeSize: Story = {
   args: {
+    value: '유형을 선택해주세요',
     size: 'lg',
     defaultValue: '유형을 선택해주세요',
   },
@@ -59,13 +65,18 @@ export const LargeSize: Story = {
       },
     },
   },
-  render: (args) => (
-    <Select {...args}>
-      {defaultContents.map((item, index) => (
-        <Select.Option key={index} id={index.toString()} name={item} />
-      ))}
-    </Select>
-  ),
+  render: (args) => {
+    const [value, setValue] = useState(args.defaultValue);
+    return (
+      <div className="h-62">
+        <Select {...args} value={value} onChange={setValue}>
+          {defaultContents.map((item, index) => (
+            <Select.Option key={index} name={item} />
+          ))}
+        </Select>
+      </div>
+    );
+  },
 };
 
 const groupingContents = {
@@ -114,16 +125,22 @@ export const Grouping: StoryObj<typeof GroupingSelect> = {
       },
     },
   },
-  render: (args) => (
-    <GroupingSelect {...args}>
-      {Object.entries(groupingContents).map(([group, departments]) => (
-        <Fragment key={group}>
-          <GroupingSelect.Group name={group} />
-          {departments.map((dept, idx) => (
-            <GroupingSelect.Option key={`${group}-${idx}`} id={`${group}-${idx}`} name={dept} />
+  render: (args) => {
+    const [value, setValue] = useState(args.defaultValue);
+
+    return (
+      <div className="h-62">
+        <GroupingSelect {...args} value={value} onChange={setValue}>
+          {Object.entries(groupingContents).map(([group, departments]) => (
+            <Fragment key={group}>
+              <GroupingSelect.Group name={group} />
+              {departments.map((dept, idx) => (
+                <GroupingSelect.Option key={`${group}-${idx}`} name={dept} />
+              ))}
+            </Fragment>
           ))}
-        </Fragment>
-      ))}
-    </GroupingSelect>
-  ),
+        </GroupingSelect>
+      </div>
+    );
+  },
 };
