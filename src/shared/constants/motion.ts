@@ -80,7 +80,7 @@ export const ACCORDION_MOTION = {
   animate: { height: 'auto', opacity: 1 },
   exit: { height: 0, opacity: 0 },
   transition: {
-    height: { duration: 0.3, ease: 'easeInOut' },
-    opacity: { duration: 0.2 },
+    height: { duration: 0.2, ease: 'easeOut' },
+    opacity: { duration: 0.1 },
   },
 };

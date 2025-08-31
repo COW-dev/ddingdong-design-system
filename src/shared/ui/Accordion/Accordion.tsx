@@ -114,6 +114,7 @@ export function AccordionItem({
             animate={ACCORDION_MOTION.animate}
             exit={ACCORDION_MOTION.exit}
             transition={ACCORDION_MOTION.transition}
+            className="overflow-hidden"
           >
             <div className={cn('bg-gray-50 px-6 py-4', contentClassName)}>{children}</div>
           </motion.div>
