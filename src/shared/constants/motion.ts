@@ -74,3 +74,13 @@ export const TOOLTIP_MOTION = {
     },
   },
 };
+
+export const ACCORDION_MOTION = {
+  initial: { height: 0, opacity: 0 },
+  animate: { height: 'auto', opacity: 1 },
+  exit: { height: 0, opacity: 0 },
+  transition: {
+    height: { duration: 0.3, ease: 'easeInOut' },
+    opacity: { duration: 0.2 },
+  },
+};
