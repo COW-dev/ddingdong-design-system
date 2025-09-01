@@ -39,6 +39,7 @@ export function Modal({ isOpen, closeModal, children }: Props) {
         initial={MODAL_MOTION.initial}
         animate={MODAL_MOTION.animate}
         exit={MODAL_MOTION.exit}
+        transition={MODAL_MOTION.transition}
         className="fixed inset-0 z-30 flex w-full items-center justify-center"
       >
         <div className="absolute inset-0 bg-black/50" onClick={handleOutsideClick} />

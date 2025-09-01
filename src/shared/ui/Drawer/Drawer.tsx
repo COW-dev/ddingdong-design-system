@@ -21,10 +21,10 @@ const FADE_IN_ANIMATION = {
 } as const;
 
 const SLIDE_IN_ANIMATION = {
-  initial: { translateX: '100%' },
-  animate: { translateX: 0 },
-  exit: { translateX: '100%' },
-  transition: { type: 'tween', damping: 50 },
+  initial: { x: '100%' },
+  animate: { x: 0 },
+  exit: { x: '100%' },
+  transition: { type: 'spring', damping: 30, stiffness: 260 },
 } as const;
 
 export function Drawer({ isOpen, onClose, children }: Props) {

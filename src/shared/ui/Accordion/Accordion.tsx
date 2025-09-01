@@ -133,10 +133,9 @@ export function AccordionItem({
 
       <AnimatePresence initial={false}>
         {isOpen && (
-          <motion.div
+          <motion.section
             id={contentId}
             aria-labelledby={triggerId}
-            role="region"
             initial={prefersReducedMotion ? undefined : ACCORDION_MOTION.initial}
             animate={prefersReducedMotion ? undefined : ACCORDION_MOTION.animate}
             exit={prefersReducedMotion ? undefined : ACCORDION_MOTION.exit}
@@ -144,7 +143,7 @@ export function AccordionItem({
             className="overflow-hidden"
           >
             <div className={cn('bg-gray-50 px-6 py-4', contentClassName)}>{children}</div>
-          </motion.div>
+          </motion.section>
         )}
       </AnimatePresence>
     </div>
