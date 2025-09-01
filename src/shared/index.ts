@@ -1,4 +1,4 @@
-export { Accordion } from './ui/Accordion';
+export { Accordion, Item } from './ui/Accordion';
 export { Avatar } from './ui/Avatar/Avatar';
 export { Badge } from './ui/Badge';
 export { Button } from './ui/Button';

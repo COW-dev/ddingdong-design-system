@@ -3,7 +3,7 @@ import { AnimatePresence, motion, useReducedMotion } from 'framer-motion';
 
 import { cn } from '@/shared/lib/core';
 
-import { AccordionContext, useAccordion } from './useAccordion';
+import { AccordionContext, useAccordion } from './Accordion.context';
 
 import { Icon } from '../Icon';
 
