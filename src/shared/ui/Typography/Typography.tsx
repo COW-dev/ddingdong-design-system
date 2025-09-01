@@ -30,7 +30,7 @@ const variantClasses = cva('whitespace-pre-wrap', {
   },
 });
 
-type AllowedTag = 'p' | 'div' | 'label' | 'span';
+type AllowedTag = 'h1' | 'h2' | 'h3' | 'p' | 'div' | 'label' | 'span';
 
 type TypographyProps<T extends AllowedTag> = {
   /**
