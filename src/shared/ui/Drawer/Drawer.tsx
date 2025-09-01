@@ -1,8 +1,6 @@
 import { PropsWithChildren } from 'react';
 import { motion } from 'framer-motion';
 
-import { FADE_IN_ANIMATION, SLIDE_IN_ANIMATION } from '@/shared/constants/motion';
-
 import { Portal } from '../Portal';
 
 export type Props = {
@@ -15,6 +13,19 @@ export type Props = {
    */
   onClose: () => void;
 } & PropsWithChildren;
+
+const FADE_IN_ANIMATION = {
+  initial: { opacity: 0 },
+  animate: { opacity: 1 },
+  exit: { opacity: 0 },
+} as const;
+
+const SLIDE_IN_ANIMATION = {
+  initial: { translateX: '100%' },
+  animate: { translateX: 0 },
+  exit: { translateX: '100%' },
+  transition: { type: 'tween', damping: 50 },
+} as const;
 
 export function Drawer({ isOpen, onClose, children }: Props) {
   return (

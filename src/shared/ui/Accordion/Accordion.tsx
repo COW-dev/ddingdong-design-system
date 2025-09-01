@@ -1,7 +1,6 @@
-import { ReactNode, useState } from 'react';
-import { AnimatePresence, motion } from 'framer-motion';
+import { ReactNode, useId, useState } from 'react';
+import { AnimatePresence, motion, useReducedMotion } from 'framer-motion';
 
-import { ACCORDION_MOTION } from '@/shared/constants/motion';
 import { cn } from '@/shared/lib/core';
 
 import { AccordionContext, useAccordion } from './useAccordion';
@@ -17,14 +16,19 @@ type AccordionRootProps = {
   /**
    * The content of the Accordion, typically AccordionItem components.
    */
-  children: React.ReactNode;
+  children: ReactNode;
   /**
    * Additional class names to apply to the AccordionRoot.
    */
   className?: string;
 };
 
-export function AccordionRoot({ type = 'single', className = '', children }: AccordionRootProps) {
+export function AccordionRoot({
+  type = 'single',
+  className = '',
+  children,
+  ...props
+}: AccordionRootProps) {
   const [openItems, setOpenItems] = useState<string[]>([]);
 
   const toggleItem = (value: string) => {
@@ -39,7 +43,9 @@ export function AccordionRoot({ type = 'single', className = '', children }: Acc
 
   return (
     <AccordionContext.Provider value={{ openItems, toggleItem, type }}>
-      <div className={cn(`w-full`, className)}>{children}</div>
+      <div className={cn(`w-full`, className)} {...props}>
+        {children}
+      </div>
     </AccordionContext.Provider>
   );
 }
@@ -72,6 +78,16 @@ type AccordionItemProps = {
   contentClassName?: string;
 };
 
+const ACCORDION_MOTION = {
+  initial: { height: 0, opacity: 0 },
+  animate: { height: 'auto', opacity: 1 },
+  exit: { height: 0, opacity: 0 },
+  transition: {
+    height: { duration: 0.2, ease: 'easeOut' },
+    opacity: { duration: 0.1 },
+  },
+};
+
 export function AccordionItem({
   trigger,
   isArrow = true,
@@ -82,13 +98,21 @@ export function AccordionItem({
   ...props
 }: AccordionItemProps) {
   const context = useAccordion();
+  const uid = useId();
+  const triggerId = `accordion-trigger-${uid}`;
+  const contentId = `accordion-content-${uid}`;
+  const prefersReducedMotion = useReducedMotion();
 
   const { openItems, toggleItem } = context;
   const isOpen = openItems.includes(value);
 
   return (
-    <div className="border-b border-gray-200" {...props}>
+    <div className="border-b border-gray-200" data-state={isOpen ? 'open' : 'closed'} {...props}>
       <button
+        id={triggerId}
+        aria-controls={contentId}
+        aria-expanded={isOpen}
+        type="button"
         onClick={() => toggleItem(value)}
         className={cn(
           'flex w-full cursor-pointer items-center justify-between px-6 py-4 text-left hover:bg-gray-50',
@@ -110,10 +134,13 @@ export function AccordionItem({
       <AnimatePresence initial={false}>
         {isOpen && (
           <motion.div
-            initial={ACCORDION_MOTION.initial}
-            animate={ACCORDION_MOTION.animate}
-            exit={ACCORDION_MOTION.exit}
-            transition={ACCORDION_MOTION.transition}
+            id={contentId}
+            aria-labelledby={triggerId}
+            role="region"
+            initial={prefersReducedMotion ? undefined : ACCORDION_MOTION.initial}
+            animate={prefersReducedMotion ? undefined : ACCORDION_MOTION.animate}
+            exit={prefersReducedMotion ? undefined : ACCORDION_MOTION.exit}
+            transition={prefersReducedMotion ? undefined : ACCORDION_MOTION.transition}
             className="overflow-hidden"
           >
             <div className={cn('bg-gray-50 px-6 py-4', contentClassName)}>{children}</div>

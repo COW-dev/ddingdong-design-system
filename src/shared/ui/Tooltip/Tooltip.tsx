@@ -1,11 +1,11 @@
 import { useId } from 'react';
 import { motion } from 'framer-motion';
 
-import { TOOLTIP_MOTION } from '@/shared/constants/motion';
-import { useTooltip } from '@/shared/hooks/useTooltip';
 import { cn } from '@/shared/lib/core';
 
+import { TOOLTIP_MOTION } from './motion';
 import { tooltipColorMap } from './tooltipColorMap';
+import { useTooltip } from './useTooltip';
 
 import { Portal } from '../Portal';
 import { Caption1 } from '../Typography';

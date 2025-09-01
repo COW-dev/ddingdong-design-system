@@ -1,6 +1,6 @@
 import type { Meta, StoryObj } from '@storybook/react';
 
-import { usePortal } from '@/shared/hooks/usePortal';
+import { usePortal } from '@/shared/ui/Portal/usePortal';
 
 import { Drawer, Props } from './Drawer';
 

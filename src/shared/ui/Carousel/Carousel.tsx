@@ -1,9 +1,9 @@
 import { ReactNode } from 'react';
 
-import { useCarouselController } from '@/shared/hooks/useCarouselController';
 import { cn } from '@/shared/lib/core';
 
 import { CarouselContext, useCarousel } from './CarouselContext';
+import { useCarouselController } from './useCarouselController';
 
 import { Icon } from '../Icon';
 

@@ -28,4 +28,4 @@ export * from './ui/assets';
 export * from './lib/colors';
 export * from './lib/core';
 
-export * from './hooks/usePortal';
+export * from './ui/Portal/usePortal';
