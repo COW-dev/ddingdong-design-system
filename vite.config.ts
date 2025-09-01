@@ -35,7 +35,6 @@ export default defineConfig({
         'react-dom',
         'react/jsx-runtime',
         'framer-motion',
-        '@radix-ui/react-accordion',
         '@radix-ui/react-switch',
         'tailwindcss',
       ],

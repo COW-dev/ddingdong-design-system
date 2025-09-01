@@ -1,4 +1,4 @@
-import type { Meta } from '@storybook/react';
+import type { Meta, StoryObj } from '@storybook/react';
 
 import { Item, Accordion } from '.';
 
@@ -17,13 +17,15 @@ const meta: Meta<typeof Accordion> = {
 
 export default meta;
 
-export const Default = {
+type Story = StoryObj<typeof Accordion>;
+
+export const Default: Story = {
   render: () => {
     return (
-      <Accordion type="multiple">
+      <Accordion type="single">
         {[...Array(3)].map((_, index) => (
           <Item value={`item-${index + 1}`} trigger={<div>질문 {index}</div>} key={index}>
-            <div className="bg-gray-50">내용 {index}</div>
+            <div>내용 {index}</div>
           </Item>
         ))}
       </Accordion>
@@ -31,15 +33,30 @@ export const Default = {
   },
 };
 
-export const NoneArrowAccordion = {
+export const MultipleAccordion: Story = {
   render: () => {
     return (
-      <Accordion type="single" collapsible>
+      <Accordion type="multiple">
+        <Item value="item-1" trigger={<div>질문 1</div>}>
+          <div>내용</div>
+        </Item>
+        <Item value="item-2" trigger={<div>질문 2</div>}>
+          <div>내용</div>
+        </Item>
+      </Accordion>
+    );
+  },
+};
+
+export const NoneArrowAccordion: Story = {
+  render: () => {
+    return (
+      <Accordion type="single">
         <Item value="item-1" isArrow={false} trigger={<div>질문 1</div>}>
-          <div className="bg-gray-50">내용</div>
+          <div>내용</div>
         </Item>
         <Item value="item-2" isArrow={false} trigger={<div>질문 2</div>}>
-          <div className="bg-gray-50">내용</div>
+          <div>내용</div>
         </Item>
       </Accordion>
     );
