@@ -1,4 +1,3 @@
-'use client';
 import { Children, isValidElement, ReactElement, useMemo, useState } from 'react';
 import { motion } from 'framer-motion';
 
@@ -34,7 +33,7 @@ export function TabsRoot({ children, defaultIndex = 0, ...props }: Props) {
           {labels.map((label) => (
             <motion.button
               key={label}
-              className={`grow transform p-3 font-semibold w-1/${labels.length} ${
+              className={`relative grow transform p-3 font-semibold ${
                 activeLabel === label
                   ? 'text-primary-300 hover:bg-primary-50'
                   : 'text-gray-500 hover:bg-gray-50'

@@ -7,12 +7,14 @@ import Check from './check.svg';
 import Close from './close.svg';
 import DownLoad from './download.svg';
 import Etc from './etc.svg';
+import File from './file.svg';
 import Insta from './instagram.svg';
 import List from './list.svg';
 import Loading from './loading.svg';
 import NavbarArrow from './navbar-arrow.svg';
 import New from './new.svg';
 import Pin from './pin.svg';
+import Search from './search.svg';
 import Trash from './trash.svg';
 import Write from './write.svg';
 import Youtube from './youtube.svg';
@@ -27,16 +29,17 @@ export const Icons = {
   close: Close,
   download: DownLoad,
   etc: Etc,
+  file: File,
   list: List,
   navbarArrow: NavbarArrow,
   new: New,
   pin: Pin,
+  search: Search,
   trash: Trash,
   write: Write,
   loading: Loading,
   instagram: Insta,
   youtube: Youtube,
-  NavbarArrow: NavbarArrow,
 };
 
 export type IconName = keyof typeof Icons;

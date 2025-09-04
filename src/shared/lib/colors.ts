@@ -27,13 +27,9 @@ export const colors = {
     200: '#22c55e',
     300: '#16A34A',
   },
-  emerald: '#10b981',
   orange: '#f97316',
   yellow: '#eab308',
-  pink: '#ec4899',
   purple: '#a855f7',
-  cyan: '#06b6d4',
-  indigo: '#6366f1',
   white: '#ffffff',
   black: '#000000',
 };

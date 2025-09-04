@@ -1,15 +1,1 @@
-export {
-  Title1,
-  Title2,
-  Title3,
-  Caption1,
-  Caption2,
-  Body1,
-  Body2,
-  Body3,
-  Subtitle1,
-  Subtitle2,
-  Subtitle3,
-  ButtonTitle1,
-  ButtonTitle2,
-} from './Typography';
+export { Title1, Title2, Title3, Caption1, Body1, Body2, Body3 } from './Typography';

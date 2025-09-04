@@ -1,22 +1,35 @@
-'use client';
-import React from 'react';
-import { useRouter } from 'next/navigation';
-
 import { Icon } from '../Icon';
 import { Title1, Title3 } from '../Typography';
 
 type Props = {
+  /**
+   * The title to display in the navigation back button.
+   */
   title: string;
+  /**
+   * The size of the navigation back button.
+   */
   size: 'sm' | 'lg';
+  /**
+   * Callback function to be called when the button is clicked.
+   */
+  onClick?: () => void;
 };
 
-export function NavBack({ title, size }: Props) {
-  const router = useRouter();
+export function NavBack({ title, size, onClick }: Props) {
+  const handleClick = () => {
+    if (onClick) {
+      onClick?.();
+      return;
+    }
+
+    window.history.back();
+  };
 
   return (
     <button
       className="flex cursor-pointer flex-row items-center gap-2 whitespace-nowrap align-middle"
-      onClick={() => router.back()}
+      onClick={handleClick}
     >
       {size === 'sm' ? (
         <>

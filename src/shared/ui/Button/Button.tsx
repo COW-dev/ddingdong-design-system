@@ -20,26 +20,40 @@ export type Props<V extends keyof VariantColorMap> = {
   variant: V;
   /**
    * color of the Button.
+   * @default 'blue'
    */
   color?: ButtonColor<V>;
   /**
+   * size of the Button.
+   * @default 'medium'
+   */
+  size?: 'sm' | 'md' | 'lg' | 'full';
+  /**
    * loading state of the Button
+   * @default false
    */
   isLoading?: boolean;
   /**
    * border-radius option of the Button
+   * @default false
    */
   rounded?: boolean;
 } & React.ButtonHTMLAttributes<HTMLButtonElement>;
 
 export const ButtonVariants = cva(
-  `flex justify-center items-center text-sm font-bold py-2.5 md:py-4 md:text-lg`,
+  `flex justify-center items-center text-sm font-medium py-2.5 md:py-4 md:text-base md:font-semibold cursor-pointer`,
   {
     variants: {
       variant: {
-        primary: 'text-white px-10 md:px-[60px]',
-        secondary: 'px-5 md:px-7',
-        tertiary: 'text-gray-400 bg-gray-100 hover:bg-gray-200 px-3 md:px-4',
+        primary: 'text-white',
+        secondary: '',
+        tertiary: 'text-gray-400 bg-gray-100 hover:bg-gray-200',
+      },
+      size: {
+        sm: 'px-3 md:px-4',
+        md: 'px-5 md:px-7',
+        lg: 'px-10 md:px-[60px]',
+        full: 'w-full px-4',
       },
       color: {
         blue: '',
@@ -48,8 +62,12 @@ export const ButtonVariants = cva(
       },
     },
     compoundVariants: [
-      { variant: 'primary', color: 'red', class: 'bg-red-200 hover:bg-red-300' },
-      { variant: 'primary', color: 'blue', class: 'bg-primary-300 hover:bg-primary-400' },
+      { variant: 'primary', color: 'red', class: 'text-white bg-red-200 hover:bg-red-300' },
+      {
+        variant: 'primary',
+        color: 'blue',
+        class: 'text-white bg-primary-300 hover:bg-primary-400',
+      },
       {
         variant: 'secondary',
         color: 'blue',
@@ -69,6 +87,7 @@ export function Button<V extends ButtonVariant>({
   children,
   variant,
   color,
+  size = 'md',
   rounded = false,
   isLoading = false,
   disabled,
@@ -81,7 +100,7 @@ export function Button<V extends ButtonVariant>({
     <button
       type="button"
       className={cn(
-        ButtonVariants({ variant, color }),
+        ButtonVariants({ variant, color, size }),
         isDisabled && `cursor-not-allowed bg-gray-100 text-gray-400 hover:bg-gray-100`,
         rounded ? 'rounded-full' : 'rounded-[10px] md:rounded-xl',
         className

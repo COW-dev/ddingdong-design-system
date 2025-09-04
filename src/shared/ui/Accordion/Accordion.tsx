@@ -1,71 +1,151 @@
-'use client';
-import * as AccordionPrimitives from '@radix-ui/react-accordion';
+import { ReactNode, useId, useState } from 'react';
+import { AnimatePresence, motion, useReducedMotion } from 'framer-motion';
 
 import { cn } from '@/shared/lib/core';
 
+import { AccordionContext, useAccordion } from './Accordion.context';
+
 import { Icon } from '../Icon';
 
-type Prop = {
+type AccordionRootProps = {
+  /**
+   * The type of the Accordion, either single or multiple.
+   * @default 'single'
+   */
+  type?: 'single' | 'multiple';
   /**
    * The content of the Accordion, typically AccordionItem components.
    */
-  children: React.ReactNode;
-} & (AccordionPrimitives.AccordionSingleProps | AccordionPrimitives.AccordionMultipleProps);
+  children: ReactNode;
+  /**
+   * Additional class names to apply to the AccordionRoot.
+   */
+  className?: string;
+};
 
-export function AccordionRoot({ children, ...props }: Prop) {
+export function AccordionRoot({
+  type = 'single',
+  className = '',
+  children,
+  ...props
+}: AccordionRootProps) {
+  const [openItems, setOpenItems] = useState<string[]>([]);
+
+  const toggleItem = (value: string) => {
+    if (type === 'single') {
+      setOpenItems((prev) => (prev.includes(value) ? [] : [value]));
+      return;
+    }
+    setOpenItems((prev) =>
+      prev.includes(value) ? prev.filter((item) => item !== value) : [...prev, value]
+    );
+  };
+
   return (
-    <AccordionPrimitives.Root className="w-full" {...props}>
-      <div>{children}</div>
-    </AccordionPrimitives.Root>
+    <AccordionContext.Provider value={{ openItems, toggleItem, type }}>
+      <div className={cn(`w-full`, className)} {...props}>
+        {children}
+      </div>
+    </AccordionContext.Provider>
   );
 }
 
-type ItemProps = {
+type AccordionItemProps = {
   /**
    * The trigger element that toggles the visibility of the content.
    */
-  trigger: React.ReactNode;
+  trigger: ReactNode;
   /**
-   * The content that is shown or hidden when the trigger is clicked.
-   */
-  children: React.ReactNode;
-  /**
-   * arrow icon to display alongside the trigger.
+   * Whether to show the arrow icon next to the trigger.
    * @default true
    */
   isArrow?: boolean;
   /**
-   * additional class names to apply to the AccordionItem.
+   * The unique value for the AccordionItem, used for tracking its state.
    */
-  className?: string;
-} & AccordionPrimitives.AccordionItemProps;
+  value: string;
+  /**
+   * The content of the AccordionItem.
+   */
+  children: ReactNode;
+  /**
+   * Additional class names to apply to the AccordionItem.
+   */
+  btnClassName?: string;
+  /**
+   * The class name for the content container.
+   */
+  contentClassName?: string;
+};
+
+const ACCORDION_MOTION = {
+  initial: { height: 0, opacity: 0 },
+  animate: { height: 'auto', opacity: 1 },
+  exit: { height: 0, opacity: 0 },
+  transition: {
+    height: { duration: 0.2, ease: 'easeOut' },
+    opacity: { duration: 0.1 },
+  },
+};
 
 export function AccordionItem({
   trigger,
-  className,
-  children,
   isArrow = true,
+  value,
+  btnClassName,
+  contentClassName,
+  children,
   ...props
-}: ItemProps) {
+}: AccordionItemProps) {
+  const context = useAccordion();
+  const uid = useId();
+  const triggerId = `accordion-trigger-${uid}`;
+  const contentId = `accordion-content-${uid}`;
+  const prefersReducedMotion = useReducedMotion();
+
+  const { openItems, toggleItem } = context;
+  const isOpen = openItems.includes(value);
+
   return (
-    <AccordionPrimitives.Item className="group border-b border-gray-200" {...props}>
-      <AccordionPrimitives.Header className="w-full">
-        <AccordionPrimitives.Trigger
-          className={cn(`flex w-full cursor-pointer justify-between px-6 py-[17px]`, className)}
-        >
-          {trigger}
-          <Icon
-            className={`ml-2 transition-transform duration-200 group-data-[state=open]:rotate-180 ${isArrow ? 'block' : 'hidden'}`}
-            name="arrowDown"
-          />
-        </AccordionPrimitives.Trigger>
-      </AccordionPrimitives.Header>
-      <AccordionPrimitives.Content
-        asChild
-        className="overflow-hidden px-6 py-[17px] data-[state=closed]:animate-accordion-up data-[state=open]:animate-accordion-down"
+    <div className="border-b border-gray-200" data-state={isOpen ? 'open' : 'closed'} {...props}>
+      <button
+        id={triggerId}
+        aria-controls={contentId}
+        aria-expanded={isOpen}
+        type="button"
+        onClick={() => toggleItem(value)}
+        className={cn(
+          'flex w-full cursor-pointer items-center justify-between px-6 py-4 text-left hover:bg-gray-50',
+          btnClassName
+        )}
       >
-        {children}
-      </AccordionPrimitives.Content>
-    </AccordionPrimitives.Item>
+        {trigger}
+        {isArrow && (
+          <motion.div
+            animate={{ rotate: isOpen ? 180 : 0 }}
+            transition={{ duration: 0.2 }}
+            className="ml-2"
+          >
+            <Icon name="arrowDown" size={20} />
+          </motion.div>
+        )}
+      </button>
+
+      <AnimatePresence initial={false}>
+        {isOpen && (
+          <motion.section
+            id={contentId}
+            aria-labelledby={triggerId}
+            initial={prefersReducedMotion ? undefined : ACCORDION_MOTION.initial}
+            animate={prefersReducedMotion ? undefined : ACCORDION_MOTION.animate}
+            exit={prefersReducedMotion ? undefined : ACCORDION_MOTION.exit}
+            transition={prefersReducedMotion ? undefined : ACCORDION_MOTION.transition}
+            className="overflow-hidden"
+          >
+            <div className={cn('bg-gray-50 px-6 py-4', contentClassName)}>{children}</div>
+          </motion.section>
+        )}
+      </AnimatePresence>
+    </div>
   );
 }

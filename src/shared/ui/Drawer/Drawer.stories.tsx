@@ -1,6 +1,6 @@
 import type { Meta, StoryObj } from '@storybook/react';
 
-import { usePortal } from '@/shared/model/usePortal';
+import { usePortal } from '@/shared/ui/Portal/usePortal';
 
 import { Drawer, Props } from './Drawer';
 
@@ -8,7 +8,7 @@ import { Button } from '../Button';
 import { Title1 } from '../Typography';
 
 const meta = {
-  title: 'components/common/Drawer',
+  title: 'components/Drawer',
   component: Drawer,
   tags: ['autodocs'],
 } satisfies Meta<typeof Drawer>;
