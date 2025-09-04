@@ -15,13 +15,13 @@ export function Checkbox({ className, ...props }: Props) {
   return (
     <CheckboxPrimitive.Root
       className={cn(
-        `peer flex h-6 w-6 items-center rounded-sm border-gray-300 disabled:cursor-not-allowed disabled:opacity-50 data-[state=unchecked]:border-[1.5px] data-[state=checked]:bg-primary-300`,
+        `peer data-[state=checked]:bg-primary-300 flex h-6 w-6 items-center rounded-sm border-gray-300 disabled:cursor-not-allowed disabled:opacity-50 data-[state=unchecked]:border-[1.5px]`,
         className
       )}
       {...props}
     >
       <CheckboxPrimitive.Indicator>
-        <Icon name="check" width={24} height={24} className="text-primary-300" />
+        <Icon name="check" color="primary" width={24} height={24} />
       </CheckboxPrimitive.Indicator>
     </CheckboxPrimitive.Root>
   );

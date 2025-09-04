@@ -33,7 +33,7 @@ export function RadioItem({ className, size = 'md', ...props }: ItemProps) {
   return (
     <RadioGroupPrimitive.Item
       className={cn(
-        `peer flex items-center justify-center rounded-full border-gray-300 disabled:cursor-not-allowed disabled:opacity-50 data-[state=unchecked]:border data-[state=checked]:border-primary-300`,
+        `peer flex items-center justify-center rounded-full border-gray-300 disabled:cursor-not-allowed disabled:opacity-50 data-[state=unchecked]:border`,
         size === 'lg' ? 'h-8 w-8' : 'h-6 w-6',
         className
       )}
@@ -42,9 +42,10 @@ export function RadioItem({ className, size = 'md', ...props }: ItemProps) {
       <RadioGroupPrimitive.Indicator className={cn(`flex items-center justify-center`)}>
         <Icon
           name="check"
+          color="primary"
           width={size === 'lg' ? 32 : 24}
           height={size === 'lg' ? 32 : 24}
-          className="rounded-full bg-primary-300 text-primary-300"
+          className="bg-primary-300 rounded-full"
         />
       </RadioGroupPrimitive.Indicator>
     </RadioGroupPrimitive.Item>
