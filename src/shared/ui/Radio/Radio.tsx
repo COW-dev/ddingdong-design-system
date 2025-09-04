@@ -33,7 +33,7 @@ export function RadioItem({ className, size = 'md', ...props }: ItemProps) {
   return (
     <RadioGroupPrimitive.Item
       className={cn(
-        `peer flex items-center justify-center rounded-full border-gray-300 disabled:cursor-not-allowed disabled:opacity-50 data-[state=unchecked]:border`,
+        `peer flex items-center justify-center rounded-full border-gray-300 focus:outline-none disabled:cursor-not-allowed disabled:opacity-50 data-[state=unchecked]:border`,
         size === 'lg' ? 'h-8 w-8' : 'h-6 w-6',
         className
       )}
