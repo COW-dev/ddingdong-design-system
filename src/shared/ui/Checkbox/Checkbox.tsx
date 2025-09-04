@@ -9,31 +9,19 @@ type Props = {
    * additional className.
    */
   className?: string;
-
-  /**
-   * size of the checkbox.
-   * @default 'md'
-   */
-  size?: 'sm' | 'md';
 } & React.ComponentPropsWithoutRef<typeof CheckboxPrimitive.Root>;
 
-export function Checkbox({ className, size = 'md', ...props }: Props) {
+export function Checkbox({ className, ...props }: Props) {
   return (
     <CheckboxPrimitive.Root
       className={cn(
-        `peer flex items-center rounded-sm border-gray-300 disabled:cursor-not-allowed disabled:opacity-50 data-[state=unchecked]:border-[1.5px] data-[state=checked]:bg-primary-300`,
-        size === 'sm' ? 'h-4 w-4' : 'h-6 w-6',
+        `peer flex h-6 w-6 items-center rounded-sm border-gray-300 disabled:cursor-not-allowed disabled:opacity-50 data-[state=unchecked]:border-[1.5px] data-[state=checked]:bg-primary-300`,
         className
       )}
       {...props}
     >
       <CheckboxPrimitive.Indicator>
-        <Icon
-          name="check"
-          width={size === 'sm' ? 16 : 24}
-          height={size === 'sm' ? 16 : 24}
-          className="text-primary-300"
-        />
+        <Icon name="check" width={24} height={24} className="text-primary-300" />
       </CheckboxPrimitive.Indicator>
     </CheckboxPrimitive.Root>
   );
