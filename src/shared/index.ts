@@ -1,3 +1,4 @@
+// Components
 export { Accordion, Item } from './ui/Accordion';
 export { Avatar } from './ui/Avatar/Avatar';
 export { Badge } from './ui/Badge';
@@ -21,11 +22,12 @@ export { Switch } from './ui/Switch';
 export { Tabs } from './ui/Tabs';
 export { TextArea } from './ui/TextArea';
 export { Tooltip } from './ui/Tooltip';
+export { Title1, Title2, Title3, Caption1, Body1, Body2, Body3 } from './ui/Typography';
 
-export * from './ui/Typography';
-export * from './ui/assets';
+export { Icons, iconNames } from './ui/assets';
+export type { IconName } from './ui/assets';
 
-export * from './lib/colors';
-export * from './lib/core';
+export { cn } from './lib/core';
+export { colors } from './lib/colors';
 
 export * from './ui/Portal/usePortal';

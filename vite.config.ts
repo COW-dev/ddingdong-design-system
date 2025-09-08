@@ -44,6 +44,7 @@ export default defineConfig({
           'react-dom': 'ReactDOM',
           tailwindcss: 'tailwindcss',
         },
+        preserveModules: false,
       },
     },
     cssCodeSplit: false,

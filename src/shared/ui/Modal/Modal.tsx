@@ -1,6 +1,8 @@
 import { ReactNode } from 'react';
 import { motion } from 'framer-motion';
 
+import { cn } from '@/shared';
+
 import { Flex } from '../Flex';
 import { Portal } from '../Portal';
 
@@ -17,6 +19,10 @@ type Props = {
    * The content to be displayed inside the modal.
    */
   children: ReactNode;
+  /**
+   * Additional classes to apply to the modal.
+   */
+  className?: string;
 };
 
 const MODAL_MOTION = {
@@ -26,7 +32,7 @@ const MODAL_MOTION = {
   transition: { duration: 0.3 },
 } as const;
 
-export function Modal({ isOpen, closeModal, children }: Props) {
+export function Modal({ isOpen, closeModal, children, className }: Props) {
   const handleOutsideClick = (e: React.MouseEvent) => {
     if (e.target instanceof HTMLElement && e.target === e.currentTarget && closeModal) {
       closeModal();
@@ -40,7 +46,7 @@ export function Modal({ isOpen, closeModal, children }: Props) {
         animate={MODAL_MOTION.animate}
         exit={MODAL_MOTION.exit}
         transition={MODAL_MOTION.transition}
-        className="fixed inset-0 z-30 flex w-full items-center justify-center"
+        className={cn('fixed inset-0 z-30 flex w-full items-center justify-center', className)}
       >
         <div className="absolute inset-0 bg-black/50" onClick={handleOutsideClick} />
         <ModalContent>{children}</ModalContent>

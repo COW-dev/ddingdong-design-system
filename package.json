@@ -1,6 +1,6 @@
 {
   "name": "ddingdong-design-system",
-  "version": "0.2.15",
+  "version": "0.2.18",
   "type": "module",
   "keywords": [
     "react",
@@ -13,6 +13,9 @@
   "homepage": "https://github.com/COW-dev/ddingdong2.0#readme",
   "main": "./dist/ddingdong-design-system.js",
   "types": "./dist/index.d.ts",
+  "sideEffects": [
+    "*.css"
+  ],
   "files": [
     "dist",
     "README.md"
