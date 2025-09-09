@@ -13,7 +13,7 @@ type Props = {
   children: React.ReactNode;
 } & React.HTMLAttributes<HTMLDivElement>;
 
-export function TabsItem({ label, children, ...props }: Props) {
+export function TabItem({ label, children, ...props }: Props) {
   const content = useContext(TabsContext);
   const isActive = content?.activeLabel === label;
 

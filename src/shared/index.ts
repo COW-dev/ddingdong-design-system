@@ -1,5 +1,4 @@
-// Components
-export { Accordion, Item } from './ui/Accordion';
+export { Accordion, AccordionItem } from './ui/Accordion';
 export { Avatar } from './ui/Avatar/Avatar';
 export { Badge } from './ui/Badge';
 export { Button } from './ui/Button';
@@ -19,7 +18,7 @@ export { Portal } from './ui/Portal';
 export { Select } from './ui/Select';
 export { Skeleton } from './ui/Skeleton';
 export { Switch } from './ui/Switch';
-export { Tabs } from './ui/Tabs';
+export { Tabs, TabItem } from './ui/Tabs';
 export { TextArea } from './ui/TextArea';
 export { Tooltip } from './ui/Tooltip';
 export { Title1, Title2, Title3, Caption1, Body1, Body2, Body3 } from './ui/Typography';
