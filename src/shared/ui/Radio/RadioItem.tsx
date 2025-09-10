@@ -13,16 +13,29 @@ type Props = {
   size?: 'md' | 'lg';
 } & Omit<React.InputHTMLAttributes<HTMLInputElement>, 'size'>;
 
-export function RadioItem({ value, id, className, disabled, size: propSize, ...props }: Props) {
+export function RadioItem({
+  value,
+  id,
+  className,
+  disabled,
+  onChange,
+  size: sizeProp,
+  ...props
+}: Props) {
   const context = useContext(RadioGroupContext);
   if (!context) throw new Error('RadioItem must be used inside a RadioGroup');
 
   const isChecked = context.value === value;
   const isDisabled = context.disabled || disabled;
-  const size = propSize ?? context.size;
+  const size = sizeProp ?? context.size;
 
-  const handleChange = () => {
-    if (!isDisabled) context.onChange(value);
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    if (isDisabled) {
+      e.preventDefault();
+      return;
+    }
+    onChange?.(e);
+    context.onChange(value);
   };
 
   return (
