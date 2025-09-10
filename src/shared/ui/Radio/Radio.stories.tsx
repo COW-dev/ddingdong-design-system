@@ -1,10 +1,12 @@
+import { useState } from 'react';
 import type { Meta, StoryObj } from '@storybook/react';
 
-import { RadioItem, RadioRoot } from './Radio';
+import { Radio, Item } from './index';
+import { InputValue } from './RadioRoot';
 
 const meta = {
   title: 'components/Radio',
-  component: RadioItem,
+  component: Item,
   tags: ['autodocs'],
   parameters: {
     docs: {
@@ -13,10 +15,10 @@ const meta = {
       },
     },
   },
-} satisfies Meta<typeof RadioItem>;
+} satisfies Meta<typeof Item>;
 
 export default meta;
-type Story = StoryObj<typeof RadioItem>;
+type Story = StoryObj<typeof Item>;
 
 export const Default: Story = {
   args: {
@@ -24,23 +26,48 @@ export const Default: Story = {
     size: 'md',
   },
   render: (args) => (
-    <RadioRoot>
-      <RadioItem {...args} />
-    </RadioRoot>
+    <Radio>
+      <Item {...args} />
+    </Radio>
   ),
 };
 
 export const UsingWithLabel: Story = {
   render: () => (
-    <RadioRoot className="flex flex-col gap-2">
+    <Radio className="flex flex-col gap-2">
       <div className="flex items-center gap-2">
-        <RadioItem id="test" value="test" />
+        <Item id="test" value="test" />
         <label htmlFor="test">radio 1</label>
       </div>
       <div className="flex items-center gap-2">
-        <RadioItem id="test2" value="test2" />
+        <Item id="test2" value="test2" />
         <label htmlFor="test2">radio 2</label>
       </div>
-    </RadioRoot>
+    </Radio>
+  ),
+};
+
+export const Controlled: Story = {
+  render: () => {
+    const [value, setValue] = useState<InputValue>(1);
+    const handleChange = (newValue: InputValue) => {
+      setValue(newValue);
+    };
+
+    return (
+      <Radio value={value} onValueChange={(value) => handleChange(value)}>
+        <Item value={1} />
+        <Item value="문자열 value" />
+      </Radio>
+    );
+  },
+};
+
+export const Uncontrolled: Story = {
+  render: () => (
+    <Radio defaultValue={1}>
+      <Item value={1} />
+      <Item value={2} />
+    </Radio>
   ),
 };

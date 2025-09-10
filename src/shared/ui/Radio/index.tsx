@@ -1,2 +1,2 @@
-export { RadioRoot as Radio } from './Radio';
-export { RadioItem as Item } from './Radio';
+export { RadioRoot as Radio } from './RadioRoot';
+export { RadioItem as Item } from './RadioItem';
