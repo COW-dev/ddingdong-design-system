@@ -44,7 +44,8 @@ export function RadioItem({
       className={cn(
         'flex cursor-pointer',
         size === 'lg' ? 'h-8 w-8' : 'h-6 w-6',
-        isDisabled && 'cursor-not-allowed opacity-50'
+        isDisabled && 'cursor-not-allowed opacity-50',
+        className
       )}
     >
       <input
@@ -70,8 +71,7 @@ export function RadioItem({
         <span
           className={cn(
             `w-full rounded-full border-gray-300`,
-            size === 'lg' ? 'border-2' : 'border-[1.5px]',
-            className
+            size === 'lg' ? 'border-2' : 'border-[1.5px]'
           )}
         />
       )}
