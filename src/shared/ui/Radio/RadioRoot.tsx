@@ -46,12 +46,11 @@ export function RadioRoot({
   onValueChange,
   children,
   disabled,
-  className,
   size = 'md',
   name,
+  className,
 }: Props) {
   const [uncontrolledValue, setUncontrolledValue] = useState<InputValue>(defaultValue);
-
   const value = controlledValue ?? uncontrolledValue;
 
   const handleChange = (val: InputValue) => {

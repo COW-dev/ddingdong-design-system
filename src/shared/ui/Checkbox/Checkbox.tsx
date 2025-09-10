@@ -1,4 +1,4 @@
-import * as React from 'react';
+import { useState } from 'react';
 
 import { cn } from '@/shared/lib/core';
 import { Icon } from '@/shared/ui/Icon/Icon';
@@ -27,25 +27,24 @@ type Props = {
 } & Omit<React.InputHTMLAttributes<HTMLInputElement>, 'onChange' | 'checked' | 'defaultChecked'>;
 
 export function Checkbox({
-  className,
-  checked,
+  checked: controlledValue,
   defaultChecked,
   onCheckedChange,
   disabled,
+  className,
   ...props
 }: Props) {
-  const [internalChecked, setInternalChecked] = React.useState<boolean>(defaultChecked ?? false);
-
-  const isControlled = checked !== undefined;
-  const value = isControlled ? checked : internalChecked;
+  const [uncontrolledValue, setUncontrolledValue] = useState<boolean>(defaultChecked ?? false);
+  const value = controlledValue ?? uncontrolledValue;
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     if (disabled) return;
-    const next = e.target.checked;
-    if (!isControlled) {
-      setInternalChecked(next);
+
+    const nextValue = e.target.checked;
+    if (controlledValue === undefined) {
+      setUncontrolledValue(nextValue);
     }
-    onCheckedChange?.(next);
+    onCheckedChange?.(nextValue);
   };
 
   return (
