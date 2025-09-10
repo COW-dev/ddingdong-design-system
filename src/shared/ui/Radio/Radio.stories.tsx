@@ -27,7 +27,7 @@ export const Default: Story = {
   },
   render: (args) => (
     <Radio {...args}>
-      <Item />
+      <Item value="option1" />
     </Radio>
   ),
 };
