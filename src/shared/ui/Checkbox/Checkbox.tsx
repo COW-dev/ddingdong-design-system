@@ -1,5 +1,4 @@
 import * as React from 'react';
-import * as CheckboxPrimitive from '@radix-ui/react-checkbox';
 
 import { cn } from '@/shared/lib/core';
 import { Icon } from '@/shared/ui/Icon/Icon';
@@ -9,20 +8,64 @@ type Props = {
    * additional className.
    */
   className?: string;
-} & React.ComponentPropsWithoutRef<typeof CheckboxPrimitive.Root>;
+  /**
+   * checked state of the checkbox.
+   */
+  checked?: boolean;
+  /**
+   * default checked state of the checkbox.
+   */
+  defaultChecked?: boolean;
+  /**
+   * disabled state of the checkbox.
+   */
+  disabled?: boolean;
+  /**
+   * callback function when checked state is changed.
+   */
+  onCheckedChange?: (checked: boolean) => void;
+} & Omit<React.InputHTMLAttributes<HTMLInputElement>, 'onChange' | 'checked' | 'defaultChecked'>;
 
-export function Checkbox({ className, ...props }: Props) {
+export function Checkbox({
+  className,
+  checked,
+  defaultChecked,
+  onCheckedChange,
+  disabled,
+  ...props
+}: Props) {
+  const [internalChecked, setInternalChecked] = React.useState<boolean>(defaultChecked ?? false);
+
+  const isControlled = checked !== undefined;
+  const value = isControlled ? checked : internalChecked;
+
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    if (disabled) return;
+    const next = e.target.checked;
+    if (!isControlled) {
+      setInternalChecked(next);
+    }
+    onCheckedChange?.(next);
+  };
+
   return (
-    <CheckboxPrimitive.Root
+    <label
       className={cn(
-        `peer data-[state=checked]:bg-primary-300 flex h-6 w-6 items-center rounded-sm border-gray-300 focus:outline-none disabled:cursor-not-allowed disabled:opacity-50 data-[state=unchecked]:border-[1.5px]`,
+        'flex h-6 w-6 rounded-sm border-gray-300',
+        value ? 'bg-primary-300' : 'border-[1.5px]',
+        disabled && 'cursor-not-allowed opacity-50',
         className
       )}
-      {...props}
     >
-      <CheckboxPrimitive.Indicator>
-        <Icon name="check" color="primary" width={24} height={24} />
-      </CheckboxPrimitive.Indicator>
-    </CheckboxPrimitive.Root>
+      <input
+        type="checkbox"
+        onChange={handleChange}
+        checked={value}
+        disabled={disabled}
+        className="sr-only"
+        {...props}
+      />
+      {value && <Icon name="check" color="primary" width={24} height={24} />}
+    </label>
   );
 }

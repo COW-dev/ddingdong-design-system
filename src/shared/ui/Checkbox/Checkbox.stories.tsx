@@ -1,3 +1,4 @@
+import { useState } from 'react';
 import type { Meta, StoryObj } from '@storybook/react';
 
 import { Checkbox } from './Checkbox';
@@ -21,9 +22,11 @@ type Story = StoryObj<typeof Checkbox>;
 export const Default: Story = {
   args: {
     disabled: false,
+    checked: true,
   },
   render: (args) => <Checkbox {...args} />,
 };
+
 export const UsingWithLabel: Story = {
   render: () => (
     <div className="flex flex-col gap-2">
@@ -37,4 +40,16 @@ export const UsingWithLabel: Story = {
       </div>
     </div>
   ),
+};
+
+export const Controlled: Story = {
+  render: () => {
+    const [checked, setChecked] = useState(false);
+
+    return <Checkbox checked={checked} onCheckedChange={() => setChecked(!checked)} />;
+  },
+};
+
+export const Uncontrolled: Story = {
+  render: () => <Checkbox defaultChecked={true} />,
 };
