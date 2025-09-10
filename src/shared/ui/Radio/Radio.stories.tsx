@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import type { Meta, StoryObj } from '@storybook/react';
 
-import { Radio, Item } from './index';
+import { Radio, RadioItem } from './index';
 import { InputValue } from './RadioRoot';
 
 const meta = {
@@ -27,7 +27,7 @@ export const Default: Story = {
   },
   render: (args) => (
     <Radio {...args}>
-      <Item value="option1" />
+      <RadioItem value="option1" />
     </Radio>
   ),
 };
@@ -36,11 +36,11 @@ export const UsingWithLabel: Story = {
   render: () => (
     <Radio className="flex flex-col gap-2">
       <div className="flex items-center gap-2">
-        <Item id="test" value="test" />
+        <RadioItem id="test" value="test" />
         <label htmlFor="test">radio 1</label>
       </div>
       <div className="flex items-center gap-2">
-        <Item id="test2" value="test2" />
+        <RadioItem id="test2" value="test2" />
         <label htmlFor="test2">radio 2</label>
       </div>
     </Radio>
@@ -56,8 +56,8 @@ export const Controlled: Story = {
 
     return (
       <Radio value={value} onValueChange={(value) => handleChange(value)}>
-        <Item value={1} />
-        <Item value="문자열 value" />
+        <RadioItem value={1} />
+        <RadioItem value="문자열 value" />
       </Radio>
     );
   },
@@ -66,8 +66,8 @@ export const Controlled: Story = {
 export const Uncontrolled: Story = {
   render: () => (
     <Radio defaultValue={1}>
-      <Item value={1} />
-      <Item value={2} />
+      <RadioItem value={1} />
+      <RadioItem value={2} />
     </Radio>
   ),
 };
