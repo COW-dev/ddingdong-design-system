@@ -3,6 +3,7 @@ import { createContext } from 'react';
 import { InputValue } from './RadioRoot';
 
 type RadioGroupContextType = {
+  name?: string;
   value: InputValue;
   onChange: (value?: InputValue) => void;
   disabled?: boolean;

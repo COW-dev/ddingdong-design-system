@@ -11,7 +11,7 @@ type Props = {
    * size of the radio button.
    */
   size?: 'md' | 'lg';
-} & Omit<React.InputHTMLAttributes<HTMLInputElement>, 'size'>;
+} & Omit<React.InputHTMLAttributes<HTMLInputElement>, 'size' | 'name'>;
 
 export function RadioItem({
   value,
@@ -55,6 +55,7 @@ export function RadioItem({
         disabled={isDisabled}
         onChange={handleChange}
         className="sr-only"
+        name={context.name}
         {...props}
       />
       {isChecked ? (
