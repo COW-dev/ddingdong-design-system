@@ -52,7 +52,7 @@ export const Basic: Story = {
   render: (args) => (
     <Flex>
       <Tooltip {...args}>
-        <Icon name="youtube" size={25} />
+        <Icon name="new" size={25} />
       </Tooltip>
     </Flex>
   ),
@@ -67,7 +67,7 @@ export const SpringAnimation: Story = {
   render: (args) => (
     <Flex>
       <Tooltip {...args}>
-        <Icon name="youtube" size={25} />
+        <Icon name="new" size={25} />
       </Tooltip>
     </Flex>
   ),
@@ -82,7 +82,7 @@ export const PopAnimation: Story = {
   render: (args) => (
     <Flex>
       <Tooltip {...args}>
-        <Icon name="youtube" size={25} />
+        <Icon name="new" size={25} />
       </Tooltip>
     </Flex>
   ),
@@ -97,7 +97,7 @@ export const SmoothAnimation: Story = {
   render: (args) => (
     <Flex>
       <Tooltip {...args}>
-        <Icon name="youtube" size={25} />
+        <Icon name="new" size={25} />
       </Tooltip>
     </Flex>
   ),
