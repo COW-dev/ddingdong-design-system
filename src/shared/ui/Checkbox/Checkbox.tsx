@@ -51,8 +51,8 @@ export function Checkbox({
   return (
     <label
       className={cn(
-        'flex h-6 w-6 rounded-sm border-gray-300',
-        value ? 'bg-primary-300' : 'border-[1.5px]',
+        'flex h-6 w-6 rounded-sm',
+        value ? 'bg-primary-300' : 'border-[1.5px] border-gray-300',
         disabled && 'cursor-not-allowed opacity-50',
         className
       )}

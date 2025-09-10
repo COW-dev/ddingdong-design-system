@@ -44,17 +44,23 @@ export function RadioItem({ value, id, className, disabled, size: propSize, ...p
         className="sr-only"
         {...props}
       />
-      <span className={cn(`w-full rounded-full border border-gray-300`, className)}>
-        {isChecked && (
-          <Icon
-            name="check"
-            color="primary"
-            width={size === 'lg' ? 32 : 24}
-            height={size === 'lg' ? 32 : 24}
-            className="bg-primary-300 rounded-full"
-          />
-        )}
-      </span>
+      {isChecked ? (
+        <Icon
+          name="check"
+          color="primary"
+          width={size === 'lg' ? 32 : 24}
+          height={size === 'lg' ? 32 : 24}
+          className="bg-primary-300 rounded-full"
+        />
+      ) : (
+        <span
+          className={cn(
+            `w-full rounded-full border-gray-300`,
+            size === 'lg' ? 'border-2' : 'border-[1.5px]',
+            className
+          )}
+        />
+      )}
     </label>
   );
 }
