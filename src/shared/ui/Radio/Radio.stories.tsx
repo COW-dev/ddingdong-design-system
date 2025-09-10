@@ -6,7 +6,7 @@ import { InputValue } from './RadioRoot';
 
 const meta = {
   title: 'components/Radio',
-  component: Item,
+  component: Radio,
   tags: ['autodocs'],
   parameters: {
     docs: {
@@ -15,10 +15,10 @@ const meta = {
       },
     },
   },
-} satisfies Meta<typeof Item>;
+} satisfies Meta<typeof Radio>;
 
 export default meta;
-type Story = StoryObj<typeof Item>;
+type Story = StoryObj<typeof Radio>;
 
 export const Default: Story = {
   args: {
@@ -26,8 +26,8 @@ export const Default: Story = {
     size: 'md',
   },
   render: (args) => (
-    <Radio>
-      <Item {...args} />
+    <Radio {...args}>
+      <Item />
     </Radio>
   ),
 };

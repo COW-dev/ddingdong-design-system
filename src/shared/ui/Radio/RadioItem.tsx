@@ -9,17 +9,17 @@ import { Icon } from '../Icon';
 type Props = {
   /**
    * size of the radio button.
-   * @default 'md'
    */
   size?: 'md' | 'lg';
 } & Omit<React.InputHTMLAttributes<HTMLInputElement>, 'size'>;
 
-export function RadioItem({ value, id, size = 'md', className, disabled, ...props }: Props) {
+export function RadioItem({ value, id, className, disabled, size: propSize, ...props }: Props) {
   const context = useContext(RadioGroupContext);
   if (!context) throw new Error('RadioItem must be used inside a RadioGroup');
 
   const isChecked = context.value === value;
   const isDisabled = context.disabled || disabled;
+  const size = propSize ?? context.size;
 
   const handleChange = () => {
     if (!isDisabled) context.onChange(value);

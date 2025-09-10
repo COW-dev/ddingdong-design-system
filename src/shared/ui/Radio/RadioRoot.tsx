@@ -29,6 +29,11 @@ type Props = {
    * additional className.
    */
   className?: string;
+  /**
+   * size of the radio button.
+   * @default 'md'
+   */
+  size?: 'md' | 'lg';
 };
 
 export function RadioRoot({
@@ -38,6 +43,7 @@ export function RadioRoot({
   children,
   disabled,
   className,
+  size = 'md',
 }: Props) {
   const [uncontrolledValue, setUncontrolledValue] = useState<InputValue>(defaultValue);
 
@@ -51,7 +57,7 @@ export function RadioRoot({
   };
 
   return (
-    <RadioGroupContext.Provider value={{ value, onChange: handleChange, disabled }}>
+    <RadioGroupContext.Provider value={{ value, onChange: handleChange, disabled, size }}>
       <div className={className}>{children}</div>
     </RadioGroupContext.Provider>
   );
