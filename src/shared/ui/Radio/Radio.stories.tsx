@@ -2,7 +2,7 @@ import { useState } from 'react';
 import type { Meta, StoryObj } from '@storybook/react';
 
 import { Radio, RadioItem } from './index';
-import { InputValue } from './RadioRoot';
+import type { InputValue } from './RadioRoot';
 
 const meta = {
   title: 'components/Radio',

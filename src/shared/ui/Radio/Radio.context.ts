@@ -1,11 +1,11 @@
 import { createContext } from 'react';
 
-import { InputValue } from './RadioRoot';
+import type { InputValue } from './RadioRoot';
 
 type RadioGroupContextType = {
   name?: string;
   value: InputValue;
-  onChange: (value?: InputValue) => void;
+  onChange: (value: InputValue) => void;
   disabled?: boolean;
   size: 'md' | 'lg';
 };
