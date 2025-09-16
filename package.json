@@ -1,6 +1,6 @@
 {
   "name": "ddingdong-design-system",
-  "version": "0.3.0",
+  "version": "0.3.1",
   "type": "module",
   "keywords": [
     "react",
@@ -13,9 +13,7 @@
   "homepage": "https://github.com/COW-dev/ddingdong2.0#readme",
   "main": "./dist/ddingdong-design-system.js",
   "types": "./dist/index.d.ts",
-  "sideEffects": [
-    "*.css"
-  ],
+  "sideEffects": false,
   "files": [
     "dist",
     "README.md"
@@ -77,9 +75,9 @@
     "eslint-plugin-jsx-a11y": "^6.10.2",
     "eslint-plugin-prettier": "^5.2.1",
     "eslint-plugin-react": "^7.37.3",
+    "eslint-plugin-react-hooks": "^5.2.0",
     "eslint-plugin-react-refresh": "^0.4.16",
     "eslint-plugin-storybook": "^0.11.2",
-    "eslint-plugin-react-hooks": "^5.2.0",
     "eslint-plugin-vitest-globals": "^1.5.0",
     "framer-motion": "^11.18.2",
     "husky": "^9.1.7",
@@ -92,9 +90,9 @@
     "storybook": "^8.6.14",
     "typescript": "^5",
     "vite": "^6.3.5",
+    "vite-plugin-dts": "^4.5.4",
     "vite-plugin-svgr": "^4.3.0",
-    "vite-tsconfig-paths": "^5.1.4",
-    "vite-plugin-dts": "^4.5.4"
+    "vite-tsconfig-paths": "^5.1.4"
   },
   "lint-staged": {
     "src/**/*.{js,jsx,ts,tsx}": [

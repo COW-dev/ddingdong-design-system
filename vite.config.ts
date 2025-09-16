@@ -44,10 +44,12 @@ export default defineConfig({
           'react-dom': 'ReactDOM',
           tailwindcss: 'tailwindcss',
         },
-        preserveModules: false,
+      },
+      treeshake: {
+        moduleSideEffects: false,
       },
     },
-    cssCodeSplit: false,
+    cssCodeSplit: true,
     sourcemap: true,
   },
 });
