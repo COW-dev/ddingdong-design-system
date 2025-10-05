@@ -40,6 +40,7 @@ export const COLORS = {
   red: colors['red'][300],
   green: colors['green'][300],
   black: colors['black'],
+  white: colors['white'],
 };
 
 export type Colors = keyof typeof colors;
