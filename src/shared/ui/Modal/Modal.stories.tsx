@@ -38,28 +38,22 @@ export const Basic: StoryObj<typeof Modal> = {
     const closeModal = () => setIsOpen(false);
 
     return (
-      <div className="flex flex-col items-center gap-4">
+      <div className="flex flex-col items-center">
         <Button onClick={openModal} variant="primary" color="blue">
           모달 열기
         </Button>
 
         <Modal {...args} isOpen={isOpen} closeModal={closeModal}>
-          <Flex dir="col" justifyContent="center" alignItems="center" className="gap-2 md:gap-4">
-            <Title3 className="text-2xl font-semibold">ddingdong 모달입니다.</Title3>
+          <Flex dir="col" justifyContent="center" alignItems="center" className="w-[400px] gap-2">
+            <Title3 className="py-5 text-2xl font-semibold">ddingdong 모달입니다.</Title3>
             <DoubleButton
               left={
-                <Button onClick={closeModal} variant="tertiary" size="full" className="h-10">
+                <Button onClick={closeModal} variant="tertiary" size="full">
                   취소
                 </Button>
               }
               right={
-                <Button
-                  onClick={closeModal}
-                  variant="primary"
-                  color="red"
-                  size="full"
-                  className="h-10"
-                >
+                <Button onClick={closeModal} variant="primary" color="blue" size="full">
                   확인하기
                 </Button>
               }
