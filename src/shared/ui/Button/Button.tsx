@@ -41,7 +41,7 @@ export type Props<V extends keyof VariantColorMap> = {
 } & React.ButtonHTMLAttributes<HTMLButtonElement>;
 
 export const ButtonVariants = cva(
-  `flex justify-center items-center text-sm font-medium py-2.5 md:py-4 md:text-base md:font-semibold cursor-pointer`,
+  `flex justify-center items-center py-2 md:py-3 md:text-base md:font-semibold text-sm font-medium cursor-pointer`,
   {
     variants: {
       variant: {
