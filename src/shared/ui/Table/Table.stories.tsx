@@ -134,5 +134,6 @@ export const NoHeader: Story = {
   args: {
     columns,
     data,
+    hideHead: true,
   },
 };
