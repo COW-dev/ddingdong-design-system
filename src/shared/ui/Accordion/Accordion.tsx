@@ -7,6 +7,11 @@ import { AccordionContext, useAccordion } from './Accordion.context';
 
 import { Icon } from '../Icon';
 
+function isInteractiveElement(element: HTMLElement) {
+  const INTERACTIVE_TAGS = ['INPUT', 'TEXTAREA', 'A'];
+  return INTERACTIVE_TAGS.includes(element.tagName);
+}
+
 type AccordionRootProps = {
   /**
    * The type of the Accordion, either single or multiple.
@@ -106,14 +111,22 @@ export function AccordionItem({
   const { openItems, toggleItem } = context;
   const isOpen = openItems.includes(value);
 
+  const handleClickTrigger = (e: React.MouseEvent<HTMLButtonElement>) => {
+    const target = e.target as HTMLElement;
+    if (isInteractiveElement(target)) {
+      return e.stopPropagation();
+    }
+    toggleItem(value);
+  };
+
   return (
     <div className="border-b border-gray-200" data-state={isOpen ? 'open' : 'closed'} {...props}>
-      <div
+      <button
         id={triggerId}
         aria-controls={contentId}
         aria-expanded={isOpen}
-        role="button"
-        onClick={() => toggleItem(value)}
+        type="button"
+        onClick={handleClickTrigger}
         className={cn(
           'flex w-full cursor-pointer items-center justify-between px-6 py-4 text-left hover:bg-gray-50',
           btnClassName
@@ -129,7 +142,7 @@ export function AccordionItem({
             <Icon name="arrowDown" size={20} />
           </motion.div>
         )}
-      </div>
+      </button>
 
       <AnimatePresence initial={false}>
         {isOpen && (
