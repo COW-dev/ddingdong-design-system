@@ -108,11 +108,11 @@ export function AccordionItem({
 
   return (
     <div className="border-b border-gray-200" data-state={isOpen ? 'open' : 'closed'} {...props}>
-      <button
+      <div
         id={triggerId}
         aria-controls={contentId}
         aria-expanded={isOpen}
-        type="button"
+        role="button"
         onClick={() => toggleItem(value)}
         className={cn(
           'flex w-full cursor-pointer items-center justify-between px-6 py-4 text-left hover:bg-gray-50',
@@ -129,7 +129,7 @@ export function AccordionItem({
             <Icon name="arrowDown" size={20} />
           </motion.div>
         )}
-      </button>
+      </div>
 
       <AnimatePresence initial={false}>
         {isOpen && (
