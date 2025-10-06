@@ -1,6 +1,7 @@
 import type { Meta, StoryObj } from '@storybook/react';
 
 import { AccordionItem, Accordion } from '.';
+import { Input } from '../Input';
 
 const meta: Meta<typeof Accordion> = {
   title: 'components/Accordion',
@@ -57,6 +58,17 @@ export const NoneArrowAccordion: Story = {
         </AccordionItem>
         <AccordionItem value="item-2" isArrow={false} trigger={<div>질문 2</div>}>
           <div>내용</div>
+        </AccordionItem>
+      </Accordion>
+    );
+  },
+};
+export const InputAccordion: Story = {
+  render: () => {
+    return (
+      <Accordion type="single">
+        <AccordionItem value="item-1" trigger={<Input onClickReset={() => {}} />}>
+          <Input onClickReset={() => {}} />
         </AccordionItem>
       </Accordion>
     );

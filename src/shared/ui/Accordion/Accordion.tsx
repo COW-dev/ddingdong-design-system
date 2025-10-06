@@ -88,6 +88,11 @@ const ACCORDION_MOTION = {
   },
 };
 
+const isInteractiveElement = (element: HTMLElement) => {
+  const INTERACTIVE_TAGS = ['INPUT', 'TEXTAREA', 'A'];
+  return INTERACTIVE_TAGS.includes(element.tagName);
+};
+
 export function AccordionItem({
   trigger,
   isArrow = true,
@@ -106,14 +111,23 @@ export function AccordionItem({
   const { openItems, toggleItem } = context;
   const isOpen = openItems.includes(value);
 
+  const handleClickTrigger = (e: React.MouseEvent<HTMLDivElement>) => {
+    const target = e.target as HTMLElement;
+    if (isInteractiveElement(target)) {
+      return e.stopPropagation();
+    }
+
+    toggleItem(value);
+  };
+
   return (
     <div className="border-b border-gray-200" data-state={isOpen ? 'open' : 'closed'} {...props}>
-      <button
+      <div
         id={triggerId}
         aria-controls={contentId}
         aria-expanded={isOpen}
-        type="button"
-        onClick={() => toggleItem(value)}
+        role="button"
+        onClick={handleClickTrigger}
         className={cn(
           'flex w-full cursor-pointer items-center justify-between px-6 py-4 text-left hover:bg-gray-50',
           btnClassName
@@ -129,7 +143,7 @@ export function AccordionItem({
             <Icon name="arrowDown" size={20} />
           </motion.div>
         )}
-      </button>
+      </div>
 
       <AnimatePresence initial={false}>
         {isOpen && (
