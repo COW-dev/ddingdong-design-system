@@ -15,7 +15,7 @@ export { Modal } from './ui/Modal';
 export { NavBack } from './ui/NavBack';
 export { Pagination } from './ui/Pagination';
 export { Portal } from './ui/Portal';
-export { Select } from './ui/Select';
+export { Select, GroupingSelect } from './ui/Select';
 export { Skeleton } from './ui/Skeleton';
 export { Switch } from './ui/Switch';
 export { Tabs, TabItem } from './ui/Tabs';
