@@ -13,8 +13,10 @@ import Loading from './loading.svg';
 import NavbarArrow from './navbar-arrow.svg';
 import New from './new.svg';
 import Pin from './pin.svg';
+import Refresh from './refresh.svg';
 import Search from './search.svg';
 import Trash from './trash.svg';
+import Upload from './upload.svg';
 import Write from './write.svg';
 
 export const Icons = {
@@ -36,6 +38,8 @@ export const Icons = {
   trash: Trash,
   write: Write,
   loading: Loading,
+  refresh: Refresh,
+  upload: Upload,
 };
 
 export type IconName = keyof typeof Icons;

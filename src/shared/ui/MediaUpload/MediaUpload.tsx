@@ -1,0 +1,159 @@
+import { ComponentProps, useId, useState } from 'react';
+
+import { MediaPreview } from './MediaUploadPreview';
+
+import { Flex } from '../Flex';
+import { Icon } from '../Icon';
+import { Caption1 } from '../Typography';
+
+export type Props = {
+  /**
+   * id of the file input.
+   * @defualt random string value
+   */
+  id?: string;
+  /**
+   * label text of the file input
+   * @default '파일을 업로드해주세요. (jpg, jpeg, png)'
+   */
+  label?: string;
+  /**
+   * description text of the file input
+   * @default '* 파일은 5GB까지 업로드 가능합니다.'
+   */
+  description?: string;
+  /**
+   * element displayed above the file input
+   */
+  topAffix?: React.ReactNode;
+  /**
+   * callback when media file is uploaded.
+   */
+  onFileUpload?: (files: File[] | null) => void;
+  /**
+   * maximum file size in GB.
+   * @default 5
+   */
+  maxSize?: number;
+  /**
+   * accepted media file formats.
+   * @default ['image/*']
+   */
+  acceptedFormats?: string[];
+  /**
+   * allow multiple file selection
+   * @default false
+   */
+  multiple?: boolean;
+} & Omit<ComponentProps<'input'>, 'id'>;
+
+const GB = 1024 * 1024 * 1024;
+
+export function MediaUpload({
+  topAffix,
+  onFileUpload,
+  id,
+  label = '파일을 업로드해주세요. (jpg, jpeg, png)',
+  description = '* 파일은 5GB까지 업로드 가능합니다.',
+  maxSize = 5,
+  acceptedFormats = ['image/*'],
+  multiple = false,
+  ...props
+}: Props) {
+  const generatedId = useId();
+  const inputId = id || generatedId;
+  const [selectedFiles, setSelectedFiles] = useState<File[]>([]);
+  const [previewUrls, setPreviewUrls] = useState<string[]>([]);
+  const isSelected = selectedFiles.length > 0;
+  const handleReset = () => {
+    setSelectedFiles([]);
+    setPreviewUrls([]);
+    onFileUpload?.(null);
+  };
+
+  const handleFileChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    const files = Array.from(event.target.files || []);
+    if (files.length === 0) {
+      return handleReset();
+    }
+    const oversizedFiles = files.filter((file) => file.size / GB > maxSize);
+    if (oversizedFiles.length > 0) {
+      return alert(`${maxSize}GB 이하의 파일로 등록해주세요.`);
+    }
+
+    const validatedFiles = multiple ? files : [files[0]];
+    setSelectedFiles(validatedFiles);
+    const urls = validatedFiles.map((file) => URL.createObjectURL(file));
+    setPreviewUrls(urls);
+    onFileUpload?.(validatedFiles);
+  };
+
+  const handleRemoveFile = (index: number) => {
+    const newFiles = selectedFiles.filter((_, i) => i !== index);
+    const newUrls = previewUrls.filter((_, i) => i !== index);
+
+    setSelectedFiles(newFiles);
+    setPreviewUrls(newUrls);
+    onFileUpload?.(newFiles.length > 0 ? newFiles : null);
+  };
+
+  return (
+    <div className="w-full">
+      <Flex>
+        <span>{topAffix}</span>
+        <Flex
+          as="button"
+          onClick={handleReset}
+          className={`justify-end ${!isSelected && 'hidden'}`}
+          aria-label="초기화"
+        >
+          <Icon name="refresh" size={24} color="primary" />
+          <span>재첨부</span>
+        </Flex>
+      </Flex>
+      {!isSelected ? (
+        <UploadBox id={inputId} label={label} description={description} />
+      ) : (
+        <MediaPreview
+          files={selectedFiles}
+          previewUrls={previewUrls}
+          onRemoveFile={handleRemoveFile}
+          multiple={multiple}
+        />
+      )}
+      <input
+        id={inputId}
+        name="media file"
+        type="file"
+        accept={acceptedFormats.join(',')}
+        multiple={multiple}
+        className="hidden"
+        onChange={handleFileChange}
+        {...props}
+      />
+    </div>
+  );
+}
+
+type UploadBoxProps = {
+  id?: string;
+  label?: string;
+  description?: string;
+};
+
+function UploadBox({ id, label, description }: UploadBoxProps) {
+  return (
+    <label
+      htmlFor={id}
+      className="focus-within:bg-primary-50 block w-full cursor-pointer rounded-xl border border-gray-200 bg-gray-50 px-4 py-8 transition-colors hover:bg-gray-100"
+    >
+      <Flex dir="col" alignItems="center" gap={4}>
+        <Icon name="upload" size={40} color="gray" />
+        <Caption1 className="text-gray-400" weight="medium">
+          {label}
+        </Caption1>
+        <Caption1 className="text-xs text-gray-300">{description}</Caption1>
+      </Flex>
+    </label>
+  );
+}
