@@ -139,7 +139,7 @@ function UploadBox({ id, label, description }: UploadBoxProps) {
   return (
     <label
       htmlFor={id}
-      className="focus-within:bg-primary-50 block w-full cursor-pointer rounded-xl border border-gray-200 bg-gray-50 px-4 py-8 transition-colors hover:bg-gray-100"
+      className="block w-full cursor-pointer rounded-xl border border-gray-200 bg-gray-50 px-4 py-8 hover:bg-gray-100"
     >
       <Flex dir="col" alignItems="center" gap={4} className="text-gray-400">
         <Icon name="upload" size={40} />

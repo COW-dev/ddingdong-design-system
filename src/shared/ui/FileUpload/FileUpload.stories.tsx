@@ -7,8 +7,6 @@ import { Flex } from '../Flex';
 import { IconButton } from '../IconButton';
 import { Caption1 } from '../Typography';
 
-// 반응형
-// 다중 이미지
 const meta = {
   title: 'components/FileUpload',
   component: FileUpload,

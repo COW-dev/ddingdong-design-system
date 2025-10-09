@@ -11,7 +11,7 @@ const meta = {
 export default meta;
 type Story = StoryObj<typeof meta>;
 
-const sampleImages = [
+const SAMPLE_IMAGE = [
   'https://images.unsplash.com/photo-1500530855697-b586d89ba3ee?q=80&w=1200&auto=format&fit=crop',
   'https://images.unsplash.com/photo-1464822759023-fed622ff2c3b?q=80&w=1200&auto=format&fit=crop',
   'https://images.unsplash.com/photo-1507525428034-b723cf961d3e?q=80&w=1200&auto=format&fit=crop',
@@ -22,7 +22,7 @@ const sampleImages = [
 
 export const Basic: Story = {
   args: {
-    images: sampleImages,
+    images: SAMPLE_IMAGE,
   },
   parameters: {
     layout: 'centered',
@@ -36,11 +36,7 @@ export const Basic: Story = {
 
 export const WithoutArrows: Story = {
   args: {
-    images: sampleImages,
+    images: SAMPLE_IMAGE,
   },
-  render: (args) => (
-    <div className="w-[640px]">
-      <ImageGallery {...args} />
-    </div>
-  ),
+  render: (args) => <ImageGallery {...args} />,
 };

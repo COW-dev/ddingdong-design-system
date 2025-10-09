@@ -47,9 +47,9 @@ function ImageGalleryContent({ className }: { className?: string }) {
           </>
         )}
       </div>
-      <div className="mt-2 flex justify-center">
+      <Flex justifyContent="center" className="mt-2">
         <ImageGalleryDots />
-      </div>
+      </Flex>
     </Flex>
   );
 }
@@ -57,20 +57,20 @@ function ImageGalleryContent({ className }: { className?: string }) {
 function ImageGalleryDots() {
   const { images, current, goToIndex } = useImageGallery();
   return (
-    <div className={cn('flex items-center gap-2')}>
-      {images.map((_, idx) => {
-        const isActive = idx === current;
+    <Flex alignItems="center" className="gap-2">
+      {images.map((_, index) => {
+        const isActive = index === current;
         return (
           <button
-            key={idx}
+            key={index}
             type="button"
-            aria-label={`이미지 ${idx + 1}`}
-            onClick={() => goToIndex(idx)}
+            aria-label={`이미지 ${index + 1}`}
+            onClick={() => goToIndex(index)}
             className={cn('h-2 w-2 rounded-full', isActive ? 'bg-primary-300' : 'bg-gray-200')}
           />
         );
       })}
-    </div>
+    </Flex>
   );
 }
 
