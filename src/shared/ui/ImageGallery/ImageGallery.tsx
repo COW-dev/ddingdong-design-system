@@ -2,6 +2,7 @@ import { cn } from '@/shared/lib/core';
 
 import { ImageGalleryProvider, useImageGallery } from './ImageGalleryContext';
 
+import { Flex } from '../Flex';
 import { Icon } from '../Icon';
 
 type Props = {
@@ -31,30 +32,32 @@ export function ImageGallery({ images, altPrefix = 'image', className }: Props) 
 function ImageGalleryContent({ className }: { className?: string }) {
   const { images, current, total, altPrefix } = useImageGallery();
   return (
-    <div className={cn('relative w-full overflow-hidden rounded-lg bg-gray-50', className)}>
-      <div className="relative aspect-video w-full">
+    <Flex dir="col" alignItems="center">
+      <div className={cn('relative h-[500px] w-[500px] overflow-hidden rounded-lg', className)}>
         <img
           src={images[current]}
           alt={`${altPrefix}${current + 1}`}
-          className="h-full w-full object-cover"
+          className="h-full w-full object-scale-down"
           loading="lazy"
         />
+        {total > 1 && (
+          <>
+            <ImageGalleryArrow direction="prev" />
+            <ImageGalleryArrow direction="next" />
+          </>
+        )}
       </div>
-      {total > 1 && (
-        <>
-          <ImageGalleryArrow direction="prev" />
-          <ImageGalleryArrow direction="next" />
-          <ImageGalleryDots />
-        </>
-      )}
-    </div>
+      <div className="mt-2 flex justify-center">
+        <ImageGalleryDots />
+      </div>
+    </Flex>
   );
 }
 
 function ImageGalleryDots() {
   const { images, current, goToIndex } = useImageGallery();
   return (
-    <div className={cn('absolute bottom-3 left-1/2 z-10 flex -translate-x-1/2 items-center gap-2')}>
+    <div className={cn('flex items-center gap-2')}>
       {images.map((_, idx) => {
         const isActive = idx === current;
         return (
@@ -63,7 +66,7 @@ function ImageGalleryDots() {
             type="button"
             aria-label={`이미지 ${idx + 1}`}
             onClick={() => goToIndex(idx)}
-            className={cn('h-2 w-2 rounded-full', isActive ? 'bg-primary-300' : 'bg-gray-300')}
+            className={cn('h-2 w-2 rounded-full', isActive ? 'bg-primary-300' : 'bg-gray-200')}
           />
         );
       })}
@@ -85,7 +88,7 @@ function ImageGalleryArrow({ direction }: ImageGalleryArrowProps) {
       type="button"
       onClick={onClick}
       className={cn(
-        'absolute top-1/2 z-10 -translate-y-1/2 rounded-full bg-white p-2 shadow-md transition hover:bg-gray-50',
+        'absolute top-1/2 z-10 -translate-y-1/2 rounded-full bg-white/75 p-1.5',
         isPrev ? 'left-4' : 'right-4',
         isHidden && 'hidden'
       )}

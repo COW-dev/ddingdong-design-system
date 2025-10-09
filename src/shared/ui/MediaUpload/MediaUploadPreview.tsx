@@ -12,16 +12,15 @@ export function MediaPreview({ files, previewUrls, onRemoveFile, multiple }: Pro
     return <MediaPreviewItem file={files[0]} previewUrl={previewUrls[0]} />;
   }
   return (
-    <div className="grid grid-cols-2 gap-4 md:grid-cols-3 lg:grid-cols-4">
+    <div className="grid grid-cols-2 gap-4 md:grid-cols-3">
       {files?.map((file, index) => (
-        <div key={index} className="group relative">
+        <div key={index} className="relative">
           <MediaPreviewItem file={file} previewUrl={previewUrls[index]} />
           <button
             onClick={() => onRemoveFile(index)}
-            className="absolute -top-2 -right-2 rounded-full bg-red-500 p-1 text-white opacity-0 transition-opacity group-hover:opacity-100"
-            aria-label={`${file.name} 삭제`}
+            className="absolute top-2 right-2 rounded-full bg-white p-1"
           >
-            <Icon name="close" size={16} />
+            <Icon name="close" size={14} />
           </button>
         </div>
       ))}
@@ -35,11 +34,15 @@ type MediaPreviewItemProps = {
 };
 function MediaPreviewItem({ file, previewUrl }: MediaPreviewItemProps) {
   return (
-    <div className="relative overflow-hidden rounded-xl border border-gray-200">
+    <div className="relative rounded-xl border border-gray-200">
       {file.type.startsWith('video/') ? (
-        <video src={previewUrl} controls className="h-32 w-full object-cover" />
+        <video src={previewUrl} controls className="h-[200px] w-full object-scale-down" />
       ) : (
-        <img src={previewUrl} alt={`미리보기 ${file.name}`} className="h-32 w-full object-cover" />
+        <img
+          src={previewUrl}
+          alt={`미리보기 ${file.name}`}
+          className="h-[200px] w-full object-scale-down"
+        />
       )}
     </div>
   );

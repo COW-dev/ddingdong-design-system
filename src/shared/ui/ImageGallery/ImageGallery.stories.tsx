@@ -5,14 +5,7 @@ import { ImageGallery } from './ImageGallery';
 const meta = {
   title: 'components/ImageGallery',
   component: ImageGallery,
-  parameters: {
-    layout: 'centered',
-  },
-  argTypes: {
-    images: {
-      control: 'object',
-    },
-  },
+  tags: ['autodocs'],
 } satisfies Meta<typeof ImageGallery>;
 
 export default meta;
@@ -30,6 +23,9 @@ const sampleImages = [
 export const Basic: Story = {
   args: {
     images: sampleImages,
+  },
+  parameters: {
+    layout: 'centered',
   },
   render: (args) => (
     <div className="w-[640px]">

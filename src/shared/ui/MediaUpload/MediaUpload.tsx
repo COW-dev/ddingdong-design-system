@@ -4,7 +4,7 @@ import { MediaPreview } from './MediaUploadPreview';
 
 import { Flex } from '../Flex';
 import { Icon } from '../Icon';
-import { Caption1 } from '../Typography';
+import { Body1, Caption1 } from '../Typography';
 
 export type Props = {
   /**
@@ -62,9 +62,11 @@ export function MediaUpload({
 }: Props) {
   const generatedId = useId();
   const inputId = id || generatedId;
+
   const [selectedFiles, setSelectedFiles] = useState<File[]>([]);
   const [previewUrls, setPreviewUrls] = useState<string[]>([]);
   const isSelected = selectedFiles.length > 0;
+
   const handleReset = () => {
     setSelectedFiles([]);
     setPreviewUrls([]);
@@ -99,17 +101,9 @@ export function MediaUpload({
 
   return (
     <div className="w-full">
-      <Flex>
-        <span>{topAffix}</span>
-        <Flex
-          as="button"
-          onClick={handleReset}
-          className={`justify-end ${!isSelected && 'hidden'}`}
-          aria-label="초기화"
-        >
-          <Icon name="refresh" size={24} color="primary" />
-          <span>재첨부</span>
-        </Flex>
+      <Flex justifyContent="between">
+        <Body1 className="text-gray-400">{topAffix}</Body1>
+        <RefreshButton handleReset={handleReset} isSelected={isSelected} />
       </Flex>
       {!isSelected ? (
         <UploadBox id={inputId} label={label} description={description} />
@@ -136,9 +130,9 @@ export function MediaUpload({
 }
 
 type UploadBoxProps = {
-  id?: string;
-  label?: string;
-  description?: string;
+  id: string;
+  label: string;
+  description: string;
 };
 
 function UploadBox({ id, label, description }: UploadBoxProps) {
@@ -147,13 +141,32 @@ function UploadBox({ id, label, description }: UploadBoxProps) {
       htmlFor={id}
       className="focus-within:bg-primary-50 block w-full cursor-pointer rounded-xl border border-gray-200 bg-gray-50 px-4 py-8 transition-colors hover:bg-gray-100"
     >
-      <Flex dir="col" alignItems="center" gap={4}>
-        <Icon name="upload" size={40} color="gray" />
-        <Caption1 className="text-gray-400" weight="medium">
-          {label}
+      <Flex dir="col" alignItems="center" gap={4} className="text-gray-400">
+        <Icon name="upload" size={40} />
+        <Body1 weight="semibold">{label}</Body1>
+        <Caption1 className="text-gray-300" weight="normal">
+          {description}
         </Caption1>
-        <Caption1 className="text-xs text-gray-300">{description}</Caption1>
       </Flex>
     </label>
+  );
+}
+
+type RefreshButtonProp = {
+  handleReset: () => void;
+  isSelected: boolean;
+};
+function RefreshButton({ handleReset, isSelected }: RefreshButtonProp) {
+  return (
+    <Flex
+      as="button"
+      onClick={handleReset}
+      alignItems="center"
+      className={`text-primary-300 justify-end ${!isSelected && 'hidden'}`}
+      aria-label="초기화"
+    >
+      <Icon name="refresh" size={24} color="primary" />
+      <Body1>초기화</Body1>
+    </Flex>
   );
 }

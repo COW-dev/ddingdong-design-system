@@ -22,7 +22,7 @@ export const Basic: Story = {
   render: (args) => <MediaUpload {...args} />,
 };
 
-export const WithVideoFormats: Story = {
+export const UploadFormats: Story = {
   args: {
     label: '이미지와 비디오를 업로드 할 수 있어요.',
     description: '3GB까지 업로드 가능해요.',
@@ -33,6 +33,12 @@ export const WithVideoFormats: Story = {
 
 export const WithTopAffix: Story = {
   args: {
-    topAffix: <span className="text-sm text-gray-500">프로필 이미지</span>,
+    topAffix: '제목처럼 추가할 수 있어요',
+  },
+};
+
+export const MultipleMode: Story = {
+  args: {
+    multiple: true,
   },
 };
