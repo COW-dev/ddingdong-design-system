@@ -23,7 +23,6 @@ type Story = StoryObj<typeof TextArea>;
 export const Basic: Story = {
   args: {
     value: '',
-    variant: 'gray',
     maxLength: 500,
     showCounter: true,
   },
