@@ -10,7 +10,7 @@ const optionVariants = cva(
     variants: {
       size: {
         md: 'px-3 py-1 text-sm',
-        lg: 'px-5 py-2 md:py-2.5',
+        lg: 'px-5 py-2.5',
       },
     },
     defaultVariants: {

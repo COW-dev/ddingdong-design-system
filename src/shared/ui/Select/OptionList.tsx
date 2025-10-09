@@ -5,12 +5,12 @@ import { cn } from '@/shared/lib/core';
 import { useSelectContext } from './Select.context';
 
 const optionListVariants = cva(
-  'absolute top-full left-0 z-50 mt-1 max-h-60 w-full overflow-y-auto rounded-md border border-gray-200 bg-white font-semibold text-gray-400 shadow-lg',
+  'relative z-50 mt-1 max-h-60 w-full overflow-y-auto rounded-md border border-gray-200 bg-white font-semibold text-gray-400 shadow-lg',
   {
     variants: {
       size: {
         md: 'text-sm min-w-24',
-        lg: 'text-base md:text-lg',
+        lg: 'md:text-lg',
       },
     },
     defaultVariants: {
