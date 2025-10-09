@@ -25,7 +25,7 @@ type Props = {
 
 const sizeVariants = {
   md: 'px-3 py-1 text-sm w-fit min-w-24',
-  lg: 'px-5 py-2.5 min-w-64 w-72 text-lg',
+  lg: 'px-4 py-3.5 min-w-64 w-72 text-lg',
 } as const;
 
 export function SelectButton({ selected, onClick, isOpen, size = 'lg' }: Props) {
