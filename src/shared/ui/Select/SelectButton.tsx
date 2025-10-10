@@ -38,12 +38,10 @@ export function SelectButton({ selected, onClick, isOpen, size = 'lg' }: Props) 
         'w-full rounded-lg border border-gray-200 bg-white font-semibold text-gray-400'
       )}
     >
-      <Flex
-        as="button"
-        alignItems="center"
-        justifyContent="between"
+      <button
+        type="button"
         className={cn(
-          'w-full cursor-pointer rounded-lg align-middle',
+          'flex w-full cursor-pointer items-center justify-between rounded-lg align-middle',
           isOpen && 'hover:rounded-b-none'
         )}
       >
@@ -56,7 +54,7 @@ export function SelectButton({ selected, onClick, isOpen, size = 'lg' }: Props) 
             size === 'md' && 'w-5'
           )}
         />
-      </Flex>
+      </button>
     </Flex>
   );
 }
