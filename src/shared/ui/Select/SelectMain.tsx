@@ -28,7 +28,7 @@ type Props = {
   children: ReactNode;
 } & Omit<ComponentProps<'select'>, 'value' | 'onChange' | 'size'>;
 
-export function SelectMain({ value, onChange, size = 'lg', children }: Props) {
+export function SelectMain({ value, onChange, size = 'lg', defaultValue, children }: Props) {
   const [isOpen, setIsOpen] = useState(false);
 
   const handleSelect = (option: string) => {
@@ -44,15 +44,13 @@ export function SelectMain({ value, onChange, size = 'lg', children }: Props) {
         size: size,
       }}
     >
-      <div className="relative w-fit">
-        <SelectButton
-          selected={value}
-          onClick={() => setIsOpen(!isOpen)}
-          size={size}
-          isOpen={isOpen}
-        />
-        {isOpen && <OptionList>{children}</OptionList>}
-      </div>
+      <SelectButton
+        selected={value || defaultValue}
+        onClick={() => setIsOpen(!isOpen)}
+        size={size}
+        isOpen={isOpen}
+      />
+      {isOpen && <OptionList>{children}</OptionList>}
     </SelectContext.Provider>
   );
 }

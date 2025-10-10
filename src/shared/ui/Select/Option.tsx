@@ -5,12 +5,12 @@ import { cn } from '@/shared/lib/core';
 import { useSelectContext } from './Select.context';
 
 const optionVariants = cva(
-  'font-semibold text- cursor-pointer first:rounded-t-md last:rounded-b-md hover:bg-gray-50',
+  'font-semibold text- cursor-pointer first:rounded-t-md last:rounded-b-md hover:bg-gray-100',
   {
     variants: {
       size: {
         md: 'px-3 py-1 text-sm',
-        lg: 'px-5 py-2 md:py-2.5',
+        lg: 'px-4 py-3.5',
       },
     },
     defaultVariants: {

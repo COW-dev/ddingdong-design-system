@@ -7,15 +7,12 @@ const meta = {
   title: 'components/Select',
   component: Select,
   tags: ['autodocs'],
-  argTypes: {
-    size: {
-      control: { type: 'radio' },
-      options: ['md', 'lg'],
-      description: 'Select 컴포넌트의 크기 옵션입니다.',
-    },
-    defaultValue: {
-      control: 'text',
-      description: '기본 선택값입니다.',
+  parameters: {
+    docs: {
+      description: {
+        component:
+          'Select 컴포넌트는 드롭다운 메뉴를 통해 여러 옵션 중 하나를 선택할 수 있는 UI 요소입니다. 사용자는 버튼을 클릭하여 옵션 목록을 열고, 원하는 옵션을 선택할 수 있습니다. 선택된 옵션은 버튼에 표시되며, 사용자는 언제든지 다른 옵션으로 변경할 수 있습니다.',
+      },
     },
   },
 } satisfies Meta<typeof Select>;
@@ -26,17 +23,21 @@ type Story = StoryObj<typeof Select>;
 const defaultContents = ['객관식', '단답형', '체크박스', '드롭다운', '파일'];
 
 export const Basic: Story = {
-  parameters: {
-    docs: {
-      description: {
-        component: '드롭다운 선택 컴포넌트로, 기본 선택과 그룹화된 선택을 지원합니다.',
-      },
-    },
-  },
   args: {
     value: '유형을 선택해주세요',
     size: 'md',
     defaultValue: '유형을 선택해주세요',
+  },
+  argTypes: {
+    size: {
+      control: { type: 'radio' },
+      options: ['md', 'lg'],
+      description: 'Select 컴포넌트의 크기 옵션입니다.',
+    },
+    defaultValue: {
+      control: 'text',
+      description: '기본 선택값입니다.',
+    },
   },
   render: (args) => {
     const [value, setValue] = useState(args.defaultValue);

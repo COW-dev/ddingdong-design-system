@@ -11,11 +11,6 @@ type TextAreaProps = {
    */
   value: string;
   /**
-   * Background color of the textarea
-   * @default 'gray'
-   */
-  variant: 'gray' | 'white';
-  /**
    * Default height in number of rows
    * @default 3
    */
@@ -31,14 +26,8 @@ type TextAreaProps = {
   className?: string;
 } & Omit<ComponentProps<'textarea'>, 'rows'>;
 
-const variantStyle = {
-  gray: 'bg-gray-50',
-  white: 'bg-white',
-} as const;
-
 export function TextArea({
   value,
-  variant = 'gray',
   rows = 3,
   showCounter = false,
   className,
@@ -49,8 +38,7 @@ export function TextArea({
       <textarea
         rows={rows}
         className={cn(
-          'focus:border-primary-100 w-full resize-none rounded-xl border-none px-4 py-3 text-gray-900 outline-1 outline-gray-200 transition-colors placeholder:text-gray-400 focus:border-1',
-          variantStyle[variant],
+          'w-full resize-none rounded-xl border-none bg-white px-4 py-3.5 text-gray-900 outline-1 outline-gray-200 transition-colors placeholder:text-gray-400 focus:ring-4 focus:ring-blue-200 focus:outline-blue-500',
           className
         )}
         {...props}
