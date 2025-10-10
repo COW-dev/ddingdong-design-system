@@ -44,13 +44,15 @@ export function SelectMain({ value, onChange, size = 'lg', defaultValue, childre
         size: size,
       }}
     >
-      <SelectButton
-        selected={value || defaultValue}
-        onClick={() => setIsOpen(!isOpen)}
-        size={size}
-        isOpen={isOpen}
-      />
-      {isOpen && <OptionList>{children}</OptionList>}
+      <div className="relative w-full">
+        <SelectButton
+          selected={value || defaultValue}
+          onClick={() => setIsOpen(!isOpen)}
+          size={size}
+          isOpen={isOpen}
+        />
+        {isOpen && <OptionList>{children}</OptionList>}
+      </div>
     </SelectContext.Provider>
   );
 }
