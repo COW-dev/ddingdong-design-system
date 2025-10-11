@@ -5,43 +5,35 @@ import { ImageGalleryProvider, useImageGallery } from './ImageGalleryContext';
 import { Flex } from '../Flex';
 import { Icon } from '../Icon';
 
+export type ImageGalleryItem = { url: string; name?: string };
 type Props = {
   /**
-   * List of image URLs
+   * List of image name and url
    */
-  images: string[];
-  /**
-   * Common alt text prefix for each image
-   */
-  altPrefix?: string;
+  images: ImageGalleryItem[];
+
   /**
    * Additional class for container
    */
   className?: string;
 };
 
-export function ImageGallery({ images, altPrefix, className }: Props) {
+export function ImageGallery({ images, className }: Props) {
   return (
-    <ImageGalleryProvider images={images} altPrefix={altPrefix}>
+    <ImageGalleryProvider images={images}>
       <ImageGalleryContent className={className} />
     </ImageGalleryProvider>
   );
 }
 
 function ImageGalleryContent({ className }: { className?: string }) {
-  const { images, current, total, firstImage, altPrefix } = useImageGallery();
-  const alt = altPrefix ? `${altPrefix}${current + 1}` : undefined;
+  const { images, current, total, firstImage } = useImageGallery();
   const loading = firstImage ? 'eager' : 'lazy';
 
   return (
     <Flex dir="col" alignItems="center">
       <div className={cn('relative h-[500px] w-[500px] overflow-hidden rounded-lg', className)}>
-        <img
-          src={images[current]}
-          className="h-full w-full object-scale-down"
-          loading={loading}
-          alt={alt}
-        />
+        <img src={images[current].url} loading={loading} alt={images[current].name} />
         {total > 1 && (
           <>
             <ImageGalleryArrow direction="prev" />
@@ -80,7 +72,7 @@ type ImageGalleryArrowProps = {
   direction: 'prev' | 'next';
 };
 function ImageGalleryArrow({ direction }: ImageGalleryArrowProps) {
-  const { altPrefix, firstImage, lastImage, goPrev, goNext } = useImageGallery();
+  const { firstImage, lastImage, goPrev, goNext } = useImageGallery();
   const isPrev = direction === 'prev';
   const isHidden = isPrev ? firstImage : lastImage;
   const onClick = isPrev ? goPrev : goNext;
@@ -94,7 +86,7 @@ function ImageGalleryArrow({ direction }: ImageGalleryArrowProps) {
         isPrev ? 'left-4' : 'right-4',
         isHidden && 'hidden'
       )}
-      aria-label={`${altPrefix} ${direction} image button`}
+      aria-label={`${direction} image button`}
     >
       <Icon name={isPrev ? 'arrowLeft' : 'arrowRight'} />
     </button>

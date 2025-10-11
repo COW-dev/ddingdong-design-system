@@ -1,7 +1,9 @@
 import { createContext, useCallback, useContext, useState } from 'react';
 
+import { ImageGalleryItem } from './ImageGallery';
+
 type ImageGalleryContextType = {
-  images: string[];
+  images: ImageGalleryItem[];
   current: number;
   total: number;
   firstImage: boolean;
@@ -9,7 +11,6 @@ type ImageGalleryContextType = {
   goPrev: () => void;
   goNext: () => void;
   goToIndex: (index: number) => void;
-  altPrefix?: string;
 };
 const initImageGalleryContext: ImageGalleryContextType = {
   images: [],
@@ -20,21 +21,20 @@ const initImageGalleryContext: ImageGalleryContextType = {
   goPrev: () => {},
   goNext: () => {},
   goToIndex: () => {},
-  altPrefix: undefined,
 };
 const ImageGalleryContext = createContext<ImageGalleryContextType>(initImageGalleryContext);
 
+/* eslint-disable react-refresh/only-export-components */
 export const useImageGallery = () => {
   return useContext(ImageGalleryContext);
 };
 
 type ProviderProps = {
-  images: string[];
-  altPrefix?: string;
+  images: ImageGalleryItem[];
   children: React.ReactNode;
 };
 
-export function ImageGalleryProvider({ images, altPrefix, children }: ProviderProps) {
+export function ImageGalleryProvider({ images, children }: ProviderProps) {
   const [current, setCurrent] = useState(0);
   const total = images.length;
 
@@ -48,7 +48,6 @@ export function ImageGalleryProvider({ images, altPrefix, children }: ProviderPr
   const value: ImageGalleryContextType = {
     images,
     current,
-    altPrefix,
     total,
     firstImage: current === 0,
     lastImage: current === total - 1,

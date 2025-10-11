@@ -17,6 +17,7 @@ export function MediaPreview({ files, previewUrls, onRemoveFile, multiple }: Pro
         <div key={index} className="relative">
           <MediaPreviewItem file={file} previewUrl={previewUrls[index]} />
           <button
+            type="button"
             onClick={() => onRemoveFile(index)}
             className="absolute top-2 right-2 rounded-full bg-white/75 p-1"
           >

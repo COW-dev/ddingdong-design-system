@@ -9,7 +9,7 @@ import { Body1, Caption1 } from '../Typography';
 export type Props = {
   /**
    * id of the file input.
-   * @defualt random string value
+   * @default random string value
    */
   id?: string;
   /**
