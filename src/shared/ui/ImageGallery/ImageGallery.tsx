@@ -29,8 +29,9 @@ export function ImageGallery({ images, altPrefix, className }: Props) {
 }
 
 function ImageGalleryContent({ className }: { className?: string }) {
-  const { images, current, total, altPrefix } = useImageGallery();
+  const { images, current, total, firstImage, altPrefix } = useImageGallery();
   const alt = altPrefix ? `${altPrefix}${current + 1}` : undefined;
+  const loading = firstImage ? 'eager' : 'lazy';
 
   return (
     <Flex dir="col" alignItems="center">
@@ -38,7 +39,7 @@ function ImageGalleryContent({ className }: { className?: string }) {
         <img
           src={images[current]}
           className="h-full w-full object-scale-down"
-          loading="lazy"
+          loading={loading}
           alt={alt}
         />
         {total > 1 && (
