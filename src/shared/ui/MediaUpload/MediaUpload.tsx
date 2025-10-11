@@ -80,7 +80,7 @@ export function MediaUpload({
     }
     const oversizedFiles = files.filter((file) => file.size / GB > maxSize);
     if (oversizedFiles.length > 0) {
-      return alert(`${maxSize}GB 이하의 파일로 등록해주세요.`);
+      throw new Error(`${maxSize}GB 이하의 파일로 등록해주세요.`);
     }
 
     const validatedFiles = multiple ? files : [files[0]];
