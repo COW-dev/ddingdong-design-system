@@ -68,6 +68,7 @@ export function MediaUpload({
   const isSelected = selectedFiles.length > 0;
 
   const handleReset = () => {
+    previewUrls.forEach((url) => URL.revokeObjectURL(url));
     setSelectedFiles([]);
     setPreviewUrls([]);
     onFileUpload?.(null);
@@ -91,6 +92,7 @@ export function MediaUpload({
   };
 
   const handleRemoveFile = (index: number) => {
+    URL.revokeObjectURL(previewUrls[index]);
     const newFiles = selectedFiles.filter((_, i) => i !== index);
     const newUrls = previewUrls.filter((_, i) => i !== index);
 
@@ -160,9 +162,9 @@ function RefreshButton({ handleReset, isSelected }: RefreshButtonProp) {
   return (
     <Flex
       as="button"
-      onClick={handleReset}
+      onClick={isSelected ? handleReset : undefined}
       alignItems="center"
-      className={`text-primary-300 justify-end ${!isSelected && 'hidden'}`}
+      className={`text-primary-300 justify-end ${isSelected ? 'cursor-pointer' : 'cursor-not-allowed opacity-50'}`}
       aria-label="초기화"
     >
       <Icon name="refresh" size={24} color="primary" />
