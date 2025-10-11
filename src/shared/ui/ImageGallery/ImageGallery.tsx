@@ -12,7 +12,6 @@ type Props = {
   images: string[];
   /**
    * 각 이미지에 사용할 공통 alt 텍스트 접두사
-   * @default 'image'
    */
   altPrefix?: string;
   /**
@@ -21,7 +20,7 @@ type Props = {
   className?: string;
 };
 
-export function ImageGallery({ images, altPrefix = 'image', className }: Props) {
+export function ImageGallery({ images, altPrefix, className }: Props) {
   return (
     <ImageGalleryProvider images={images} altPrefix={altPrefix}>
       <ImageGalleryContent className={className} />
@@ -31,14 +30,16 @@ export function ImageGallery({ images, altPrefix = 'image', className }: Props) 
 
 function ImageGalleryContent({ className }: { className?: string }) {
   const { images, current, total, altPrefix } = useImageGallery();
+  const alt = altPrefix ? `${altPrefix}${current + 1}` : undefined;
+
   return (
     <Flex dir="col" alignItems="center">
       <div className={cn('relative h-[500px] w-[500px] overflow-hidden rounded-lg', className)}>
         <img
           src={images[current]}
-          alt={`${altPrefix}${current + 1}`}
           className="h-full w-full object-scale-down"
           loading="lazy"
+          alt={alt}
         />
         {total > 1 && (
           <>
@@ -92,7 +93,7 @@ function ImageGalleryArrow({ direction }: ImageGalleryArrowProps) {
         isPrev ? 'left-4' : 'right-4',
         isHidden && 'hidden'
       )}
-      aria-label={`${altPrefix} ${isPrev} arrow button`}
+      aria-label={`${altPrefix} ${direction} button`}
     >
       <Icon name={isPrev ? 'arrowLeft' : 'arrowRight'} />
     </button>

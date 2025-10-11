@@ -4,23 +4,23 @@ type ImageGalleryContextType = {
   images: string[];
   current: number;
   total: number;
-  altPrefix: string;
   firstImage: boolean;
   lastImage: boolean;
   goPrev: () => void;
   goNext: () => void;
   goToIndex: (index: number) => void;
+  altPrefix?: string;
 };
 const initImageGalleryContext: ImageGalleryContextType = {
   images: [],
   current: 0,
   total: 0,
-  altPrefix: 'image',
   firstImage: true,
   lastImage: false,
   goPrev: () => {},
   goNext: () => {},
   goToIndex: () => {},
+  altPrefix: undefined,
 };
 const ImageGalleryContext = createContext<ImageGalleryContextType>(initImageGalleryContext);
 
@@ -30,7 +30,7 @@ export const useImageGallery = () => {
 
 type ProviderProps = {
   images: string[];
-  altPrefix: string;
+  altPrefix?: string;
   children: React.ReactNode;
 };
 
