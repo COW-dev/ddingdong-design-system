@@ -31,16 +31,27 @@ function ImageGalleryContent({ className }: { className?: string }) {
   const loading = firstImage ? 'eager' : 'lazy';
 
   return (
-    <Flex dir="col" alignItems="center">
-      <div className={cn('relative h-[500px] w-[500px] overflow-hidden rounded-lg', className)}>
-        <img src={images[current].url} loading={loading} alt={images[current].name} />
+    <Flex dir="col" alignItems="center" className={cn('w-full max-w-[500px]', className)}>
+      <Flex
+        alignItems="center"
+        justifyContent="center"
+        className="relative aspect-square w-full overflow-hidden bg-gray-50"
+      >
+        <img
+          src={images[current].url}
+          loading={loading}
+          alt={images[current].name}
+          width={500}
+          height={500}
+          className="h-full w-full object-contain"
+        />
         {total > 1 && (
           <>
             <ImageGalleryArrow direction="prev" />
             <ImageGalleryArrow direction="next" />
           </>
         )}
-      </div>
+      </Flex>
       <Flex justifyContent="center" className="mt-2">
         <ImageGalleryDots />
       </Flex>
@@ -82,13 +93,13 @@ function ImageGalleryArrow({ direction }: ImageGalleryArrowProps) {
       type="button"
       onClick={onClick}
       className={cn(
-        'absolute top-1/2 z-10 -translate-y-1/2 rounded-full bg-white/75 p-1.5',
+        'absolute top-1/2 z-10 -translate-y-1/2 rounded-full bg-white/75 p-1 shadow-sm transition-opacity hover:bg-white md:p-1.5',
         isPrev ? 'left-4' : 'right-4',
         isHidden && 'hidden'
       )}
       aria-label={`${direction} image button`}
     >
-      <Icon name={isPrev ? 'arrowLeft' : 'arrowRight'} />
+      <Icon name={isPrev ? 'arrowLeft' : 'arrowRight'} className="h-5 w-5 md:h-6 md:w-6" />
     </button>
   );
 }
