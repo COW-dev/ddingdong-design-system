@@ -7,15 +7,15 @@ import { Icon } from '../Icon';
 
 type Props = {
   /**
-   * 이미지 URL 목록
+   * List of image URLs
    */
   images: string[];
   /**
-   * 각 이미지에 사용할 공통 alt 텍스트 접두사
+   * Common alt text prefix for each image
    */
   altPrefix?: string;
   /**
-   * 컨테이너 추가 클래스
+   * Additional class for container
    */
   className?: string;
 };
@@ -66,7 +66,7 @@ function ImageGalleryDots() {
           <button
             key={index}
             type="button"
-            aria-label={`이미지 ${index + 1}`}
+            aria-label={`Image ${index + 1}`}
             onClick={() => goToIndex(index)}
             className={cn('h-2 w-2 rounded-full', isActive ? 'bg-primary-300' : 'bg-gray-200')}
           />
@@ -94,7 +94,7 @@ function ImageGalleryArrow({ direction }: ImageGalleryArrowProps) {
         isPrev ? 'left-4' : 'right-4',
         isHidden && 'hidden'
       )}
-      aria-label={`${altPrefix} ${direction} button`}
+      aria-label={`${altPrefix} ${direction} image button`}
     >
       <Icon name={isPrev ? 'arrowLeft' : 'arrowRight'} />
     </button>
