@@ -1,3 +1,4 @@
+import { Flex } from '../Flex';
 import { Icon } from '../Icon';
 
 type Props = {
@@ -12,9 +13,9 @@ export function MediaPreview({ files, previewUrls, onRemoveFile, multiple }: Pro
     return <MediaPreviewItem file={files[0]} previewUrl={previewUrls[0]} />;
   }
   return (
-    <div className="grid grid-cols-2 gap-4 md:grid-cols-3">
+    <div className="grid grid-cols-2 gap-2 md:grid-cols-3 md:gap-4">
       {files?.map((file, index) => (
-        <div key={index} className="relative">
+        <div key={index} className="relative aspect-square">
           <MediaPreviewItem file={file} previewUrl={previewUrls[index]} />
           <button
             type="button"
@@ -35,16 +36,24 @@ type MediaPreviewItemProps = {
 };
 function MediaPreviewItem({ file, previewUrl }: MediaPreviewItemProps) {
   return (
-    <div className="relative rounded-xl border border-gray-200">
+    <Flex
+      justifyContent="center"
+      alignItems="center"
+      className="relative h-full w-full rounded-xl border border-gray-200 bg-gray-50"
+    >
       {file.type.startsWith('video/') ? (
-        <video src={previewUrl} controls className="h-[200px] w-full object-scale-down" />
+        <video
+          src={previewUrl}
+          controls
+          className="h-full max-h-[500px] w-full max-w-[500px] object-contain"
+        />
       ) : (
         <img
           src={previewUrl}
           alt={`미리보기 ${file.name}`}
-          className="h-[200px] w-full object-scale-down"
+          className="h-full max-h-[500px] w-full max-w-[500px] object-contain"
         />
       )}
-    </div>
+    </Flex>
   );
 }
