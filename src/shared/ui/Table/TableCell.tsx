@@ -11,8 +11,8 @@ export type Props = React.TdHTMLAttributes<HTMLTableCellElement> & {
 
 export function TableCell({ className, children, ...props }: Props) {
   return (
-    <td className={cn('px-4 py-2 align-middle md:px-2', className)} {...props}>
-      <Body2 className="whitespace-pre-wrap text-gray-400 md:px-2 md:py-2" weight="normal">
+    <td className={cn('px-4 py-2 align-middle md:px-4', className)} {...props}>
+      <Body2 className="whitespace-pre-wrap text-gray-400" weight="normal">
         {children}
       </Body2>
     </td>
