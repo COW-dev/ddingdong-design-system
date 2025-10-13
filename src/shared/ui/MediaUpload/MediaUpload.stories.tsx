@@ -42,3 +42,13 @@ export const MultipleMode: Story = {
     multiple: true,
   },
 };
+
+export const EditMode: Story = {
+  args: {
+    multiple: true,
+    initialPreviewUrls: [
+      'https://images.unsplash.com/photo-1500530855697-b586d89ba3ee?q=80&w=1200&auto=format&fit=crop',
+    ],
+    initialFiles: [new File([], 'test.jpg')],
+  },
+};

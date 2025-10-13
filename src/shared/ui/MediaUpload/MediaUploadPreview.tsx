@@ -20,7 +20,7 @@ export function MediaPreview({ files, previewUrls, onRemoveFile, multiple }: Pro
           <button
             type="button"
             onClick={() => onRemoveFile(index)}
-            className="absolute top-2 right-2 rounded-full bg-white/75 p-1"
+            className="absolute top-2 right-2 cursor-pointer rounded-full bg-white/75 p-1"
           >
             <Icon name="close" size={14} />
           </button>

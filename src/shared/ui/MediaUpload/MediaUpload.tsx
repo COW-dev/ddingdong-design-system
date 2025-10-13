@@ -45,6 +45,14 @@ export type Props = {
    * @default false
    */
   multiple?: boolean;
+  /**
+   * initial preview urls for edit mode (e.g., existing uploaded image urls)
+   */
+  initialPreviewUrls?: string[];
+  /**
+   * initial files for edit mode (if available).
+   */
+  initialFiles?: File[];
 } & Omit<ComponentProps<'input'>, 'id'>;
 
 const GB = 1024 * 1024 * 1024;
@@ -58,17 +66,21 @@ export function MediaUpload({
   maxSize = 5,
   acceptedFormats = ['image/*'],
   multiple = false,
+  initialPreviewUrls,
+  initialFiles,
   ...props
 }: Props) {
   const generatedId = useId();
   const inputId = id || generatedId;
 
-  const [selectedFiles, setSelectedFiles] = useState<File[]>([]);
-  const [previewUrls, setPreviewUrls] = useState<string[]>([]);
+  const [selectedFiles, setSelectedFiles] = useState<File[]>(initialFiles || []);
+  const [previewUrls, setPreviewUrls] = useState<string[]>(initialPreviewUrls || []);
   const isSelected = selectedFiles.length > 0;
 
   const handleReset = () => {
-    previewUrls.forEach((url) => URL.revokeObjectURL(url));
+    previewUrls.forEach((url) => {
+      if (url.startsWith('blob:')) URL.revokeObjectURL(url);
+    });
     setSelectedFiles([]);
     setPreviewUrls([]);
     onFileUpload?.(null);
@@ -92,7 +104,10 @@ export function MediaUpload({
   };
 
   const handleRemoveFile = (index: number) => {
-    URL.revokeObjectURL(previewUrls[index]);
+    const urlToRemove = previewUrls[index];
+    if (urlToRemove?.startsWith('blob:')) {
+      URL.revokeObjectURL(urlToRemove);
+    }
     const newFiles = selectedFiles.filter((_, i) => i !== index);
     const newUrls = previewUrls.filter((_, i) => i !== index);
 
@@ -162,7 +177,10 @@ function RefreshButton({ handleReset, isSelected }: RefreshButtonProp) {
   return (
     <Flex
       as="button"
-      onClick={isSelected ? handleReset : undefined}
+      onClick={(e) => {
+        e.stopPropagation();
+        if (isSelected) handleReset();
+      }}
       alignItems="center"
       className={`text-primary-300 justify-end ${isSelected ? 'cursor-pointer' : 'cursor-not-allowed opacity-50'}`}
       aria-label="초기화"
