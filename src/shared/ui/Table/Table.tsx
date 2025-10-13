@@ -1,31 +1,26 @@
+import * as React from 'react';
+
 import { cn } from '@/shared/lib/core';
 
-import { TableBody } from './TableBody';
-import { TableHead } from './TableHead';
-import type { Column } from './types';
-
-type Props<T extends Record<string, unknown>> = {
-  columns: Column<T>[];
-  data: T[];
-  hideHead?: boolean;
+export type Props = React.HTMLAttributes<HTMLTableElement> & {
+  /**
+   * Optional custom className for additional styling.
+   */
   className?: string;
-};
 
-export function Table<T extends Record<string, unknown>>({
-  columns,
-  data,
-  hideHead,
-  className,
-}: Props<T>) {
+  /**
+   * Table content, usually composed of `<TableHeader>`, `<TableBody>`, etc.
+   */
+  children?: React.ReactNode;
+};
+export function Table({ className, children, ...props }: Props) {
   return (
     <div
-      className={cn(
-        'no-scrollbar relative max-h-[220px] w-full overflow-y-auto rounded-md border border-gray-100 md:max-h-[300px]',
-        className
-      )}
+      className={cn('no-scrollbar relative w-full overflow-auto rounded-md border border-gray-100')}
     >
-      {!hideHead && <TableHead<T> columns={columns} />}
-      <TableBody<T> columns={columns} data={data} />
+      <table className={cn('w-full table-fixed border-collapse text-sm', className)} {...props}>
+        {children}
+      </table>
     </div>
   );
 }

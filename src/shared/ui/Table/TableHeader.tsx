@@ -7,10 +7,10 @@ export type Props = React.HTMLAttributes<HTMLTableSectionElement> & {
   children?: React.ReactNode;
 };
 
-export function TableBody({ className, children, ...props }: Props) {
+export function TableHeader({ className, children, ...props }: Props) {
   return (
-    <tbody className={cn('bg-white', className)} {...props}>
+    <thead className={cn('bg-gray-50', className)} {...props}>
       {children}
-    </tbody>
+    </thead>
   );
 }
