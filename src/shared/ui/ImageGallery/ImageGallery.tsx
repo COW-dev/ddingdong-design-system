@@ -71,7 +71,10 @@ function ImageGalleryDots() {
             type="button"
             aria-label={`Image ${index + 1}`}
             onClick={() => goToIndex(index)}
-            className={cn('h-2 w-2 rounded-full', isActive ? 'bg-primary-300' : 'bg-gray-200')}
+            className={cn(
+              'h-2 w-2 cursor-pointer rounded-full',
+              isActive ? 'bg-primary-300' : 'bg-gray-200'
+            )}
           />
         );
       })}
@@ -93,7 +96,7 @@ function ImageGalleryArrow({ direction }: ImageGalleryArrowProps) {
       type="button"
       onClick={onClick}
       className={cn(
-        'absolute top-1/2 z-10 -translate-y-1/2 rounded-full bg-white/75 p-1 shadow-sm transition-opacity hover:bg-white md:p-1.5',
+        'absolute top-1/2 z-10 -translate-y-1/2 cursor-pointer rounded-full bg-white/75 p-1 shadow-sm transition-opacity hover:bg-white md:p-1.5',
         isPrev ? 'left-4' : 'right-4',
         isHidden && 'hidden'
       )}
