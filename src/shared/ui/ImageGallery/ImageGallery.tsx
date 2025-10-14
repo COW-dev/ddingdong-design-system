@@ -52,7 +52,7 @@ function ImageGalleryContent({ className }: { className?: string }) {
           </>
         )}
       </Flex>
-      <Flex justifyContent="center" className="mt-2">
+      <Flex justifyContent="center" className="mt-3">
         <ImageGalleryDots />
       </Flex>
     </Flex>
@@ -62,7 +62,7 @@ function ImageGalleryContent({ className }: { className?: string }) {
 function ImageGalleryDots() {
   const { images, current, goToIndex } = useImageGallery();
   return (
-    <Flex alignItems="center" className="gap-2">
+    <Flex alignItems="center" className="gap-2 md:gap-2.5">
       {images.map((_, index) => {
         const isActive = index === current;
         return (
@@ -72,7 +72,7 @@ function ImageGalleryDots() {
             aria-label={`Image ${index + 1}`}
             onClick={() => goToIndex(index)}
             className={cn(
-              'h-2 w-2 cursor-pointer rounded-full',
+              'h-2 w-2 cursor-pointer rounded-full md:h-2.5 md:w-2.5',
               isActive ? 'bg-primary-300' : 'bg-gray-200'
             )}
           />
