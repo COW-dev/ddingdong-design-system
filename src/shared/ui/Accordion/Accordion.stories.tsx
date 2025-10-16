@@ -63,12 +63,28 @@ export const NoneArrowAccordion: Story = {
     );
   },
 };
+
 export const InputAccordion: Story = {
   render: () => {
     return (
       <Accordion type="single">
         <AccordionItem value="item-1" trigger={<Input onClickReset={() => {}} />}>
           <Input onClickReset={() => {}} />
+        </AccordionItem>
+      </Accordion>
+    );
+  },
+};
+
+export const DefaultValueAccordion: Story = {
+  render: () => {
+    return (
+      <Accordion type="multiple" defaultValue={['item-2']}>
+        <AccordionItem value="item-1" isArrow={false} trigger={<div>질문 1</div>}>
+          <div>내용</div>
+        </AccordionItem>
+        <AccordionItem value="item-2" isArrow={false} trigger={<div>질문 1</div>}>
+          <div>내용</div>
         </AccordionItem>
       </Accordion>
     );

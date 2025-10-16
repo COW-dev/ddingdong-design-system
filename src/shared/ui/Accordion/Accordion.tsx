@@ -18,6 +18,11 @@ type AccordionRootProps = {
    */
   children: ReactNode;
   /**
+   * The default value of the Accordion item that should be open on initial render.
+   */
+  defaultValue?: string[];
+
+  /**
    * Additional class names to apply to the AccordionRoot.
    */
   className?: string;
@@ -27,9 +32,11 @@ export function AccordionRoot({
   type = 'single',
   className = '',
   children,
+  defaultValue,
   ...props
 }: AccordionRootProps) {
-  const [openItems, setOpenItems] = useState<string[]>([]);
+  const defaultOpenItem = defaultValue ? defaultValue : [];
+  const [openItems, setOpenItems] = useState<string[]>(defaultOpenItem);
 
   const toggleItem = (value: string) => {
     if (type === 'single') {
