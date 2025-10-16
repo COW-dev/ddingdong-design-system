@@ -79,12 +79,12 @@ export const InputAccordion: Story = {
 export const DefaultValueAccordion: Story = {
   render: () => {
     return (
-      <Accordion type="multiple" defaultValue={['item-2']}>
-        <AccordionItem value="item-1" isArrow={false} trigger={<div>질문 1</div>}>
-          <div>내용</div>
+      <Accordion type="single" defaultValue={['item-2']}>
+        <AccordionItem value="item-1" isArrow={false} trigger="defualtValue를 설정하지 않은 요소">
+          초기 render시 조회되지 않아요
         </AccordionItem>
-        <AccordionItem value="item-2" isArrow={false} trigger={<div>질문 1</div>}>
-          <div>내용</div>
+        <AccordionItem value="item-2" isArrow={false} trigger="defualtValue를 설정한 요소">
+          초기 render시 조회돼요
         </AccordionItem>
       </Accordion>
     );
