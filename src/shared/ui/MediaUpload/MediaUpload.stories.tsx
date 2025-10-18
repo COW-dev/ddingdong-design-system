@@ -13,7 +13,8 @@ export default meta;
 type Story = StoryObj<Props>;
 
 function MediaUploadStoryWrapper(args: Props & { serverResponseUrl?: string[] }) {
-  const [previewUrls, setPreviewUrls] = useState<string[]>(args.serverResponseUrl ?? []);
+  const { serverResponseUrl } = args;
+  const [previewUrls, setPreviewUrls] = useState<string[]>(serverResponseUrl ?? []);
   const [previewFiles, setPreviewFiles] = useState<File[]>([]);
 
   const handleFileChange = (files: File[] | null, urls: string[]) => {
