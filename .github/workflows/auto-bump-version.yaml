@@ -3,7 +3,6 @@ name: Auto Bump Version on Merge to main
 on:
   pull_request:
     types: [closed]
-  workflow_dispatch:
 
 permissions:
   contents: write
@@ -20,44 +19,37 @@ jobs:
         uses: actions/checkout@v4
         with:
           ref: main
-          fetch-depth: 0
 
       - name: Setup Node
         uses: actions/setup-node@v4
         with:
           node-version: '20'
 
-      - name: Check if version was changed in PR
-        id: check_version_change
+      - name: Detect if package.json version changed in PR
+        id: ver_changed
         uses: actions/github-script@v7
         with:
           script: |
-            const prNumber = context.payload.pull_request.number;
-            const { data: files } = await github.rest.pulls.listFiles({
+            const pr = context.payload.pull_request.number;
+            const files = await github.paginate(github.rest.pulls.listFiles, {
               owner: context.repo.owner,
               repo: context.repo.repo,
-              pull_number: prNumber,
-              per_page: 250
+              pull_number: pr,
+              per_page: 100
             });
-            const pkg = files.find(f => f.filename === 'package.json');
-            let versionChanged = false;
-            if (pkg && pkg.patch) {
-              const touched = pkg.patch.includes('"version"');
-              if (touched) versionChanged = true;
-            }
-            core.setOutput('version_changed_in_pr', versionChanged ? 'true' : 'false');
+            const touched = files.some(f => f.filename === 'package.json' && /"version"\s*:/.test(f.patch || ''));
+            core.setOutput('changed', touched ? 'true' : 'false');
 
       - name: Bump patch version (+0.0.1) if not changed in PR
-        if: steps.check_version_change.outputs.version_changed_in_pr != 'true'
+        if: steps.ver_changed.outputs.changed != 'true'
         run: |
           node -e "
             const fs = require('fs');
-            const pkg = JSON.parse(fs.readFileSync('package.json', 'utf8'));
-            const [maj, min, pat] = pkg.version.split('.').map(Number);
-            const next = [maj, min, (pat || 0) + 1].join('.');
-            pkg.version = next;
-            fs.writeFileSync('package.json', JSON.stringify(pkg, null, 2) + '\n');
-            console.log('Bumped version:', next);
+            const pkg = JSON.parse(fs.readFileSync('package.json','utf8'));
+            const [a,b,c] = pkg.version.split('.').map(Number);
+            pkg.version = [a,b,(c||0)+1].join('.');
+            fs.writeFileSync('package.json', JSON.stringify(pkg,null,2)+'\n');
+            console.log('Bumped to', pkg.version);
           "
 
       - name: Sync UI exports to dist/shared/index.d.ts
@@ -65,54 +57,48 @@ jobs:
           node -e "
             const fs = require('fs');
             const path = require('path');
+            const posix = path.posix;
             const root = 'dist/shared';
-            const indexPath = path.join(root, 'index.d.ts');
-            const uiRoot = path.join(root, 'ui');
-            const indexContent = fs.existsSync(indexPath)
-              ? fs.readFileSync(indexPath, 'utf8')
-              : '';
-            function findIndexFiles(dir) {
-              const results = [];
-              for (const file of fs.readdirSync(dir)) {
-                const full = path.join(dir, file);
-                const stat = fs.statSync(full);
-                if (stat.isDirectory()) results.push(...findIndexFiles(full));
-                else if (file === 'index.d.ts') results.push(full);
-              }
-              return results;
-            }
+            const indexPath = posix.join(root, 'index.d.ts');
+            const uiRoot = posix.join(root, 'ui');
+            if (!fs.existsSync(uiRoot)) { console.log('No dist/shared/ui found. Skip.'); process.exit(0); }
+            const indexContent = fs.existsSync(indexPath) ? fs.readFileSync(indexPath,'utf8') : '';
+            const findIndexFiles = (dir) => {
+              return fs.readdirSync(dir, { withFileTypes: true }).flatMap(d => {
+                const p = posix.join(dir, d.name);
+                if (d.isDirectory()) return findIndexFiles(p);
+                return d.name === 'index.d.ts' ? [p] : [];
+              });
+            };
             const uiFiles = findIndexFiles(uiRoot);
-            const exportsToAdd = [];
-            for (const file of uiFiles) {
-              const content = fs.readFileSync(file, 'utf8');
-              const relPath = './' + path.relative(root, file).replace(/\\\\/g, '/').replace(/\\/g, '/');
-              const exports = [...content.matchAll(/export\\s+\\{([^}]+)\\}\\s+from\\s+'\\.\\/([^']+)'/g)];
-              for (const match of exports) {
-                const names = match[1].trim();
-                const from = match[2].trim();
-                const exportLine = \`export { \${names} } from '\${relPath.replace(/\\/index\\.d\\.ts$/, '')}/\${from}';\`;
-                if (!indexContent.includes(names)) {
-                  exportsToAdd.push(exportLine);
-                }
+            const adds = [];
+            for (const f of uiFiles) {
+              const content = fs.readFileSync(f, 'utf8');
+              for (const m of content.matchAll(/export\s+\{([^}]+)\}\s+from\s+'\.\/([^']+)'/g)) {
+                const names = m[1].trim();
+                const fromRel = m[2].trim();
+                const base = f.replace(/\/index\.d\.ts$/, '');
+                const line = \`export { \${names} } from '\${base.replace(root,'').replace(/^\//,'').length ? './' + base.slice(root.length+1) : '.'}/\${fromRel}';\`;
+                if (!indexContent.includes(names)) adds.push(line);
               }
             }
-            if (exportsToAdd.length > 0) {
-              const newContent = indexContent.trim() + '\\n' + exportsToAdd.join('\\n') + '\\n';
-              fs.writeFileSync(indexPath, newContent);
-              console.log('Added new exports:', exportsToAdd);
+            if (adds.length) {
+              const next = (indexContent.trim() ? indexContent.trim()+'\n' : '') + adds.join('\n') + '\n';
+              fs.writeFileSync(indexPath, next);
+              console.log('Added exports:', adds);
             } else {
               console.log('No new exports found.');
             }
           "
 
-      - name: Commit & Push (if version or export changed)
+      - name: Commit & Push
         run: |
           if git diff --quiet; then
-            echo "No changes to commit. Skipping."
+            echo "No changes to commit."
             exit 0
           fi
           git config user.name  "github-actions[bot]"
           git config user.email "github-actions[bot]@users.noreply.github.com"
-          git add package.json dist/shared/index.d.ts
+          git add package.json dist/shared/index.d.ts || true
           git commit -m "chore: bump version and sync UI exports [skip ci]"
           git push
