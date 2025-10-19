@@ -39,20 +39,15 @@ jobs:
               pull_number: prNumber,
               per_page: 250
             });
-
             const pkg = files.find(f => f.filename === 'package.json');
             let versionChanged = false;
             if (pkg && pkg.patch) {
               const touched = pkg.patch.includes('"version"');
               if (touched) versionChanged = true;
             }
-
             core.setOutput('version_changed_in_pr', versionChanged ? 'true' : 'false');
 
-      - name: Show decision
-        run: echo "version_changed_in_pr=${{ steps.check_version_change.outputs.version_changed_in_pr }}"
-
-      - name: Bump minor version (+0.1) if not changed in PR
+      - name: Bump patch version (+0.0.1) if not changed in PR
         if: steps.check_version_change.outputs.version_changed_in_pr != 'true'
         run: |
           node -e "
@@ -60,22 +55,64 @@ jobs:
             const pkg = JSON.parse(fs.readFileSync('package.json', 'utf8'));
             const [maj, min, pat] = pkg.version.split('.').map(Number);
             const next = [maj, min, (pat || 0) + 1].join('.');
-
             pkg.version = next;
             fs.writeFileSync('package.json', JSON.stringify(pkg, null, 2) + '\n');
             console.log('Bumped version:', next);
           "
 
-      - name: Commit & Push (only if changed)
+      - name: Sync UI exports to dist/shared/index.d.ts
+        run: |
+          node -e "
+            const fs = require('fs');
+            const path = require('path');
+            const root = 'dist/shared';
+            const indexPath = path.join(root, 'index.d.ts');
+            const uiRoot = path.join(root, 'ui');
+            const indexContent = fs.existsSync(indexPath)
+              ? fs.readFileSync(indexPath, 'utf8')
+              : '';
+            function findIndexFiles(dir) {
+              const results = [];
+              for (const file of fs.readdirSync(dir)) {
+                const full = path.join(dir, file);
+                const stat = fs.statSync(full);
+                if (stat.isDirectory()) results.push(...findIndexFiles(full));
+                else if (file === 'index.d.ts') results.push(full);
+              }
+              return results;
+            }
+            const uiFiles = findIndexFiles(uiRoot);
+            const exportsToAdd = [];
+            for (const file of uiFiles) {
+              const content = fs.readFileSync(file, 'utf8');
+              const relPath = './' + path.relative(root, file).replace(/\\\\/g, '/').replace(/\\/g, '/');
+              const exports = [...content.matchAll(/export\\s+\\{([^}]+)\\}\\s+from\\s+'\\.\\/([^']+)'/g)];
+              for (const match of exports) {
+                const names = match[1].trim();
+                const from = match[2].trim();
+                const exportLine = \`export { \${names} } from '\${relPath.replace(/\\/index\\.d\\.ts$/, '')}/\${from}';\`;
+                if (!indexContent.includes(names)) {
+                  exportsToAdd.push(exportLine);
+                }
+              }
+            }
+            if (exportsToAdd.length > 0) {
+              const newContent = indexContent.trim() + '\\n' + exportsToAdd.join('\\n') + '\\n';
+              fs.writeFileSync(indexPath, newContent);
+              console.log('Added new exports:', exportsToAdd);
+            } else {
+              console.log('No new exports found.');
+            }
+          "
+
+      - name: Commit & Push (if version or export changed)
         run: |
           if git diff --quiet; then
             echo "No changes to commit. Skipping."
             exit 0
           fi
-
           git config user.name  "github-actions[bot]"
           git config user.email "github-actions[bot]@users.noreply.github.com"
-
-          git add package.json
-          git commit -m "chore: bump version on merge to main [skip ci]"
+          git add package.json dist/shared/index.d.ts
+          git commit -m "chore: bump version and sync UI exports [skip ci]"
           git push
