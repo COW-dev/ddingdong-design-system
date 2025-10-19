@@ -1,8 +1,10 @@
+import { useState, useEffect } from 'react';
+
 import { Flex } from '../Flex';
 import { Icon } from '../Icon';
 
 type Props = {
-  files: File[];
+  files: File[] | null;
   previewUrls: string[];
   onRemoveFile: (index: number) => void;
   multiple: boolean;
@@ -10,13 +12,13 @@ type Props = {
 
 export function MediaPreview({ files, previewUrls, onRemoveFile, multiple }: Props) {
   if (!multiple) {
-    return <MediaPreviewItem file={files[0]} previewUrl={previewUrls[0]} />;
+    return <MediaPreviewItem file={files?.[0]} previewUrl={previewUrls[0]} />;
   }
   return (
     <div className="grid grid-cols-2 gap-2 md:grid-cols-3 md:gap-4">
-      {files?.map((file, index) => (
+      {previewUrls?.map((previewUrl, index) => (
         <div key={index} className="relative aspect-square">
-          <MediaPreviewItem file={file} previewUrl={previewUrls[index]} />
+          <MediaPreviewItem file={files?.[index]} previewUrl={previewUrl} />
           <button
             type="button"
             onClick={() => onRemoveFile(index)}
@@ -31,17 +33,27 @@ export function MediaPreview({ files, previewUrls, onRemoveFile, multiple }: Pro
 }
 
 type MediaPreviewItemProps = {
-  file: File;
+  file?: File;
   previewUrl: string;
 };
 function MediaPreviewItem({ file, previewUrl }: MediaPreviewItemProps) {
+  const [isVideo, setIsVideo] = useState<boolean>(false);
+
+  useEffect(() => {
+    if (file) return setIsVideo(file.type.startsWith('video/'));
+    getMimeType(previewUrl).then((type) => {
+      if (type) setIsVideo(type.startsWith('video/'));
+      else setIsVideo(false);
+    });
+  }, [file, previewUrl]);
+
   return (
     <Flex
       justifyContent="center"
       alignItems="center"
       className="relative h-full w-full rounded-xl border border-gray-200 bg-gray-50"
     >
-      {file.type.startsWith('video/') ? (
+      {isVideo ? (
         <video
           src={previewUrl}
           controls
@@ -50,10 +62,19 @@ function MediaPreviewItem({ file, previewUrl }: MediaPreviewItemProps) {
       ) : (
         <img
           src={previewUrl}
-          alt={`미리보기 ${file.name}`}
+          alt={file ? `미리보기 ${file.name}` : '미리보기 이미지'}
           className="h-full max-h-[500px] w-full max-w-[500px] object-contain"
         />
       )}
     </Flex>
   );
+}
+
+async function getMimeType(url: string): Promise<string | null> {
+  try {
+    const res = await fetch(url, { method: 'HEAD' });
+    return res.headers.get('Content-Type');
+  } catch {
+    return null;
+  }
 }

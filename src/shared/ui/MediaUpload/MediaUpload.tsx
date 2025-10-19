@@ -1,4 +1,4 @@
-import { ComponentProps, useId, useState } from 'react';
+import { ComponentProps, useId } from 'react';
 
 import { MediaPreview } from './MediaUploadPreview';
 
@@ -46,44 +46,43 @@ export type Props = {
    */
   multiple?: boolean;
   /**
-   * initial preview urls for edit mode (e.g., existing uploaded image urls)
+   * Array of preview URLs to display existing media
    */
-  initialPreviewUrls?: string[];
+  previewUrls?: string[];
   /**
-   * initial files for edit mode (if available).
+   * Array of preview File objects for new uploads
    */
-  initialFiles?: File[];
+  previewFiles?: File[] | null;
+  /**
+   * Callback function called when files are selected, removed, or reset
+   */
+  onFileChange?: (files: File[] | null, previewUrls: string[]) => void;
 } & Omit<ComponentProps<'input'>, 'id'>;
 
 const GB = 1024 * 1024 * 1024;
 
 export function MediaUpload({
   topAffix,
-  onFileUpload,
   id,
   label = '파일을 업로드해주세요. (jpg, jpeg, png)',
   description = '* 파일은 5GB까지 업로드 가능합니다.',
   maxSize = 5,
   acceptedFormats = ['image/*'],
   multiple = false,
-  initialPreviewUrls,
-  initialFiles,
+  previewFiles = [],
+  previewUrls = [],
+  onFileChange,
   ...props
 }: Props) {
   const generatedId = useId();
   const inputId = id || generatedId;
-
-  const [selectedFiles, setSelectedFiles] = useState<File[]>(initialFiles || []);
-  const [previewUrls, setPreviewUrls] = useState<string[]>(initialPreviewUrls || []);
-  const isSelected = selectedFiles.length > 0;
+  const isSelected = previewUrls.length > 0;
 
   const handleReset = () => {
     previewUrls.forEach((url) => {
       if (url.startsWith('blob:')) URL.revokeObjectURL(url);
     });
-    setSelectedFiles([]);
-    setPreviewUrls([]);
-    onFileUpload?.(null);
+    onFileChange?.(null, []);
   };
 
   const handleFileChange = (event: React.ChangeEvent<HTMLInputElement>) => {
@@ -97,27 +96,22 @@ export function MediaUpload({
     }
 
     const validatedFiles = multiple ? files : [files[0]];
-    setSelectedFiles(validatedFiles);
     const urls = validatedFiles.map((file) => URL.createObjectURL(file));
-    setPreviewUrls(urls);
-    onFileUpload?.(validatedFiles);
+    onFileChange?.(validatedFiles, urls);
   };
 
   const handleRemoveFile = (index: number) => {
     const urlToRemove = previewUrls[index];
-    if (urlToRemove?.startsWith('blob:')) {
-      URL.revokeObjectURL(urlToRemove);
-    }
-    const newFiles = selectedFiles.filter((_, i) => i !== index);
+    if (urlToRemove?.startsWith('blob:')) URL.revokeObjectURL(urlToRemove);
+
+    const newFiles = previewFiles?.filter((_, i) => i !== index) ?? null;
     const newUrls = previewUrls.filter((_, i) => i !== index);
 
-    setSelectedFiles(newFiles);
-    setPreviewUrls(newUrls);
-    onFileUpload?.(newFiles.length > 0 ? newFiles : null);
+    onFileChange?.(newFiles, newUrls);
   };
 
   return (
-    <div className="max-h-[500px] w-full">
+    <div className="max-h-[500px] w-full overflow-auto">
       <Flex justifyContent="between">
         <Body1 className="text-gray-400">{topAffix}</Body1>
         <RefreshButton handleReset={handleReset} isSelected={isSelected} />
@@ -126,7 +120,7 @@ export function MediaUpload({
         <UploadBox id={inputId} label={label} description={description} />
       ) : (
         <MediaPreview
-          files={selectedFiles}
+          files={previewFiles}
           previewUrls={previewUrls}
           onRemoveFile={handleRemoveFile}
           multiple={multiple}
@@ -178,7 +172,7 @@ function RefreshButton({ handleReset, isSelected }: RefreshButtonProp) {
     <Flex
       as="button"
       onClick={(e) => {
-        e.stopPropagation();
+        e.preventDefault();
         if (isSelected) handleReset();
       }}
       alignItems="center"
