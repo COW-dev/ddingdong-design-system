@@ -1,0 +1,81 @@
+name: Auto Bump Version on Merge to main
+
+on:
+  pull_request:
+    types: [closed]
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  bump-version:
+    if: >
+      github.event.pull_request.merged == true &&
+      github.event.pull_request.base.ref == 'main' &&
+      github.actor != 'github-actions[bot]'
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout main
+        uses: actions/checkout@v4
+        with:
+          ref: main
+          fetch-depth: 0
+
+      - name: Setup Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+
+      - name: Check if version was changed in PR
+        id: check_version_change
+        uses: actions/github-script@v7
+        with:
+          script: |
+            const prNumber = context.payload.pull_request.number;
+            const { data: files } = await github.rest.pulls.listFiles({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              pull_number: prNumber,
+              per_page: 250
+            });
+
+            const pkg = files.find(f => f.filename === 'package.json');
+            let versionChanged = false;
+            if (pkg && pkg.patch) {
+              const touched = pkg.patch.includes('"version"');
+              if (touched) versionChanged = true;
+            }
+
+            core.setOutput('version_changed_in_pr', versionChanged ? 'true' : 'false');
+
+      - name: Show decision
+        run: echo "version_changed_in_pr=${{ steps.check_version_change.outputs.version_changed_in_pr }}"
+
+      - name: Bump minor version (+0.1) if not changed in PR
+        if: steps.check_version_change.outputs.version_changed_in_pr != 'true'
+        run: |
+          node -e "
+            const fs = require('fs');
+            const pkg = JSON.parse(fs.readFileSync('package.json', 'utf8'));
+            const [maj, min, pat] = pkg.version.split('.').map(Number);
+            const next = [maj, min, (pat || 0) + 1].join('.');
+
+            pkg.version = next;
+            fs.writeFileSync('package.json', JSON.stringify(pkg, null, 2) + '\n');
+            console.log('Bumped version:', next);
+          "
+
+      - name: Commit & Push (only if changed)
+        run: |
+          if git diff --quiet; then
+            echo "No changes to commit. Skipping."
+            exit 0
+          fi
+
+          git config user.name  "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+
+          git add package.json
+          git commit -m "chore: bump version on merge to main [skip ci]"
+          git push
