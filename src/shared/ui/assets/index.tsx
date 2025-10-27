@@ -10,6 +10,7 @@ import Etc from './etc.svg';
 import File from './file.svg';
 import List from './list.svg';
 import Loading from './loading.svg';
+import Locate from './locate.svg';
 import NavbarArrow from './navbar-arrow.svg';
 import New from './new.svg';
 import Pin from './pin.svg';
@@ -34,6 +35,7 @@ export const Icons = {
   navbarArrow: NavbarArrow,
   new: New,
   pin: Pin,
+  locate: Locate,
   search: Search,
   trash: Trash,
   write: Write,
