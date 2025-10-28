@@ -1,5 +1,7 @@
 import { ComponentProps, useId } from 'react';
 
+import { cn } from '@/shared/lib/core';
+
 import { MediaPreview } from './MediaUploadPreview';
 
 import { Flex } from '../Flex';
@@ -72,6 +74,7 @@ export function MediaUpload({
   previewFiles = [],
   previewUrls = [],
   onFileChange,
+  className,
   ...props
 }: Props) {
   const generatedId = useId();
@@ -117,7 +120,7 @@ export function MediaUpload({
         <RefreshButton handleReset={handleReset} isSelected={isSelected} />
       </Flex>
       {!isSelected ? (
-        <UploadBox id={inputId} label={label} description={description} />
+        <UploadBox id={inputId} label={label} description={description} className={className} />
       ) : (
         <MediaPreview
           files={previewFiles}
@@ -144,13 +147,17 @@ type UploadBoxProps = {
   id: string;
   label: string;
   description: string;
+  className?: string;
 };
 
-function UploadBox({ id, label, description }: UploadBoxProps) {
+function UploadBox({ id, label, description, className }: UploadBoxProps) {
   return (
     <label
       htmlFor={id}
-      className="block w-full cursor-pointer rounded-xl border border-gray-200 bg-gray-50 px-4 py-8 hover:bg-gray-100"
+      className={cn(
+        'block w-full cursor-pointer rounded-xl border border-gray-200 bg-gray-50 px-4 py-8 hover:bg-gray-100',
+        className
+      )}
     >
       <Flex dir="col" alignItems="center" gap={4} className="text-gray-400">
         <Icon name="upload" size={40} />
