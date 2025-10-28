@@ -41,6 +41,7 @@ export function TextArea({
           'w-full resize-none rounded-xl border-none bg-white px-4 py-3.5 text-gray-900 outline-1 outline-gray-200 transition-colors placeholder:text-gray-400 focus:ring-4 focus:ring-blue-200 focus:outline-blue-500',
           className
         )}
+        value={value}
         {...props}
       />
 
