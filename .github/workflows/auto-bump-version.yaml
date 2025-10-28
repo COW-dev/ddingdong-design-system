@@ -45,9 +45,18 @@ jobs:
         run: |
           node -e "
             const fs = require('fs');
+            const pr_title = context.payload.pull_request.title;
             const pkg = JSON.parse(fs.readFileSync('package.json','utf8'));
             const [a,b,c] = pkg.version.split('.').map(Number);
-            pkg.version = [a,b,(c||0)+1].join('.');
+            let new_version;
+
+            if (pr_title.toLowerCase().startsWith('feat')) {
+                new_version = [a,b+1,0].join('.');
+             } else {
+              new_version = [a,b,c+1].join('.');
+            }
+
+            pkg.version = new_version;
             fs.writeFileSync('package.json', JSON.stringify(pkg,null,2)+'\n');
             console.log('Bumped to', pkg.version);
           "
