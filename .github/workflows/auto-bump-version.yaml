@@ -65,47 +65,59 @@ jobs:
       - name: Install dependencies
         run: npm ci
 
-      - name: Build package
-        run: npm run build
-
-      - name: Sync UI exports to dist/shared/index.d.ts
+      - name: Sync exports to src/shared/index.ts (Revised)
         run: |
           node -e "
             const fs = require('fs');
             const path = require('path');
-            const posix = path.posix;
-            const root = 'dist/shared';
-            const indexPath = posix.join(root, 'index.d.ts');
-            const uiRoot = posix.join(root, 'ui');
-            if (!fs.existsSync(uiRoot)) { console.log('No dist/shared/ui found. Skip.'); process.exit(0); }
+            const root = 'src/shared';
+            const indexPath = path.join(root, 'index.ts');
             const indexContent = fs.existsSync(indexPath) ? fs.readFileSync(indexPath,'utf8') : '';
-            const findIndexFiles = (dir) => {
-              return fs.readdirSync(dir, { withFileTypes: true }).flatMap(d => {
-                const p = posix.join(dir, d.name);
-                if (d.isDirectory()) return findIndexFiles(p);
-                return d.name === 'index.d.ts' ? [p] : [];
-              });
-            };
-            const uiFiles = findIndexFiles(uiRoot);
+            const existingExports = new Set((indexContent.match(/from\\s+['\\\"](\\.\\/|\\.\\.\\/)([^'\\\"]+)['\\\"]/g) || [])
+                                  .map(line => line.match(/from\\s+['\\\"]([^'\\\"]+)['\\\"]/)[1]));
+
             const adds = [];
-            for (const f of uiFiles) {
-              const content = fs.readFileSync(f, 'utf8');
-              for (const m of content.matchAll(/export\s+\{([^}]+)\}\s+from\s+'\.\/([^']+)'/g)) {
-                const names = m[1].trim();
-                const fromRel = m[2].trim();
-                const base = f.replace(/\/index\.d\.ts$/, '');
-                const line = \`export { \${names} } from '\${base.replace(root,'').replace(/^\//,'').length ? './' + base.slice(root.length+1) : '.'}/\${fromRel}';\`;
-                if (!indexContent.includes(names)) adds.push(line);
-              }
+            
+            const uiRoot = path.join(root, 'ui');
+            const componentFiles = [];
+            
+            if (fs.existsSync(uiRoot)) {
+                fs.readdirSync(uiRoot, { withFileTypes: true })
+                  .filter(d => d.isDirectory())
+                  .forEach(dir => {
+                    const dirPath = path.join(uiRoot, dir.name);
+                    const innerItems = fs.readdirSync(dirPath, { withFileTypes: true });
+
+                    for (const item of innerItems) {
+                        if (item.isFile() && (item.name.endsWith('.ts') || item.name.endsWith('.tsx')) && item.name !== 'index.ts') {
+                             componentFiles.push(path.join(dir.name, item.name)); 
+                    }
+                });
             }
-            if (adds.length) {
-              const next = (indexContent.trim() ? indexContent.trim()+'\n' : '') + adds.join('\n') + '\n';
-              fs.writeFileSync(indexPath, next);
-              console.log('Added exports:', adds);
-            } else {
-              console.log('No new exports found.');
+
+            for (const relativeFilePath of componentFiles) {
+                const componentName = path.basename(relativeFilePath, path.extname(relativeFilePath)); 
+                const exportPath = './ui/' + relativeFilePath.replace(path.extname(relativeFilePath), '');
+
+                if (existingExports.has(exportPath)) {
+                    continue;
+                }
+                const line = \`export { \${componentName} } from '\${exportPath}'\`;
+                adds.push(line);
             }
+
+
+          if (adds.length) {
+            const next = (indexContent.trim() ? indexContent.trim()+'\\n' : '') + adds.join(';\\n') + ';\\n';
+            fs.writeFileSync(indexPath, next);
+            console.log('Added exports to index.ts:', adds);
+          } else {
+            console.log('No new files found to export.');
+          }
           "
+
+      - name: Build package
+        run: npm run build
 
       - name: Commit & Push
         run: |
@@ -115,8 +127,8 @@ jobs:
           fi
           git config user.name  "github-actions[bot]"
           git config user.email "github-actions[bot]@users.noreply.github.com"
-          git add package.json dist/shared/index.d.ts || true
-          git commit -m "chore: bump version and sync UI exports [skip ci]"
+          git add package.json src/shared/index.ts || true
+          git commit -m "chore: bump version and sync shared exports [skip ci]"
           git push
 
       - name: Publish to npm
