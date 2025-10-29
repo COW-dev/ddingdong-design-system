@@ -75,12 +75,9 @@ jobs:
             const indexContent = fs.existsSync(indexPath) ? fs.readFileSync(indexPath,'utf8') : '';
             const existingExports = new Set((indexContent.match(/from\\s+['\\\"](\\.\\/|\\.\\.\\/)([^'\\\"]+)['\\\"]/g) || [])
                                   .map(line => line.match(/from\\s+['\\\"]([^'\\\"]+)['\\\"]/)[1]));
-
             const adds = [];
-            
             const uiRoot = path.join(root, 'ui');
             const componentFiles = [];
-            
             if (fs.existsSync(uiRoot)) {
                 fs.readdirSync(uiRoot, { withFileTypes: true })
                   .filter(d => d.isDirectory())
@@ -92,8 +89,9 @@ jobs:
                         if (item.isFile() && (item.name.endsWith('.ts') || item.name.endsWith('.tsx')) && item.name !== 'index.ts') {
                              componentFiles.push(path.join(dir.name, item.name)); 
                     }
-                });
-            }
+                }        
+            });
+          }
 
             for (const relativeFilePath of componentFiles) {
                 const componentName = path.basename(relativeFilePath, path.extname(relativeFilePath)); 
