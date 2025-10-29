@@ -24,6 +24,7 @@ jobs:
         uses: actions/setup-node@v4
         with:
           node-version: '20'
+          registry-url: 'https://registry.npmjs.org'
 
       - name: Detect if package.json version changed in PR
         id: ver_changed
@@ -60,6 +61,12 @@ jobs:
             fs.writeFileSync('package.json', JSON.stringify(pkg,null,2)+'\n');
             console.log('Bumped to', pkg.version);
           "
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Build package
+        run: npm run build
 
       - name: Sync UI exports to dist/shared/index.d.ts
         run: |
@@ -111,3 +118,8 @@ jobs:
           git add package.json dist/shared/index.d.ts || true
           git commit -m "chore: bump version and sync UI exports [skip ci]"
           git push
+
+      - name: Publish to npm
+        run: npm publish
+        env:
+          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
