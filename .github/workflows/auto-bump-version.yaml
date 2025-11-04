@@ -42,26 +42,61 @@ jobs:
             const touched = files.some(f => f.filename === 'package.json' && /"version"\s*:/.test(f.patch || ''));
             core.setOutput('changed', touched ? 'true' : 'false');
 
-      - name: Bump patch version (+0.0.1) if not changed in PR
+      - name: Detect if new UI folder added
+        id: new_ui_folder
+        uses: actions/github-script@v7
+        with:
+          script: |
+            const pr = context.payload.pull_request.number;
+            const files = await github.paginate(github.rest.pulls.listFiles, {
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              pull_number: pr,
+              per_page: 100
+            });
+
+            const addedDirs = new Set();
+            for (const f of files) {
+              if (f.status === 'added' && f.filename.startsWith('src/shared/ui/')) {
+                const parts = f.filename.split('/');
+                if (parts.length > 3) {
+                  addedDirs.add(parts.slice(0, 4).join('/')); // 예: src/shared/ui/Button
+                }
+              }
+            }
+
+            core.setOutput('new_ui_folder', addedDirs.size > 0 ? 'true' : 'false');
+            console.log('New UI folders detected:', Array.from(addedDirs));
+
+      - name: Bump version based on PR type
         if: steps.ver_changed.outputs.changed != 'true'
         run: |
           node -e "
             const fs = require('fs');
-            const pr_title = context.payload.pull_request.title;
+            const pr_title = process.env.PR_TITLE;
+            const is_new_ui = process.env.NEW_UI_FOLDER === 'true';
             const pkg = JSON.parse(fs.readFileSync('package.json', 'utf8'));
             const [a, b, c] = pkg.version.split('.').map(Number);
             let new_version;
 
-            if (pr_title.toLowerCase().startsWith('feat')) {
+            if (is_new_ui) {
+              new_version = [a + 1, 0, 0].join('.');
+              console.log('Major bump (new UI folder added)');
+            } else if (pr_title.toLowerCase().startsWith('feat')) {
               new_version = [a, b + 1, 0].join('.');
+              console.log('Minor bump (feat detected)');
             } else {
               new_version = [a, b, c + 1].join('.');
+              console.log('Patch bump (default)');
             }
 
             pkg.version = new_version;
             fs.writeFileSync('package.json', JSON.stringify(pkg, null, 2) + '\n');
             console.log('Bumped to', pkg.version);
           "
+        env:
+          PR_TITLE: ${{ github.event.pull_request.title }}
+          NEW_UI_FOLDER: ${{ steps.new_ui_folder.outputs.new_ui_folder }}
 
       - name: Install dependencies
         run: npm ci
@@ -87,7 +122,6 @@ jobs:
                 .forEach(dir => {
                   const dirPath = path.join(uiRoot, dir.name);
                   const innerItems = fs.readdirSync(dirPath, { withFileTypes: true });
-
                   for (const item of innerItems) {
                     if (item.isFile() && (item.name.endsWith('.ts') || item.name.endsWith('.tsx')) && item.name !== 'index.ts') {
                       componentFiles.push(path.join(dir.name, item.name));
@@ -99,10 +133,7 @@ jobs:
             for (const relativeFilePath of componentFiles) {
               const componentName = path.basename(relativeFilePath, path.extname(relativeFilePath));
               const exportPath = './ui/' + relativeFilePath.replace(path.extname(relativeFilePath), '');
-
-              if (existingExports.has(exportPath)) {
-                continue;
-              }
+              if (existingExports.has(exportPath)) continue;
               const line = \`export { \${componentName} } from '\${exportPath}'\`;
               adds.push(line);
             }
