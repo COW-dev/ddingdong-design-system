@@ -3,6 +3,7 @@ import ArrowDown from './arrow-down.svg';
 import ArrowLeft from './arrow-left.svg';
 import ArrowRight from './arrow-right.svg';
 import ArrowUp from './arrow-up.svg';
+import Camera from './camera.svg';
 import Check from './check.svg';
 import Close from './close.svg';
 import DownLoad from './download.svg';
@@ -28,6 +29,7 @@ export const Icons = {
   arrowRight: ArrowRight,
   check: Check,
   close: Close,
+  camera: Camera,
   download: DownLoad,
   etc: Etc,
   file: File,
