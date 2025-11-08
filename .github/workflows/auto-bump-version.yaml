@@ -60,7 +60,7 @@ jobs:
               if (f.status === 'added' && f.filename.startsWith('src/shared/ui/')) {
                 const parts = f.filename.split('/');
                 if (parts.length > 3) {
-                  addedDirs.add(parts.slice(0, 4).join('/')); // 예: src/shared/ui/Button
+                  addedDirs.add(parts.slice(0, 4).join('/'));
                 }
               }
             }
@@ -113,37 +113,31 @@ jobs:
               (indexContent.match(/from\\s+['\\\"](\\.\\/|\\.\\.\\/)([^'\\\"]+)['\\\"]/g) || [])
                 .map(line => line.match(/from\\s+['\\\"]([^'\\\"]+)['\\\"]/)[1])
             );
+
             const adds = [];
             const uiRoot = path.join(root, 'ui');
-            const componentFiles = [];
+
             if (fs.existsSync(uiRoot)) {
               fs.readdirSync(uiRoot, { withFileTypes: true })
                 .filter(d => d.isDirectory())
                 .forEach(dir => {
                   const dirPath = path.join(uiRoot, dir.name);
-                  const innerItems = fs.readdirSync(dirPath, { withFileTypes: true });
-                  for (const item of innerItems) {
-                    if (item.isFile() && (item.name.endsWith('.ts') || item.name.endsWith('.tsx')) && item.name !== 'index.ts') {
-                      componentFiles.push(path.join(dir.name, item.name));
+                  const hasIndex = ['index.ts', 'index.tsx'].some(file => fs.existsSync(path.join(dirPath, file)));
+                  if (hasIndex) {
+                    const exportPath = './ui/' + dir.name;
+                    if (!existingExports.has(exportPath)) {
+                      adds.push(\`export { \${dir.name} } from '\${exportPath}'\`);
                     }
                   }
                 });
             }
 
-            for (const relativeFilePath of componentFiles) {
-              const componentName = path.basename(relativeFilePath, path.extname(relativeFilePath));
-              const exportPath = './ui/' + relativeFilePath.replace(path.extname(relativeFilePath), '');
-              if (existingExports.has(exportPath)) continue;
-              const line = \`export { \${componentName} } from '\${exportPath}'\`;
-              adds.push(line);
-            }
-
             if (adds.length) {
-              const next = (indexContent.trim() ? indexContent.trim() + '\\n' : '') + adds.join(';\\n') + ';\\n';
+              const next = (indexContent.trim() ? indexContent.trim() + '\\n' : '') + adds.join('\\n') + '\\n';
               fs.writeFileSync(indexPath, next);
               console.log('Added exports to index.ts:', adds);
             } else {
-              console.log('No new files found to export.');
+              console.log('No new UI components found to export.');
             }
           "
 
