@@ -126,7 +126,7 @@ jobs:
                   if (hasIndex) {
                     const exportPath = './ui/' + dir.name;
                     if (!existingExports.has(exportPath)) {
-                      adds.push(\`export { \${dir.name} } from '\${exportPath}'\`);
+                      adds.push(`export { ${dir.name} } from '${exportPath}';`);
                     }
                   }
                 });
