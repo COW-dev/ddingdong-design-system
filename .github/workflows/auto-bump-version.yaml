@@ -156,7 +156,7 @@ jobs:
 
       - name: Create branch and commit
         run: |
-          TIMESTAMP=$(date +'%Y%m%d-%H%M%S')
+          TIMESTAMP=$(date -u +'%Y%m%d-%H%M%S%N' | cut -c1-14)
           BRANCH="bump/$TIMESTAMP"
 
           git checkout -b "$BRANCH"
@@ -173,13 +173,14 @@ jobs:
           git commit -m "chore: bump version and sync shared exports"
           git push origin "$BRANCH"
 
+          echo "BRANCH_NAME=$BRANCH" >> $GITHUB_ENV
+
       - name: Create PR
         id: cpr
         uses: actions/github-script@v7
         with:
           script: |
-            const timestamp = new Date().toISOString().replace(/[:.]/g, '-');
-            const branch = `bump/${timestamp}`;
+            const branch = process.env.BRANCH_NAME;
 
             const pr = await github.rest.pulls.create({
               owner: context.repo.owner,
