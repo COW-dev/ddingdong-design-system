@@ -40,7 +40,9 @@ jobs:
               repo: context.repo.repo,
               pull_number: pr
             });
-            const touched = files.some(f => f.filename === 'package.json' && /"version"\s*:/.test(f.patch || ''));
+            const touched = files.some(
+              f => f.filename === 'package.json' && /"version"\s*:/.test(f.patch || '')
+            );
             core.setOutput('changed', touched ? 'true' : 'false');
 
       - name: Detect if new UI folder added
@@ -72,10 +74,13 @@ jobs:
         run: |
           node -e "
             const fs = require('fs');
+
             const pr_title = process.env.PR_TITLE;
             const is_new_ui = process.env.NEW_UI_FOLDER === 'true';
+
             const pkg = JSON.parse(fs.readFileSync('package.json', 'utf8'));
             const [a, b, c] = pkg.version.split('.').map(Number);
+
             let new_version;
 
             if (is_new_ui) {
@@ -87,7 +92,8 @@ jobs:
             }
 
             pkg.version = new_version;
-            fs.writeFileSync('package.json', JSON.stringify(pkg, null, 2) + '\n');
+
+            fs.writeFileSync('package.json', JSON.stringify(pkg, null, 2) + '\\n');
           "
         env:
           PR_TITLE: ${{ github.event.pull_request.title }}
@@ -98,7 +104,52 @@ jobs:
 
       - name: Sync exports to src/shared/index.ts
         run: |
-          node scripts/syncExports.js
+          node -e "
+            const fs = require('fs');
+            const path = require('path');
+
+            const root = 'src/shared';
+            const indexPath = path.join(root, 'index.ts');
+            const indexContent = fs.existsSync(indexPath)
+              ? fs.readFileSync(indexPath, 'utf8')
+              : '';
+
+            const existingExports = new Set(
+              (indexContent.match(/from\\s+['\\\"](\\.\\/|\\.\\.\\/)([^'\\\"]+)['\\\"]/g) || [])
+                .map(line => line.match(/from\\s+['\\\"]([^'\\\"]+)['\\\"]/)[1])
+            );
+
+            const adds = [];
+            const uiRoot = path.join(root, 'ui');
+
+            if (fs.existsSync(uiRoot)) {
+              fs.readdirSync(uiRoot, { withFileTypes: true })
+                .filter(d => d.isDirectory())
+                .forEach(dir => {
+                  const dirPath = path.join(uiRoot, dir.name);
+                  const hasIndex = ['index.ts', 'index.tsx']
+                    .some(file => fs.existsSync(path.join(dirPath, file)));
+
+                  if (hasIndex) {
+                    const exportPath = './ui/' + dir.name;
+                    if (!existingExports.has(exportPath)) {
+                      adds.push(`export { ${dir.name} } from '${exportPath}';`);
+                    }
+                  }
+                });
+            }
+
+            if (adds.length) {
+              const next = (indexContent.trim() ? indexContent.trim() + '\\n' : '')
+                + adds.join('\\n')
+                + '\\n';
+
+              fs.writeFileSync(indexPath, next);
+              console.log('Added exports to index.ts:', adds);
+            } else {
+              console.log('No new UI components found to export.');
+            }
+          "
 
       - name: Build package
         run: npm run build
@@ -117,9 +168,9 @@ jobs:
 
           git config user.name  "github-actions[bot]"
           git config user.email "github-actions[bot]@users.noreply.github.com"
+
           git add .
           git commit -m "chore: bump version and sync shared exports"
-
           git push origin "$BRANCH"
 
       - name: Create PR
