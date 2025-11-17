@@ -114,7 +114,7 @@ export function MediaUpload({
   };
 
   return (
-    <div className="max-h-[500px] w-full overflow-auto">
+    <div className="w-full">
       <Flex justifyContent="between">
         <Body1 className="text-gray-400">{topAffix}</Body1>
         <RefreshButton handleReset={handleReset} isSelected={isSelected} />
