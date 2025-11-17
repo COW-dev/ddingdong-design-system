@@ -56,7 +56,6 @@ jobs:
               repo: context.repo.repo,
               pull_number: pr
             });
-
             const addedDirs = new Set();
             for (const f of files) {
               if (f.status === 'added' && f.filename.startsWith('src/shared/ui/')) {
@@ -141,11 +140,19 @@ jobs:
           git add .
           git commit -m "chore: bump version and sync exports"
           git push https://x-access-token:${{ secrets.PAT }}@github.com/${{ github.repository }} "$BRANCH"
-
-          # Create PR
           pr_number=$(gh pr create --base main --head $BRANCH --title "chore: bump version & sync exports" --body "Automated bump and sync")
-          # Auto merge PR
-          gh pr merge $pr_number --auto --squash
+          gh pr merge $pr_number --squash --admin
+          for i in {1..10}; do
+            git fetch origin main
+            VERSION_IN_MAIN=$(git show origin/main:package.json | jq -r '.version')
+            VERSION_IN_BRANCH=$(jq -r '.version' package.json)
+            if [ "$VERSION_IN_MAIN" = "$VERSION_IN_BRANCH" ]; then
+              break
+            fi
+            sleep 5
+          done
+          git checkout main
+          git pull origin main
 
       - name: Publish to npm
         run: npm publish
