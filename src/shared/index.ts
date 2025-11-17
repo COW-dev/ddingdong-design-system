@@ -26,6 +26,8 @@ export { Tabs, TabItem } from './ui/Tabs';
 export { TextArea } from './ui/TextArea';
 export { Tooltip } from './ui/Tooltip';
 export { Title1, Title2, Title3, Caption1, Body1, Body2, Body3 } from './ui/Typography';
+export { Header, NavigationItem, MenuContainer, Menu, MenuTrigger, MenuItem } from './ui/Header';
+export { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from './ui/Table';
 
 export { Icons, iconNames } from './ui/assets';
 export type { IconName } from './ui/assets';
