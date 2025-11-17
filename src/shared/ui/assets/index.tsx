@@ -4,6 +4,7 @@ import ArrowLeft from './arrow-left.svg';
 import ArrowRight from './arrow-right.svg';
 import ArrowUp from './arrow-up.svg';
 import Camera from './camera.svg';
+import Chart from './chart.svg';
 import Check from './check.svg';
 import Close from './close.svg';
 import Dots from './dots.svg';
@@ -36,6 +37,7 @@ export const Icons = {
   check: Check,
   close: Close,
   camera: Camera,
+  chart: Chart,
   download: DownLoad,
   dots: Dots,
   dustpan: Dustpan,
