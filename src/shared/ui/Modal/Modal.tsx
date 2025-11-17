@@ -62,7 +62,7 @@ export function ModalContent({ children }: { children: React.ReactNode }) {
       aria-modal="true"
       justifyContent="center"
       alignItems="center"
-      className="relative z-40 rounded-lg bg-white p-8"
+      className="relative z-40 rounded-lg bg-white p-6"
     >
       {children}
     </Flex>

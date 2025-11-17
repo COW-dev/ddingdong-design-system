@@ -1,5 +1,6 @@
 import { cn } from '@/shared/lib/core';
 
+import { Flex } from '../Flex';
 import { Icon } from '../Icon';
 
 type Props = {
@@ -23,22 +24,24 @@ type Props = {
 };
 
 const sizeVariants = {
-  md: 'px-3 py-1 text-sm w-fit min-w-24',
-  lg: 'px-5 py-1.5 md:py-2.5 min-w-64 md:w-72 text-base md:text-lg',
+  md: 'px-3 py-1 text-sm min-w-24',
+  lg: 'px-4 py-3.5 min-w-64 text-lg',
 } as const;
 
 export function SelectButton({ selected, onClick, isOpen, size = 'lg' }: Props) {
   return (
-    <div
+    <Flex
+      alignItems="center"
       onClick={onClick}
       className={cn(
         sizeVariants[size],
-        'flex cursor-pointer items-center rounded-lg border border-gray-200 bg-white text-start font-semibold text-gray-400'
+        'w-full rounded-lg border border-gray-200 bg-white font-semibold text-gray-400'
       )}
     >
       <button
+        type="button"
         className={cn(
-          'flex w-full items-center justify-between rounded-lg align-middle hover:rounded-lg',
+          'flex w-full cursor-pointer items-center justify-between rounded-lg align-middle',
           isOpen && 'hover:rounded-b-none'
         )}
       >
@@ -52,6 +55,6 @@ export function SelectButton({ selected, onClick, isOpen, size = 'lg' }: Props) 
           )}
         />
       </button>
-    </div>
+    </Flex>
   );
 }

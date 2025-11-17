@@ -1,5 +1,7 @@
 import { ComponentProps } from 'react';
 
+import { cn } from '@/shared/lib/core';
+
 import { Flex } from '../Flex';
 import { IconButton } from '../IconButton';
 
@@ -10,12 +12,15 @@ type InputProps = {
   onClickReset: () => void;
 } & ComponentProps<'input'>;
 
-export function Input({ value, onClickReset, ...props }: InputProps) {
+export function Input({ value, onClickReset, className, ...props }: InputProps) {
   return (
     <Flex gap={8} alignItems="center" className="relative w-full">
       <input
         value={value}
-        className="focus:bg-primary-50 w-full rounded-xl border-none bg-gray-50 px-4 py-3 outline-1 outline-gray-200 md:py-3.5"
+        className={cn(
+          'w-full rounded-xl border-none bg-white px-4 py-3.5 outline-1 outline-gray-200 focus:ring-4 focus:ring-blue-200 focus:outline-blue-500',
+          className
+        )}
         {...props}
       />
       {value && (

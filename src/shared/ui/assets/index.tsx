@@ -3,6 +3,7 @@ import ArrowDown from './arrow-down.svg';
 import ArrowLeft from './arrow-left.svg';
 import ArrowRight from './arrow-right.svg';
 import ArrowUp from './arrow-up.svg';
+import Camera from './camera.svg';
 import Check from './check.svg';
 import Close from './close.svg';
 import DownLoad from './download.svg';
@@ -10,11 +11,14 @@ import Etc from './etc.svg';
 import File from './file.svg';
 import List from './list.svg';
 import Loading from './loading.svg';
+import Locate from './locate.svg';
 import NavbarArrow from './navbar-arrow.svg';
 import New from './new.svg';
 import Pin from './pin.svg';
+import Refresh from './refresh.svg';
 import Search from './search.svg';
 import Trash from './trash.svg';
+import Upload from './upload.svg';
 import Write from './write.svg';
 
 export const Icons = {
@@ -25,6 +29,7 @@ export const Icons = {
   arrowRight: ArrowRight,
   check: Check,
   close: Close,
+  camera: Camera,
   download: DownLoad,
   etc: Etc,
   file: File,
@@ -32,10 +37,13 @@ export const Icons = {
   navbarArrow: NavbarArrow,
   new: New,
   pin: Pin,
+  locate: Locate,
   search: Search,
   trash: Trash,
   write: Write,
   loading: Loading,
+  refresh: Refresh,
+  upload: Upload,
 };
 
 export type IconName = keyof typeof Icons;
