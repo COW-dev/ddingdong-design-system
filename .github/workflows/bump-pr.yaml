@@ -13,7 +13,7 @@ jobs:
   create-pr:
     runs-on: ubuntu-latest
     steps:
-      - name: Create PR
+      - name: Create pr
         id: cpr
         uses: actions/github-script@v7
         with:
