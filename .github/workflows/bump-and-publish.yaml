@@ -1,4 +1,4 @@
-name: Bump Version on Merge to main
+name: Bump Version and Publish
 
 on:
   pull_request:
@@ -7,9 +7,11 @@ on:
 
 permissions:
   contents: write
+  pull-requests: write
+  packages: write
 
 jobs:
-  bump-version:
+  bump-and-publish:
     if: >
       github.event.pull_request.merged == true &&
       github.event.pull_request.base.ref == 'main'
@@ -25,8 +27,9 @@ jobs:
         uses: actions/setup-node@v4
         with:
           node-version: '20'
+          registry-url: 'https://registry.npmjs.org'
 
-      - name: Detect if package.json version changed in PR
+      - name: Detect if package.json version changed
         id: ver_changed
         uses: actions/github-script@v7
         with:
@@ -42,7 +45,7 @@ jobs:
             );
             core.setOutput('changed', touched ? 'true' : 'false');
 
-      - name: Detect if new UI folder added
+      - name: Detect new UI folder
         id: new_ui_folder
         uses: actions/github-script@v7
         with:
@@ -53,7 +56,6 @@ jobs:
               repo: context.repo.repo,
               pull_number: pr
             });
-
             const addedDirs = new Set();
             for (const f of files) {
               if (f.status === 'added' && f.filename.startsWith('src/shared/ui/')) {
@@ -63,7 +65,6 @@ jobs:
                 }
               }
             }
-
             core.setOutput('new_ui_folder', addedDirs.size > 0 ? 'true' : 'false');
 
       - name: Bump version based on PR type
@@ -71,26 +72,16 @@ jobs:
         run: |
           node -e "
             const fs = require('fs');
-
             const pr_title = process.env.PR_TITLE;
             const is_new_ui = process.env.NEW_UI_FOLDER === 'true';
-
             const pkg = JSON.parse(fs.readFileSync('package.json', 'utf8'));
-            const [a, b, c] = pkg.version.split('.').map(Number);
-
+            const [a,b,c] = pkg.version.split('.').map(Number);
             let new_version;
-
-            if (is_new_ui) {
-              new_version = [a + 1, 0, 0].join('.');
-            } else if (pr_title.toLowerCase().startsWith('feat')) {
-              new_version = [a, b + 1, 0].join('.');
-            } else {
-              new_version = [a, b, c + 1].join('.');
-            }
-
+            if(is_new_ui) new_version = [a+1,0,0].join('.');
+            else if(pr_title.toLowerCase().startsWith('feat')) new_version = [a,b+1,0].join('.');
+            else new_version = [a,b,c+1].join('.');
             pkg.version = new_version;
-
-            fs.writeFileSync('package.json', JSON.stringify(pkg, null, 2) + '\\n');
+            fs.writeFileSync('package.json', JSON.stringify(pkg,null,2)+'\n');
           "
         env:
           PR_TITLE: ${{ github.event.pull_request.title }}
@@ -99,75 +90,71 @@ jobs:
       - name: Install dependencies
         run: npm ci
 
-      - name: Sync exports (inline)
+      - name: Sync exports
         run: |
           node -e "
             const fs = require('fs');
             const path = require('path');
-
             const root = 'src/shared';
             const indexPath = path.join(root, 'index.ts');
-            const indexContent = fs.existsSync(indexPath)
-              ? fs.readFileSync(indexPath, 'utf8')
-              : '';
-
+            const indexContent = fs.existsSync(indexPath) ? fs.readFileSync(indexPath,'utf8') : '';
             const existingExports = new Set(
               (indexContent.match(/from\\s+['\\\"](\\.\\/|\\.\\.\\/)([^'\\\"]+)['\\\"]/g) || [])
                 .map(line => line.match(/from\\s+['\\\"]([^'\\\"]+)['\\\"]/)[1])
             );
-
             const adds = [];
-            const uiRoot = path.join(root, 'ui');
-
-            if (fs.existsSync(uiRoot)) {
-              fs.readdirSync(uiRoot, { withFileTypes: true })
-                .filter(d => d.isDirectory())
-                .forEach(dir => {
-                  const dirPath = path.join(uiRoot, dir.name);
-                  const hasIndex = ['index.ts', 'index.tsx']
-                    .some(file => fs.existsSync(path.join(dirPath, file)));
-
-                  if (hasIndex) {
-                    const exportPath = './ui/' + dir.name;
-                    if (!existingExports.has(exportPath)) {
-                      adds.push(`export { ${dir.name} } from '${exportPath}';`);
-                    }
+            const uiRoot = path.join(root,'ui');
+            if(fs.existsSync(uiRoot)){
+              fs.readdirSync(uiRoot,{withFileTypes:true})
+                .filter(d=>d.isDirectory())
+                .forEach(dir=>{
+                  const dirPath = path.join(uiRoot,dir.name);
+                  const hasIndex = ['index.ts','index.tsx'].some(file=>fs.existsSync(path.join(dirPath,file)));
+                  if(hasIndex){
+                    const exportPath = './ui/'+dir.name;
+                    if(!existingExports.has(exportPath)) adds.push(`export { ${dir.name} } from '${exportPath}';`);
                   }
                 });
             }
-
-            if (adds.length) {
-              const next = (indexContent.trim() ? indexContent.trim() + '\\n' : '')
-                + adds.join('\\n')
-                + '\\n';
-
-              fs.writeFileSync(indexPath, next);
-              console.log('Added exports to index.ts:', adds);
-            } else {
-              console.log('No new UI components found to export.');
-            }
+            if(adds.length){
+              const next = (indexContent.trim()?indexContent.trim()+'\n':'') + adds.join('\n') + '\n';
+              fs.writeFileSync(indexPath,next);
+              console.log('Added exports:',adds);
+            }else console.log('No new exports found.');
           "
 
       - name: Build package
         run: npm run build
 
-      - name: Create bump branch and push
+      - name: Create bump branch and merge
         run: |
           TIMESTAMP=$(date -u +'%Y%m%d-%H%M%S%N' | cut -c1-14)
           BRANCH="bump/$TIMESTAMP"
-
           git checkout -b "$BRANCH"
-
           if git diff --quiet; then
             echo "NO_CHANGES=true" >> $GITHUB_ENV
             exit 0
           fi
-
           git config user.name  "github-actions[bot]"
           git config user.email "github-actions[bot]@users.noreply.github.com"
-
           git add .
           git commit -m "chore: bump version and sync exports"
           git push https://x-access-token:${{ secrets.PAT }}@github.com/${{ github.repository }} "$BRANCH"
+          pr_number=$(gh pr create --base main --head $BRANCH --title "chore: bump version & sync exports" --body "Automated bump and sync")
+          gh pr merge $pr_number --squash --admin
+          for i in {1..10}; do
+            git fetch origin main
+            VERSION_IN_MAIN=$(git show origin/main:package.json | jq -r '.version')
+            VERSION_IN_BRANCH=$(jq -r '.version' package.json)
+            if [ "$VERSION_IN_MAIN" = "$VERSION_IN_BRANCH" ]; then
+              break
+            fi
+            sleep 5
+          done
+          git checkout main
+          git pull origin main
 
-          echo "BRANCH_NAME=$BRANCH" >> $GITHUB_ENV
+      - name: Publish to npm
+        run: npm publish
+        env:
+          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
