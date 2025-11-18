@@ -9,6 +9,7 @@ import Check from './check.svg';
 import Close from './close.svg';
 import Dots from './dots.svg';
 import DownLoad from './download.svg';
+import Drag from './drag.svg';
 import Dustpan from './dustpan.svg';
 import Etc from './etc.svg';
 import File from './file.svg';
@@ -39,6 +40,7 @@ export const Icons = {
   camera: Camera,
   chart: Chart,
   download: DownLoad,
+  drag: Drag,
   dots: Dots,
   dustpan: Dustpan,
   peoples: Peoples,
