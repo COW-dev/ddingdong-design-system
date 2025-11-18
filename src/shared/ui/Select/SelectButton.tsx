@@ -21,32 +21,46 @@ type Props = {
    * The size of the button.
    */
   size?: 'md' | 'lg';
+  /**
+   * Custom class name for styling.
+   */
+  className?: string;
 };
 
 const sizeVariants = {
-  md: 'px-3 py-1 text-sm min-w-24',
-  lg: 'px-4 py-3.5 min-w-64 text-lg',
+  md: 'px-3 py-1 text-sm min-w-24 rounded-lg',
+  lg: 'px-4 py-3.5 min-w-64 min-h-[52px] rounded-xl',
 } as const;
 
-export function SelectButton({ selected, onClick, isOpen, size = 'lg' }: Props) {
+export function SelectButton({
+  selected,
+  onClick,
+  isOpen,
+  size = 'lg',
+  className,
+  ...props
+}: Props) {
   return (
     <Flex
       alignItems="center"
       onClick={onClick}
       className={cn(
         sizeVariants[size],
-        'w-full rounded-lg border border-gray-200 bg-white font-semibold text-gray-400'
+        'w-full border border-gray-200 bg-white font-semibold text-gray-400',
+        className
       )}
+      {...props}
     >
       <button
         type="button"
         className={cn(
-          'flex w-full cursor-pointer items-center justify-between rounded-lg align-middle',
+          'flex w-full cursor-pointer items-center justify-between rounded-xl align-middle leading-none',
           isOpen && 'hover:rounded-b-none'
         )}
       >
         {selected}
         <Icon
+          size={20}
           name="arrowDown"
           className={cn(
             'transform transition-transform duration-300',
