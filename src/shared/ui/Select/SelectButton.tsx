@@ -46,7 +46,7 @@ export function SelectButton({
       onClick={onClick}
       className={cn(
         sizeVariants[size],
-        'w-full border border-gray-200 bg-white font-semibold text-gray-400',
+        'w-full border border-gray-200 bg-white font-semibold whitespace-nowrap text-gray-400',
         className
       )}
       {...props}
