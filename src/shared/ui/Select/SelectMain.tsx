@@ -1,4 +1,4 @@
-import { ComponentProps, ReactNode, useState } from 'react';
+import { ComponentProps, ReactNode, useState, useRef, useEffect } from 'react';
 
 import { OptionList } from './OptionList';
 import { SelectContext } from './Select.context';
@@ -30,11 +30,26 @@ type Props = {
 
 export function SelectMain({ value, onChange, size = 'lg', defaultValue, children }: Props) {
   const [isOpen, setIsOpen] = useState(false);
+  const ref = useRef<HTMLDivElement>(null);
 
   const handleSelect = (option: string) => {
     setIsOpen(false);
     onChange?.(option);
   };
+
+  useEffect(() => {
+    const handleClickOutside = (event: MouseEvent) => {
+      if (ref.current && !ref.current.contains(event.target as Node)) {
+        setIsOpen(false);
+      }
+    };
+    if (isOpen) {
+      document.addEventListener('mousedown', handleClickOutside);
+    }
+    return () => {
+      document.removeEventListener('mousedown', handleClickOutside);
+    };
+  }, [isOpen]);
 
   return (
     <SelectContext.Provider
@@ -44,7 +59,7 @@ export function SelectMain({ value, onChange, size = 'lg', defaultValue, childre
         size: size,
       }}
     >
-      <div className="relative w-full">
+      <div ref={ref} className="relative w-full">
         <SelectButton
           selected={value || defaultValue}
           onClick={() => setIsOpen(!isOpen)}
