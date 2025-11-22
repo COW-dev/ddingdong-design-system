@@ -33,7 +33,7 @@ export function Drawer({ isOpen, onClose, children }: Props) {
       <motion.div
         key="drawer-backdrop"
         onClick={onClose}
-        className="fixed inset-0 bg-black/50"
+        className="fixed inset-0 z-50 bg-black/50"
         initial={FADE_IN_ANIMATION.initial}
         animate={FADE_IN_ANIMATION.animate}
         exit={FADE_IN_ANIMATION.exit}

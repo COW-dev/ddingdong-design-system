@@ -13,7 +13,7 @@ export function Header({ children, className }: Props) {
   return (
     <header
       className={cn(
-        'fixed top-0 left-0 z-10 w-full border-b border-gray-200 bg-white px-6 md:z-20',
+        'fixed top-0 left-0 z-10 w-full border-b border-gray-200 bg-white px-6',
         className
       )}
     >
