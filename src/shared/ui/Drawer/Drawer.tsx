@@ -31,6 +31,7 @@ export function Drawer({ isOpen, onClose, children }: Props) {
   return (
     <Portal isOpen={isOpen}>
       <motion.div
+        key="drawer-backdrop"
         onClick={onClose}
         className="fixed inset-0 bg-black/50"
         initial={FADE_IN_ANIMATION.initial}
@@ -39,6 +40,7 @@ export function Drawer({ isOpen, onClose, children }: Props) {
       />
       <div className="fixed top-0 right-0 z-50 h-full">
         <motion.div
+          key="drawer-panel"
           className="h-full bg-white shadow-lg"
           initial={SLIDE_IN_ANIMATION.initial}
           animate={SLIDE_IN_ANIMATION.animate}
