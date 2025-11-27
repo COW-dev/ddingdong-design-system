@@ -13,6 +13,7 @@ import Drag from './drag.svg';
 import Dustpan from './dustpan.svg';
 import Etc from './etc.svg';
 import File from './file.svg';
+import Information from './information.svg';
 import List from './list.svg';
 import Loading from './loading.svg';
 import Locate from './locate.svg';
@@ -60,6 +61,7 @@ export const Icons = {
   loading: Loading,
   refresh: Refresh,
   upload: Upload,
+  information: Information,
 };
 
 export type IconName = keyof typeof Icons;
