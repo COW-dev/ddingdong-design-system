@@ -11,7 +11,7 @@ export { FileUpload } from './ui/FileUpload/FileUpload';
 export { Flex } from './ui/Flex';
 export { Icon } from './ui/Icon';
 export { IconButton } from './ui/IconButton';
-export { Input } from './ui/Input/Input';
+export { Input } from './ui/Input';
 export { ImageGallery } from './ui/ImageGallery';
 export { Modal } from './ui/Modal';
 export { MediaUpload } from './ui/MediaUpload';
