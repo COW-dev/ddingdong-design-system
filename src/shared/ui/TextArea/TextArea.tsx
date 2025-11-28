@@ -24,6 +24,10 @@ type TextAreaProps = {
    * Custom class name for styling
    */
   className?: string;
+  /**
+   * Custom class name for Wrapper styling
+   */
+  wrapperClassName?: string;
 } & Omit<ComponentProps<'textarea'>, 'rows'>;
 
 export function TextArea({
@@ -31,10 +35,11 @@ export function TextArea({
   rows = 3,
   showCounter = false,
   className,
+  wrapperClassName,
   ...props
 }: TextAreaProps) {
   return (
-    <Flex dir="col" gap={2}>
+    <Flex dir="col" gap={2} className={wrapperClassName}>
       <textarea
         rows={rows}
         className={cn(
