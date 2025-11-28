@@ -16,9 +16,12 @@ export type Props = React.HTMLAttributes<HTMLTableElement> & {
 export function Table({ className, children, ...props }: Props) {
   return (
     <div
-      className={cn('no-scrollbar relative w-full overflow-auto rounded-md border border-gray-100')}
+      className={cn(
+        'no-scrollbar relative w-full overflow-auto rounded-md border border-gray-100',
+        className
+      )}
     >
-      <table className={cn('w-full table-fixed border-collapse text-sm', className)} {...props}>
+      <table className="w-full table-fixed border-collapse text-sm" {...props}>
         {children}
       </table>
     </div>
