@@ -24,6 +24,7 @@ import Pin from './pin.svg';
 import PlusMinus from './plusminus.svg';
 import Refresh from './refresh.svg';
 import Report from './report.svg';
+import Score from './score.svg';
 import Search from './search.svg';
 import ShortReport from './shortReport.svg';
 import Trash from './trash.svg';
@@ -61,6 +62,7 @@ export const Icons = {
   loading: Loading,
   refresh: Refresh,
   upload: Upload,
+  score: Score,
   information: Information,
 };
 
