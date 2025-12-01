@@ -29,6 +29,7 @@ import Search from './search.svg';
 import ShortReport from './shortReport.svg';
 import Trash from './trash.svg';
 import Upload from './upload.svg';
+import Video from './video.svg';
 import Write from './write.svg';
 
 export const Icons = {
@@ -63,6 +64,7 @@ export const Icons = {
   refresh: Refresh,
   upload: Upload,
   score: Score,
+  video: Video,
   information: Information,
 };
 
