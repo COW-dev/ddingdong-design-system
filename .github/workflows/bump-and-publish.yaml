@@ -60,7 +60,7 @@ jobs:
             for (const f of files) {
               if (f.status === 'added' && f.filename.startsWith('src/shared/ui/')) {
                 const parts = f.filename.split('/');
-                if (parts.length > 3) {
+                if (parts.length > 3 && parts[3] !== 'assets') {
                   addedDirs.add(parts.slice(0, 4).join('/'));
                 }
               }
