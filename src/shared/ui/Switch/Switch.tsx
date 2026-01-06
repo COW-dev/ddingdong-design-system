@@ -42,6 +42,7 @@ export function Switch({
       role="switch"
       disabled={disabled}
       onClick={handleClick}
+      aria-checked={isChecked}
       data-state={isChecked ? 'checked' : 'unchecked'}
       className={[
         'group flex h-3.5 w-7 items-center rounded-full shadow-lg',
