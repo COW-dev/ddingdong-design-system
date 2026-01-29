@@ -30,6 +30,7 @@ export const Basic: StoryObj<typeof Modal> = {
   },
   args: {
     isOpen: false,
+    closeOnOutsideClick: true,
   },
   render: (args) => {
     const [isOpen, setIsOpen] = useState(args.isOpen);
