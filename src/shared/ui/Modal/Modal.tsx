@@ -20,6 +20,11 @@ type Props = {
    */
   children: ReactNode;
   /**
+   * Whether clicking outside the modal closes it.
+   * @default true
+   */
+  closeOnOutsideClick?: boolean;
+  /**
    * Additional classes to apply to the modal.
    */
   className?: string;
@@ -32,9 +37,20 @@ const MODAL_MOTION = {
   transition: { duration: 0.3 },
 } as const;
 
-export function Modal({ isOpen, closeModal, children, className }: Props) {
+export function Modal({
+  isOpen,
+  closeModal,
+  children,
+  closeOnOutsideClick = true,
+  className,
+}: Props) {
   const handleOutsideClick = (e: React.MouseEvent) => {
-    if (e.target instanceof HTMLElement && e.target === e.currentTarget && closeModal) {
+    if (
+      closeOnOutsideClick &&
+      e.target instanceof HTMLElement &&
+      e.target === e.currentTarget &&
+      closeModal
+    ) {
       closeModal();
     }
   };
