@@ -82,7 +82,9 @@ export function ModalContent({
     <Flex
       role="dialog"
       aria-modal="true"
-      className={cn('relative z-50 flex items-center justify-center rounded-lg p-6', className)}
+      justifyContent="center"
+      alignItems="center"
+      className={cn('relative z-50 rounded-lg bg-white p-6', className)}
     >
       {children}
     </Flex>
