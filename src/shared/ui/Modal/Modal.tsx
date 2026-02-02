@@ -62,23 +62,27 @@ export function Modal({
         animate={MODAL_MOTION.animate}
         exit={MODAL_MOTION.exit}
         transition={MODAL_MOTION.transition}
-        className={cn('fixed inset-0 z-50 flex w-full items-center justify-center', className)}
+        className={cn('fixed inset-0 z-50 flex w-full items-center justify-center')}
       >
         <div className="absolute inset-0 bg-black/50" onClick={handleOutsideClick} />
-        <ModalContent>{children}</ModalContent>
+        <ModalContent className={className}>{children}</ModalContent>
       </motion.div>
     </Portal>
   );
 }
 
-export function ModalContent({ children }: { children: React.ReactNode }) {
+export function ModalContent({
+  children,
+  className,
+}: {
+  children: React.ReactNode;
+  className?: string;
+}) {
   return (
     <Flex
       role="dialog"
       aria-modal="true"
-      justifyContent="center"
-      alignItems="center"
-      className="relative z-50 rounded-lg bg-white p-6"
+      className={cn('relative z-50 flex items-center justify-center rounded-lg p-6', className)}
     >
       {children}
     </Flex>
