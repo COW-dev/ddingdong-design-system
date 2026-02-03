@@ -28,6 +28,11 @@ type Props = {
    * Additional classes to apply to the modal.
    */
   className?: string;
+
+  /**
+   * Additional classes to apply to the modal content.
+   */
+  contentClassName?: string;
 };
 
 const MODAL_MOTION = {
@@ -43,6 +48,7 @@ export function Modal({
   children,
   closeOnOutsideClick = true,
   className,
+  contentClassName,
 }: Props) {
   const handleOutsideClick = (e: React.MouseEvent) => {
     if (
@@ -62,10 +68,10 @@ export function Modal({
         animate={MODAL_MOTION.animate}
         exit={MODAL_MOTION.exit}
         transition={MODAL_MOTION.transition}
-        className={cn('fixed inset-0 z-50 flex w-full items-center justify-center')}
+        className={cn('fixed inset-0 z-50 flex w-full items-center justify-center', className)}
       >
         <div className="absolute inset-0 bg-black/50" onClick={handleOutsideClick} />
-        <ModalContent className={className}>{children}</ModalContent>
+        <ModalContent contentClassName={contentClassName}>{children}</ModalContent>
       </motion.div>
     </Portal>
   );
@@ -73,10 +79,10 @@ export function Modal({
 
 export function ModalContent({
   children,
-  className,
+  contentClassName,
 }: {
   children: React.ReactNode;
-  className?: string;
+  contentClassName?: string;
 }) {
   return (
     <Flex
@@ -84,7 +90,7 @@ export function ModalContent({
       aria-modal="true"
       justifyContent="center"
       alignItems="center"
-      className={cn('relative z-50 rounded-lg bg-white p-6', className)}
+      className={cn('relative z-50 rounded-lg bg-white p-6', contentClassName)}
     >
       {children}
     </Flex>
