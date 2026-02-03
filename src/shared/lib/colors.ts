@@ -48,5 +48,5 @@ export const COLORS = {
 export type Colors = keyof typeof colors;
 export type IconColor = keyof typeof COLORS;
 export type SwitchColor = keyof typeof COLORS;
-export type ProgressBarColor = keyof typeof colors;
+export type ProgressBarColor = keyof typeof COLORS;
 export const colorNames = Object.keys(colors) as Colors[];
