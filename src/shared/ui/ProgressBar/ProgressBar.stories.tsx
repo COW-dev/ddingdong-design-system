@@ -8,6 +8,13 @@ const meta = {
   title: 'Components/ProgressBar',
   component: ProgressBar,
   tags: ['autodocs'],
+  parameters: {
+    docs: {
+      description: {
+        component: 'ProgressBar 컴포넌트는 진행 상황을 시각적으로 표시하는 컴포넌트입니다.',
+      },
+    },
+  },
 } satisfies Meta<typeof ProgressBar>;
 
 export default meta;

@@ -3,7 +3,14 @@ import { cn } from '@/shared/lib/core';
 import { Flex } from '@/shared/ui/Flex';
 
 type Props = {
+  /**
+   *   defined in percentage (0-100).
+   */
   percent: number;
+  /**
+   * color of the switch.
+   * @default 'primary'
+   */
   color?: keyof typeof COLORS;
   className?: string;
 };
