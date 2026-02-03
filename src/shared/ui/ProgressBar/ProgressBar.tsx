@@ -1,4 +1,4 @@
-import { COLORS } from '@/shared/lib/colors';
+import { COLORS, colors } from '@/shared/lib/colors';
 import { cn } from '@/shared/lib/core';
 import { Flex } from '@/shared/ui/Flex';
 
@@ -22,6 +22,7 @@ export function ProgressBar({ color = 'primary', percent, className }: Props) {
           height: `${height}px`,
           borderRadius: `${height / 2}px`,
           backgroundColor: '#F3F4F6',
+          backgroundColor: colors.gray[100],
         }}
       >
         <div
