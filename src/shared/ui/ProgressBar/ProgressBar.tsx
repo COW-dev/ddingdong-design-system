@@ -1,6 +1,5 @@
 import { COLORS, colors } from '@/shared/lib/colors';
 import { cn } from '@/shared/lib/core';
-import { Flex } from '@/shared/ui/Flex';
 
 type Props = {
   /**
@@ -20,21 +19,19 @@ export function ProgressBar({ color = 'primary', percent, className }: Props) {
   const barColor = COLORS[color];
 
   return (
-    <Flex>
+    <div
+      className={cn('h-2.5 w-[16.5rem] overflow-hidden rounded-full', className)}
+      style={{
+        backgroundColor: colors.gray[100],
+      }}
+    >
       <div
-        className={cn('h-[0.625rem] w-[16.5rem] overflow-hidden rounded-full', className)}
+        className="h-full rounded-full transition-[width] duration-500 ease-in-out"
         style={{
-          backgroundColor: colors.gray[100],
+          width: `${clampedPercent}%`,
+          backgroundColor: barColor,
         }}
-      >
-        <div
-          className="h-full rounded-full transition-[width] duration-600 ease-in-out"
-          style={{
-            width: `${clampedPercent}%`,
-            backgroundColor: barColor,
-          }}
-        />
-      </div>
-    </Flex>
+      />
+    </div>
   );
 }
