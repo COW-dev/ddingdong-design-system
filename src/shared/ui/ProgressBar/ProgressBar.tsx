@@ -16,28 +16,22 @@ type Props = {
 };
 
 export function ProgressBar({ color = 'primary', percent, className }: Props) {
-  const height = 10;
   const clampedPercent = Math.min(100, Math.max(0, percent));
   const barColor = COLORS[color];
 
   return (
     <Flex>
       <div
-        className={cn('overflow-hidden', className)}
+        className={cn('h-[0.625rem] w-[16.5rem] overflow-hidden rounded-full', className)}
         style={{
-          width: '264px',
-          height: `${height}px`,
-          borderRadius: `${height / 2}px`,
-          backgroundColor: '#F3F4F6',
           backgroundColor: colors.gray[100],
         }}
       >
         <div
-          className="h-full transition-[width] duration-300 ease-in-out"
+          className="h-full rounded-full transition-[width] duration-600 ease-in-out"
           style={{
             width: `${clampedPercent}%`,
             backgroundColor: barColor,
-            borderRadius: `${height / 2}px`,
           }}
         />
       </div>
