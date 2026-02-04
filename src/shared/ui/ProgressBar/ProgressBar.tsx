@@ -19,12 +19,7 @@ export function ProgressBar({ color = 'primary', percent, className }: Props) {
   const barColor = COLORS[color];
 
   return (
-    <div
-      className={cn('h-2.5 w-[16.5rem] overflow-hidden rounded-full', className)}
-      style={{
-        backgroundColor: colors.gray[100],
-      }}
-    >
+    <div className={cn('h-2.5 w-[16.5rem] overflow-hidden rounded-full bg-gray-100', className)}>
       <div
         className="h-full rounded-full transition-[width] duration-500 ease-in-out"
         style={{
