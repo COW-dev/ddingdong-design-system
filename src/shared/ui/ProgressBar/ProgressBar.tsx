@@ -1,4 +1,4 @@
-import { COLORS, colors } from '@/shared/lib/colors';
+import { COLORS } from '@/shared/lib/colors';
 import { cn } from '@/shared/lib/core';
 
 type Props = {
@@ -7,7 +7,7 @@ type Props = {
    */
   percent: number;
   /**
-   * color of the switch.
+   * color of the progressbar.
    * @default 'primary'
    */
   color?: keyof typeof COLORS;
