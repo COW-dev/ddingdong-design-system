@@ -32,6 +32,7 @@ export const colors = {
   purple: '#a855f7',
   white: '#ffffff',
   black: '#000000',
+  pink: '#FF507D',
 };
 
 export const COLORS = {
@@ -41,9 +42,11 @@ export const COLORS = {
   green: colors['green'][300],
   black: colors['black'],
   white: colors['white'],
+  pink: colors['pink'],
 };
 
 export type Colors = keyof typeof colors;
 export type IconColor = keyof typeof COLORS;
 export type SwitchColor = keyof typeof COLORS;
+export type ProgressBarColor = keyof typeof COLORS;
 export const colorNames = Object.keys(colors) as Colors[];
