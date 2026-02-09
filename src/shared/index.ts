@@ -18,6 +18,7 @@ export { MediaUpload } from './ui/MediaUpload';
 export { NavBack } from './ui/NavBack';
 export { Pagination } from './ui/Pagination';
 export { Portal } from './ui/Portal';
+export { ProgressBar } from './ui/ProgressBar';
 export { Select, GroupingSelect } from './ui/Select';
 export { Skeleton } from './ui/Skeleton';
 export { Radio, RadioItem } from './ui/Radio';
