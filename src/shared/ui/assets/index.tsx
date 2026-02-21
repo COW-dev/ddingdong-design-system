@@ -9,87 +9,85 @@ import Chart from './chart.svg';
 import Check from './check.svg';
 import Cleaning from './cleaning.svg';
 import Close from './close.svg';
-import ClubFeed from './clubFeed.svg';
-import ClubMember from './clubMember.svg';
-import ClubScore from './clubScore.svg';
+import Contacts from './contacts.svg';
+import Cube from './cube.svg';
 import Dots from './dots.svg';
-import DoubleArrow from './doubleArrow.svg';
 import DownLoad from './download.svg';
 import Drag from './drag.svg';
 import Dustpan from './dustpan.svg';
 import Etc from './etc.svg';
-import Faq from './faq.svg';
+import Feed from './feed.svg';
 import File from './file.svg';
-import HandleApply from './handleApply.svg';
+import Heart from './heart.svg';
 import Information from './information.svg';
-import JoinActivity from './joinActivity.svg';
 import List from './list.svg';
 import Loading from './loading.svg';
 import Locate from './locate.svg';
-import Manage from './manage.svg';
 import NavbarArrow from './navbar-arrow.svg';
 import New from './new.svg';
+import OpenBook from './openBook.svg';
 import Peoples from './peoples.svg';
 import Pin from './pin.svg';
 import PlusMinus from './plusminus.svg';
+import Questionmark from './questionmark.svg';
 import Refresh from './refresh.svg';
 import Repair from './repair.svg';
 import Report from './report.svg';
 import Score from './score.svg';
-import ScoreAdjust from './scoreAdjust.svg';
 import Search from './search.svg';
 import ShortReport from './shortReport.svg';
+import Skip from './skip.svg';
+import Star from './star.svg';
 import Trash from './trash.svg';
 import Upload from './upload.svg';
 import Video from './video.svg';
 import Write from './write.svg';
 
 export const Icons = {
+  activityReport: ActivityReport,
   add: Add,
   arrowDown: ArrowDown,
-  arrowUp: ArrowUp,
   arrowLeft: ArrowLeft,
   arrowRight: ArrowRight,
-  check: Check,
-  close: Close,
+  arrowUp: ArrowUp,
   camera: Camera,
   chart: Chart,
+  check: Check,
+  cleaning: Cleaning,
+  close: Close,
+  contacts: Contacts,
   download: DownLoad,
   drag: Drag,
   dots: Dots,
   dustpan: Dustpan,
-  peoples: Peoples,
-  plusMinus: PlusMinus,
-  report: Report,
-  shortReport: ShortReport,
   etc: Etc,
+  feed: Feed,
   file: File,
+  heart: Heart,
+  information: Information,
   list: List,
+  loading: Loading,
+  locate: Locate,
+  cube: Cube,
   navbarArrow: NavbarArrow,
   new: New,
+  openBook: OpenBook,
+  peoples: Peoples,
   pin: Pin,
-  locate: Locate,
-  search: Search,
-  trash: Trash,
-  write: Write,
-  loading: Loading,
+  plusMinus: PlusMinus,
+  questionmark: Questionmark,
   refresh: Refresh,
-  upload: Upload,
-  score: Score,
-  video: Video,
-  information: Information,
-  faq: Faq,
-  handleApply: HandleApply,
-  joinActivity: JoinActivity,
-  manage: Manage,
-  activityReport: ActivityReport,
-  clubFeed: ClubFeed,
-  clubMember: ClubMember,
-  clubScore: ClubScore,
-  doubleArrow: DoubleArrow,
   repair: Repair,
-  cleaning: Cleaning,
-  ScoreAdjust: ScoreAdjust,
+  report: Report,
+  score: Score,
+  search: Search,
+  shortReport: ShortReport,
+  skip: Skip,
+  star: Star,
+  trash: Trash,
+  upload: Upload,
+  video: Video,
+  write: Write,
 };
 
 export type IconName = keyof typeof Icons;
