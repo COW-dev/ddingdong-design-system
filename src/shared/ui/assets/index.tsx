@@ -29,13 +29,12 @@ import Link from './link.svg';
 import List from './list.svg';
 import Loading from './loading.svg';
 import Locate from './locate.svg';
-import NavbarArrow from './navbar-arrow.svg';
 import New from './new.svg';
 import OpenBook from './openBook.svg';
 import Peoples from './peoples.svg';
 import Pin from './pin.svg';
 import PlusMinus from './plusminus.svg';
-import Questionmark from './questionmark.svg';
+import QuestionMark from './questionMark.svg';
 import Refresh from './refresh.svg';
 import Repair from './repair.svg';
 import Report from './report.svg';
@@ -44,7 +43,7 @@ import Search from './search.svg';
 import Send from './send.svg';
 import ShortReport from './shortReport.svg';
 import Skip from './skip.svg';
-import Spiner from './spiner.svg';
+import Spinner from './spinner.svg';
 import Star from './star.svg';
 import Trash from './trash.svg';
 import Upload from './upload.svg';
@@ -83,13 +82,12 @@ export const Icons = {
   loading: Loading,
   locate: Locate,
   cube: Cube,
-  navbarArrow: NavbarArrow,
   new: New,
   openBook: OpenBook,
   peoples: Peoples,
   pin: Pin,
   plusMinus: PlusMinus,
-  questionmark: Questionmark,
+  questionMark: QuestionMark,
   refresh: Refresh,
   repair: Repair,
   report: Report,
@@ -98,7 +96,7 @@ export const Icons = {
   send: Send,
   shortReport: ShortReport,
   skip: Skip,
-  spiner: Spiner,
+  spinner: Spinner,
   star: Star,
   trash: Trash,
   upload: Upload,
