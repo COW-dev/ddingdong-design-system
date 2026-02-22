@@ -4,11 +4,14 @@ import ArrowDown from './arrow-down.svg';
 import ArrowLeft from './arrow-left.svg';
 import ArrowRight from './arrow-right.svg';
 import ArrowUp from './arrow-up.svg';
+import Calendar from './calendar.svg';
 import Camera from './camera.svg';
 import Chart from './chart.svg';
 import Check from './check.svg';
+import CheckBold from './checkBold.svg';
 import Cleaning from './cleaning.svg';
 import Close from './close.svg';
+import Comment from './comment.svg';
 import Contacts from './contacts.svg';
 import Cube from './cube.svg';
 import Dots from './dots.svg';
@@ -16,10 +19,13 @@ import DownLoad from './download.svg';
 import Drag from './drag.svg';
 import Dustpan from './dustpan.svg';
 import Etc from './etc.svg';
+import Eye from './eye.svg';
 import Feed from './feed.svg';
 import File from './file.svg';
 import Heart from './heart.svg';
 import Information from './information.svg';
+import Like from './like.svg';
+import Link from './link.svg';
 import List from './list.svg';
 import Loading from './loading.svg';
 import Locate from './locate.svg';
@@ -35,8 +41,10 @@ import Repair from './repair.svg';
 import Report from './report.svg';
 import Score from './score.svg';
 import Search from './search.svg';
+import Send from './send.svg';
 import ShortReport from './shortReport.svg';
 import Skip from './skip.svg';
+import Spiner from './spiner.svg';
 import Star from './star.svg';
 import Trash from './trash.svg';
 import Upload from './upload.svg';
@@ -50,21 +58,27 @@ export const Icons = {
   arrowLeft: ArrowLeft,
   arrowRight: ArrowRight,
   arrowUp: ArrowUp,
+  calendar: Calendar,
   camera: Camera,
   chart: Chart,
   check: Check,
+  checkBold: CheckBold,
   cleaning: Cleaning,
   close: Close,
   contacts: Contacts,
+  comment: Comment,
   download: DownLoad,
   drag: Drag,
   dots: Dots,
   dustpan: Dustpan,
   etc: Etc,
+  eye: Eye,
   feed: Feed,
   file: File,
   heart: Heart,
   information: Information,
+  like: Like,
+  link: Link,
   list: List,
   loading: Loading,
   locate: Locate,
@@ -81,8 +95,10 @@ export const Icons = {
   report: Report,
   score: Score,
   search: Search,
+  send: Send,
   shortReport: ShortReport,
   skip: Skip,
+  spiner: Spiner,
   star: Star,
   trash: Trash,
   upload: Upload,
