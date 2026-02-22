@@ -38,7 +38,7 @@ export function NavBack({ title, size, onClick }: Props) {
         </>
       ) : (
         <>
-          <Icon name="navbarArrow" className="w-6 md:w-8" />
+          <Icon name="arrowLeft" className="w-6 md:w-8" />
           <Title1 className="whitespace-nowrap text-gray-500">{title}</Title1>
         </>
       )}
