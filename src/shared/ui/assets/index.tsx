@@ -18,6 +18,7 @@ import Dots from './dots.svg';
 import DownLoad from './download.svg';
 import Drag from './drag.svg';
 import Dustpan from './dustpan.svg';
+import Error from './error.svg';
 import Etc from './etc.svg';
 import Eye from './eye.svg';
 import Feed from './feed.svg';
@@ -70,6 +71,7 @@ export const Icons = {
   drag: Drag,
   dots: Dots,
   dustpan: Dustpan,
+  error: Error,
   etc: Etc,
   eye: Eye,
   feed: Feed,
