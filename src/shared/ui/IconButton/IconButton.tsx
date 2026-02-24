@@ -31,6 +31,7 @@ const hoverColorMap = {
   green: 'hover:bg-green-400/20',
   black: 'hover:bg-black/20',
   white: 'hover:bg-white/20',
+  pink: 'hover: bg-pink/20',
 } as const;
 
 export function IconButton({
