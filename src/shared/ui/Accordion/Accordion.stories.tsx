@@ -90,3 +90,59 @@ export const DefaultValueAccordion: Story = {
     );
   },
 };
+export const IconSizeAccordion: Story = {
+  render: () => {
+    return (
+      <Accordion type="single">
+        <AccordionItem value="item-1" trigger={<div>사용자 입력값에 따라</div>} iconSize={12}>
+          <div>아이콘의 크기를 조절합니다.</div>
+        </AccordionItem>
+      </Accordion>
+    );
+  },
+};
+
+export const IconAlignAccordion: Story = {
+  render: () => {
+    return (
+      <Accordion type="multiple">
+        <AccordionItem
+          value="item-1"
+          trigger={
+            <div>
+              <div>질문 1</div>
+              <div>아이콘은 요소의 상단에 위치합니다</div>
+            </div>
+          }
+          iconAlign="top"
+        >
+          <div>아이콘 정렬 top</div>
+        </AccordionItem>
+        <AccordionItem
+          value="item-2"
+          trigger={
+            <div>
+              <div>질문 2</div>
+              <div>아이콘은 요소의 가운데 위치합니다</div>
+            </div>
+          }
+          iconAlign="center"
+        >
+          <div>아이콘 정렬 center</div>
+        </AccordionItem>
+        <AccordionItem
+          value="item-3"
+          trigger={
+            <div>
+              <div>아이콘 정렬 bottom</div>
+              <div>아이콘은 요소의 하단에 위치합니다</div>
+            </div>
+          }
+          iconAlign="bottom"
+        >
+          <div>아이콘 정렬 bottom</div>
+        </AccordionItem>
+      </Accordion>
+    );
+  },
+};

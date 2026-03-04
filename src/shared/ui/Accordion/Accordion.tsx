@@ -83,6 +83,20 @@ type AccordionItemProps = {
    * The class name for the content container.
    */
   contentClassName?: string;
+  /**
+   * Additional class names for the arrow icon.
+   */
+  iconClassName?: string;
+  /**
+   * icon size
+   * @default 20
+   */
+  iconSize?: number;
+  /**
+   * icon vertical alignment position.
+   * @default 'center'
+   */
+  iconAlign?: 'top' | 'center' | 'bottom';
 };
 
 const ACCORDION_MOTION = {
@@ -106,6 +120,9 @@ export function AccordionItem({
   value,
   btnClassName,
   contentClassName,
+  iconClassName,
+  iconSize = 20,
+  iconAlign = 'center',
   children,
   ...props
 }: AccordionItemProps) {
@@ -145,9 +162,17 @@ export function AccordionItem({
           <motion.div
             animate={{ rotate: isOpen ? 180 : 0 }}
             transition={{ duration: 0.2 }}
-            className="ml-2"
+            className={cn(
+              'ml-2',
+              {
+                'self-start': iconAlign === 'top',
+                'self-center': iconAlign === 'center',
+                'self-end': iconAlign === 'bottom',
+              },
+              iconClassName
+            )}
           >
-            <Icon name="arrowDown" size={20} />
+            <Icon name="arrowDown" size={iconSize} />
           </motion.div>
         )}
       </div>
