@@ -84,7 +84,11 @@ type AccordionItemProps = {
    */
   contentClassName?: string;
   /**
-   * Additional class names for the arrow icon.
+   * Additional class names for the arrow icon wrapper.
+   */
+  iconWrapperClassName?: string;
+  /**
+   * Additional class names for the SVG arrow icon itself.
    */
   iconClassName?: string;
   /**
@@ -96,7 +100,7 @@ type AccordionItemProps = {
    * icon vertical alignment position.
    * @default 'center'
    */
-  iconAlign?: 'top' | 'center' | 'bottom';
+  iconAlign?: 'start' | 'center' | 'end';
 };
 
 const ACCORDION_MOTION = {
@@ -107,6 +111,12 @@ const ACCORDION_MOTION = {
     height: { duration: 0.2, ease: 'easeOut' },
     opacity: { duration: 0.1 },
   },
+};
+
+const ALIGN_ICON = {
+  start: 'self-start',
+  center: 'self-center',
+  end: 'self-end',
 };
 
 const isInteractiveElement = (element: HTMLElement) => {
@@ -120,12 +130,14 @@ export function AccordionItem({
   value,
   btnClassName,
   contentClassName,
+  iconWrapperClassName,
   iconClassName,
   iconSize = 20,
   iconAlign = 'center',
   children,
   ...props
 }: AccordionItemProps) {
+  const normalizedIconSize = Number.isFinite(iconSize) && iconSize > 0 ? iconSize : 20;
   const context = useAccordion();
   const uid = useId();
   const triggerId = `accordion-trigger-${uid}`;
@@ -162,17 +174,9 @@ export function AccordionItem({
           <motion.div
             animate={{ rotate: isOpen ? 180 : 0 }}
             transition={{ duration: 0.2 }}
-            className={cn(
-              'ml-2',
-              {
-                'self-start': iconAlign === 'top',
-                'self-center': iconAlign === 'center',
-                'self-end': iconAlign === 'bottom',
-              },
-              iconClassName
-            )}
+            className={cn('ml-2', ALIGN_ICON[iconAlign], iconWrapperClassName)}
           >
-            <Icon name="arrowDown" size={iconSize} />
+            <Icon name="arrowDown" size={normalizedIconSize} className={iconClassName} />
           </motion.div>
         )}
       </div>

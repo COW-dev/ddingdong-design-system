@@ -94,7 +94,7 @@ export const IconSizeAccordion: Story = {
   render: () => {
     return (
       <Accordion type="single">
-        <AccordionItem value="item-1" trigger={<div>사용자 입력값에 따라</div>} iconSize={12}>
+        <AccordionItem iconSize={12} value="item-1" trigger={<div>사용자 입력값에 따라</div>}>
           <div>아이콘의 크기를 조절합니다.</div>
         </AccordionItem>
       </Accordion>
@@ -114,7 +114,7 @@ export const IconAlignAccordion: Story = {
               <div>아이콘은 요소의 상단에 위치합니다</div>
             </div>
           }
-          iconAlign="top"
+          iconAlign="start"
         >
           <div>아이콘 정렬 top</div>
         </AccordionItem>
@@ -138,7 +138,7 @@ export const IconAlignAccordion: Story = {
               <div>아이콘은 요소의 하단에 위치합니다</div>
             </div>
           }
-          iconAlign="bottom"
+          iconAlign="end"
         >
           <div>아이콘 정렬 bottom</div>
         </AccordionItem>
