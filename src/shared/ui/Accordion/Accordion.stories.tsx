@@ -93,8 +93,8 @@ export const DefaultValueAccordion: Story = {
 export const IconSizeAccordion: Story = {
   render: () => {
     return (
-      <Accordion type="single">
-        <AccordionItem iconSize={12} value="item-1" trigger={<div>사용자 입력값에 따라</div>}>
+      <Accordion type="single" iconSize={12}>
+        <AccordionItem value="item-1" trigger={<div>사용자 입력값에 따라</div>}>
           <div>아이콘의 크기를 조절합니다.</div>
         </AccordionItem>
       </Accordion>

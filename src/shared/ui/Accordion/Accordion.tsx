@@ -26,6 +26,10 @@ type AccordionRootProps = {
    * Additional class names to apply to the AccordionRoot.
    */
   className?: string;
+  /**
+   * Default icon size for all AccordionItems.
+   */
+  iconSize?: number;
 };
 
 export function AccordionRoot({
@@ -33,6 +37,7 @@ export function AccordionRoot({
   className = '',
   children,
   defaultValue,
+  iconSize,
   ...props
 }: AccordionRootProps) {
   const defaultOpenItem = defaultValue ? defaultValue : [];
@@ -49,7 +54,7 @@ export function AccordionRoot({
   };
 
   return (
-    <AccordionContext.Provider value={{ openItems, toggleItem, type }}>
+    <AccordionContext.Provider value={{ openItems, toggleItem, type, iconSize }}>
       <div className={cn(`w-full`, className)} {...props}>
         {children}
       </div>
@@ -132,13 +137,14 @@ export function AccordionItem({
   contentClassName,
   iconWrapperClassName,
   iconClassName,
-  iconSize = 20,
+  iconSize,
   iconAlign = 'center',
   children,
   ...props
 }: AccordionItemProps) {
-  const normalizedIconSize = Number.isFinite(iconSize) && iconSize > 0 ? iconSize : 20;
   const context = useAccordion();
+  const rawIconSize = iconSize ?? context.iconSize ?? 20;
+  const normalizedIconSize = Number.isFinite(rawIconSize) && rawIconSize > 0 ? rawIconSize : 20;
   const uid = useId();
   const triggerId = `accordion-trigger-${uid}`;
   const contentId = `accordion-content-${uid}`;

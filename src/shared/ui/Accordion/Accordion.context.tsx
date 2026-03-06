@@ -4,6 +4,7 @@ type AccordionContextType = {
   type: 'single' | 'multiple';
   openItems: string[];
   toggleItem: (value: string) => void;
+  iconSize?: number;
 };
 
 export const AccordionContext = createContext<AccordionContextType | null>(null);
