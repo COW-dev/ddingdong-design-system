@@ -143,8 +143,8 @@ export function AccordionItem({
   ...props
 }: AccordionItemProps) {
   const context = useAccordion();
-  const rawIconSize = iconSize ?? context.iconSize ?? 20;
-  const normalizedIconSize = Number.isFinite(rawIconSize) && rawIconSize > 0 ? rawIconSize : 20;
+  const rawIconSize = iconSize ?? context.iconSize ?? 13.5;
+  const normalizedIconSize = Number.isFinite(rawIconSize) && rawIconSize > 0 ? rawIconSize : 13.5;
   const uid = useId();
   const triggerId = `accordion-trigger-${uid}`;
   const contentId = `accordion-content-${uid}`;
