@@ -26,6 +26,10 @@ type AccordionRootProps = {
    * Additional class names to apply to the AccordionRoot.
    */
   className?: string;
+  /**
+   * Default icon size for all AccordionItems.
+   */
+  iconSize?: number;
 };
 
 export function AccordionRoot({
@@ -33,6 +37,7 @@ export function AccordionRoot({
   className = '',
   children,
   defaultValue,
+  iconSize,
   ...props
 }: AccordionRootProps) {
   const defaultOpenItem = defaultValue ? defaultValue : [];
@@ -49,7 +54,7 @@ export function AccordionRoot({
   };
 
   return (
-    <AccordionContext.Provider value={{ openItems, toggleItem, type }}>
+    <AccordionContext.Provider value={{ openItems, toggleItem, type, iconSize }}>
       <div className={cn(`w-full`, className)} {...props}>
         {children}
       </div>
@@ -83,6 +88,24 @@ type AccordionItemProps = {
    * The class name for the content container.
    */
   contentClassName?: string;
+  /**
+   * Additional class names for the arrow icon wrapper.
+   */
+  iconWrapperClassName?: string;
+  /**
+   * Additional class names for the SVG arrow icon itself.
+   */
+  iconClassName?: string;
+  /**
+   * icon size
+   * @default 20
+   */
+  iconSize?: number;
+  /**
+   * icon vertical alignment position.
+   * @default 'center'
+   */
+  iconAlign?: 'start' | 'center' | 'end';
 };
 
 const ACCORDION_MOTION = {
@@ -93,6 +116,12 @@ const ACCORDION_MOTION = {
     height: { duration: 0.2, ease: 'easeOut' },
     opacity: { duration: 0.1 },
   },
+};
+
+const ALIGN_ICON = {
+  start: 'self-start',
+  center: 'self-center',
+  end: 'self-end',
 };
 
 const isInteractiveElement = (element: HTMLElement) => {
@@ -106,10 +135,16 @@ export function AccordionItem({
   value,
   btnClassName,
   contentClassName,
+  iconWrapperClassName,
+  iconClassName,
+  iconSize,
+  iconAlign = 'center',
   children,
   ...props
 }: AccordionItemProps) {
   const context = useAccordion();
+  const rawIconSize = iconSize ?? context.iconSize ?? 13.5;
+  const normalizedIconSize = Number.isFinite(rawIconSize) && rawIconSize > 0 ? rawIconSize : 13.5;
   const uid = useId();
   const triggerId = `accordion-trigger-${uid}`;
   const contentId = `accordion-content-${uid}`;
@@ -145,9 +180,9 @@ export function AccordionItem({
           <motion.div
             animate={{ rotate: isOpen ? 180 : 0 }}
             transition={{ duration: 0.2 }}
-            className="ml-2"
+            className={cn('ml-2', ALIGN_ICON[iconAlign], iconWrapperClassName)}
           >
-            <Icon name="arrowDown" size={20} />
+            <Icon name="arrowDown" size={normalizedIconSize} className={iconClassName} />
           </motion.div>
         )}
       </div>
